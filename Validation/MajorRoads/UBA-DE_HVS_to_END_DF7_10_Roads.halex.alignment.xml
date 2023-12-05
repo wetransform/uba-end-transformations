@@ -1,0 +1,592 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<alignment xmlns="http://www.esdi-humboldt.eu/hale/alignment">
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.create" id="Cb31e8faf-97e1-47c6-b625-dd9c31c191d1" priority="normal">
+        <target>
+            <class>
+                <type name="NAP_MajorRoadLimitValues"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+withTransformationContext {&#13;
+	def c = _.context.collector(it)&#13;
+	&#13;
+	def infoGrenzwert = c.Allgemeines.infoGrenzwert.value()&#13;
+	if(infoGrenzwert){&#13;
+		_target {&#13;
+			actionPlanId_identifier( c.Allgemeines.kennungPlan.value() )&#13;
+			limitValues_otherCriteriaLimitDetail( infoGrenzwert )&#13;
+		}&#13;
+	}&#13;
+}
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.create" id="C3668c3d1-5f96-4a5a-8cbf-ed108cb08050" priority="normal">
+        <target>
+            <class>
+                <type name="NAP_RoadMappingResultDetail"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+withTransformationContext {&#13;
+	def c = _.context.collector(it)&#13;
+&#13;
+	_target {&#13;
+		actionPlanId_identifier( c.Allgemeines.kennungPlan.value() )&#13;
+		exposedLden55( c.Lärmkartierung.personen_Lden55.value() )&#13;
+		exposedLnight50( c.Lärmkartierung.personen_Lnight55.value() )&#13;
+		situationForImprovementExplanation( c.Lärmkartierung.beschreibungProbleme.value() )&#13;
+		&#13;
+		//get codelist values for 'kriterienPrio' like classified in lookup-table 'KriterienPrioritaeten'&#13;
+		def kriterienPrio = c.Lärmkartierung.krietrienPrio.values()&#13;
+		def kriterienPrio_classified = _snippets.helperFunctions.classifyListValues(kriterienPrio, 'b2ca8a99-05aa-4253-89cc-1a8f65be1ace')&#13;
+		situationForImprovementPrioritisationCriteria( kriterienPrio_classified.join("; ") )&#13;
+	}&#13;
+}
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.retype" id="C4918ff5a-33b8-4836-aa06-9c2b7f193193" priority="highest">
+        <source>
+            <class>
+                <type name="Lärmkartierung"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NAP_RoadMappingResultDetail"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+// This groovy script collects the information from sheet 'Lärmkartierung'&#13;
+// No target is created.&#13;
+&#13;
+def bezeichnung = _source.p.Bezeichnung.value()&#13;
+def wert = _source.p.Wert.value()&#13;
+&#13;
+withTransformationContext {&#13;
+	def c = _.context.collector(it)&#13;
+	&#13;
+	if (bezeichnung.contains('Anzahl der Personen, die in dem vom Lärmaktionsplan erfassten Gebiet einer Lärmbelastung ab 55 dB(A) LDEN ausgesetzt sind')){&#13;
+		c.Lärmkartierung.personen_Lden55 &lt;&lt; wert&#13;
+	}&#13;
+	else if (bezeichnung.contains('Anzahl der Personen, die in dem vom Lärmaktionsplan erfassten Gebiet einer Lärmbelastung ab 50 dB(A) LNight ausgesetzt sind')){&#13;
+		c.Lärmkartierung.personen_Lnight55 &lt;&lt; wert&#13;
+	}&#13;
+	else if (bezeichnung.contains('Beschreibung der festgestellten Lärmprobleme und der verbesserungsbedürftigen Situationen')){&#13;
+		c.Lärmkartierung.beschreibungProbleme &lt;&lt; wert&#13;
+	}&#13;
+	else if (wert == 'Ja'){&#13;
+		c.Lärmkartierung.krietrienPrio &lt;&lt; bezeichnung&#13;
+	}&#13;
+	&#13;
+	def prioritiesAll = _snippets.helperFunctions.CODELIST_PrioritisationCriteriaText_DE()&#13;
+	if ( bezeichnung in prioritiesAll ) {&#13;
+		c.Maßnahmen."${bezeichnung}" &lt;&lt; wert&#13;
+	}&#13;
+	&#13;
+}&#13;
+&#13;
+&#13;
+
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.create" id="Cf3c8df90-02b7-4c6f-a20d-3c6f2f1a9add" priority="normal">
+        <target>
+            <class>
+                <type name="NAP_RoadReductionHealthImpact_1"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+withTransformationContext {&#13;
+	def c = _.context.collector(it)&#13;
+	&#13;
+	_target {&#13;
+		actionPlanId_identifier( c.Allgemeines.kennungPlan.value() )&#13;
+		explanationMethod( c.Wirkungen.personenReduktionMethode.value() )&#13;
+		nrOfPeople( c.Wirkungen.personenReduktion.value() )&#13;
+	}&#13;
+}
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.retype" id="Ce5ef095e-e607-49f5-9b0e-8c7a56f950f6" priority="highest">
+        <source>
+            <class>
+                <type name="Wirkungen"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NAP_RoadReductionHealthImpact_1"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+// This groovy script collects the information from sheet 'Wirkung'&#13;
+// No target is created.&#13;
+&#13;
+def bezeichnung = _source.p.Bezeichnung.value()&#13;
+def wert = _source.p.Wert.value()&#13;
+&#13;
+withTransformationContext {&#13;
+	def c = _.context.collector(it)&#13;
+	&#13;
+	if (bezeichnung.contains('Geschätzte Anzahl der Personen in dem von dem Aktionsplan erfassten Gebiet, für die sich der Lärm innerhalb der nächsten fünf Jahre reduziert')){&#13;
+		c.Wirkungen.personenReduktion &lt;&lt; wert&#13;
+	}&#13;
+	else if (bezeichnung.contains('Erläuterung der Methode, die zur Schätzung der Anzahl der Personen, für die sich der Lärm reduziert, verwendet wurde')){&#13;
+		c.Wirkungen.personenReduktionMethode &lt;&lt; wert&#13;
+	}&#13;
+	else if (bezeichnung.contains('Geschätztes Kosten-Nutzen-Verhältnis der im Aktionsplan beschriebenen Maßnahmen')){&#13;
+		c.Wirkungen.kostenNutzen &lt;&lt; wert&#13;
+	}&#13;
+	&#13;
+	else if (bezeichnung.contains('Angabe, ob der Lärmaktionsplan eine langfristige Strategie zur Reduzierung der Lärmbelastung vorsieht')){&#13;
+		c.Wirkungen.strategie &lt;&lt; wert&#13;
+	}&#13;
+	else if (bezeichnung.contains('Erläuterung der langfristigen Strategie zur Reduzierung der Lärmbelastung')){&#13;
+		c.Wirkungen.strategieErlaeuterung &lt;&lt; wert&#13;
+	}&#13;
+	else if (bezeichnung.contains('Geschätzte Gesamtkosten des Aktionsplans (ohne Maßnahmenumsetzung) [€]')){&#13;
+		c.Wirkungen.kostenGesamt &lt;&lt; wert&#13;
+	}&#13;
+	else if (bezeichnung.contains('Angabe, ob im Lärmaktionsplan ruhige Gebiete beschrieben werden')){&#13;
+		c.Wirkungen.ruhigeGebiete &lt;&lt; wert&#13;
+	}&#13;
+	else if (bezeichnung.contains('Angabe, ob Regelungen für die Überprüfung der Umsetzung des Lärmaktionsplans vorgesehen sind')){&#13;
+		c.Wirkungen.pruefungUmsetzung &lt;&lt; wert&#13;
+	}&#13;
+	else if (bezeichnung.contains('Erläuterung der geplanten Regelungen für die Überprüfung der Umsetzung des Lärmaktionsplans')){&#13;
+		c.Wirkungen.pruefungUmsetzungErlaueterung &lt;&lt; wert&#13;
+	}&#13;
+	else if (bezeichnung.contains('Angabe, ob Regelungen für die Überprüfung der Wirksamkeit des Lärmaktionsplans vorgesehen sind')){&#13;
+		c.Wirkungen.pruefungWirksamkeit &lt;&lt; wert&#13;
+	}&#13;
+	else if (bezeichnung.contains('Geplante Regelungen für die Überprüfung der Wirksamkeit des Lärmaktionsplans')){&#13;
+		c.Wirkungen.pruefungWirksamkeitErlaeuterung &lt;&lt; wert&#13;
+	}&#13;
+}&#13;
+
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.create" id="Ceb35597e-7327-469a-9821-78d44da8f7e2" priority="normal">
+        <target>
+            <class>
+                <type name="NAP_RoadReductionHealthImpact_3"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+withTransformationContext {&#13;
+	def c = _.context.collector(it)&#13;
+&#13;
+	def kostenNutzen = c.Wirkungen.kostenNutzen.value()&#13;
+	if (kostenNutzen) {&#13;
+		_target {&#13;
+			actionPlanId_identifier( c.Allgemeines.kennungPlan.value() )&#13;
+			estimatedCostBenefit( kostenNutzen )&#13;
+		}&#13;
+	}&#13;
+}
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.create" id="C00732c56-a4ce-4e7d-9e96-82952bca9deb" priority="normal">
+        <target>
+            <class>
+                <type name="NAP_RoadReductionMeasure"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+withTransformationContext {&#13;
+	def c = _.context.collector(it)&#13;
+	&#13;
+	_target {&#13;
+		actionPlanId_identifier( c.Allgemeines.kennungPlan.value() )&#13;
+		&#13;
+		def vorhandeneMaßnahmen = c.Maßnahmen.vorhandene.values()&#13;
+		if ( vorhandeneMaßnahmen ) {&#13;
+			//get codelist values for 'vorhandeneMaßnahmen' like classified in lookup-table 'MaßnahmenStraße'&#13;
+			def vorhandeneMaßnahmen_classified = _snippets.helperFunctions.classifyListValues(vorhandeneMaßnahmen, '32c747f4-d11e-4fc2-a75e-e08b0aab6071')&#13;
+			existingMeasure( vorhandeneMaßnahmen_classified.join("; ") )&#13;
+		}&#13;
+		else {&#13;
+			existingMeasure( 'noMeasure' )&#13;
+		}&#13;
+		&#13;
+		def geplannteMaßnahmen = c.Maßnahmen.geplante.values()&#13;
+		if (geplannteMaßnahmen) {&#13;
+			//get codelist values for 'geplanteMaßnahmen' like classified in lookup-table 'MaßnahmenStraße'&#13;
+			def geplannteMaßnahmen_classified = _snippets.helperFunctions.classifyListValues(geplannteMaßnahmen, '32c747f4-d11e-4fc2-a75e-e08b0aab6071')&#13;
+			plannedMeasureDetail_plannedMeasure( geplannteMaßnahmen_classified.join("; ") )&#13;
+		}&#13;
+		else {&#13;
+			plannedMeasureDetail_plannedMeasure( 'noMeasure' )&#13;
+		}&#13;
+		plannedMeasureDetail_expectedBenefits( c.Maßnahmen.nutzen.value() )&#13;
+	}&#13;
+}
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.retype" id="Caa6baea0-93d7-482b-85ee-69177b90d2db" priority="highest">
+        <source>
+            <class>
+                <type name="Maßnahmen"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NAP_RoadReductionMeasure"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+// This groovy script collects the information from sheet 'Maßahmen'&#13;
+// No target is created.&#13;
+&#13;
+def bezeichnung = _source.p.Bezeichnung.value()&#13;
+&#13;
+withTransformationContext {&#13;
+	def c = _.context.collector(it)&#13;
+	if (_source.p.geplanteMaßnahme.value() == 'Ja'){&#13;
+		c.Maßnahmen.geplante &lt;&lt; bezeichnung&#13;
+	}&#13;
+	if (_source.p.vorhandeneMaßnahme.value() =='Ja'){&#13;
+		c.Maßnahmen.vorhandene &lt;&lt; bezeichnung&#13;
+	}&#13;
+	if (bezeichnung == 'Erläuterung des erwarteten Nutzens durch die Umsetzung der geplanten Maßnahmen'){&#13;
+		c.Maßnahmen.nutzen &lt;&lt; _source.p.'ErläuterungNutzen'.value()&#13;
+	}&#13;
+	&#13;
+	def measuresAll = _snippets.helperFunctions.CODELIST_RoadMeasureText_DE()&#13;
+	if ( bezeichnung in measuresAll ) {&#13;
+		c.Maßnahmen."${bezeichnung}_vorhanden" &lt;&lt; _source.p.vorhandeneMaßnahme.value()&#13;
+		c.Maßnahmen."${bezeichnung}_geplant" &lt;&lt; _source.p.geplanteMaßnahme.value()&#13;
+	}&#13;
+	&#13;
+}&#13;
+&#13;
+&#13;
+
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.create" id="C95c9bffc-397a-426a-b1df-b788d9c1d7f9" priority="normal">
+        <target>
+            <class>
+                <type name="NoiseActionPlanMajorRoad"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+//validate source data&#13;
+_snippets.end_Checks{&#13;
+&#13;
+	//Validate sheet 'Allgemeines'&#13;
+	existsCheck('Z02 - v', 'Allgemeines', 'typ')&#13;
+	existsCheck('Z03 - v', 'Allgemeines', 'name')&#13;
+	existsCheck('Z04 - v', 'Allgemeines', 'bundesland')&#13;
+	integerCheck('Z05 - v', 'Z05 - k', 'Allgemeines', 'ags_rs')&#13;
+	&#13;
+	withTransformationContext {	&#13;
+		def c = _.context.collector(it)&#13;
+		typ = c.Allgemeines.typ.value()&#13;
+	}&#13;
+	if (typ == 'Gemeinde') {&#13;
+		generalCheck('Z05 - AGS', null, 'Allgemeines', 'ags_rs', 'is not a valid AGS', hasNumberOfDigits([8]))&#13;
+	}&#13;
+	else {&#13;
+		generalCheck('Z05 - RS', null, 'Allgemeines', 'ags_rs', 'is not a valid RS (3)', hasNumberOfDigits([3, 9]))&#13;
+	}&#13;
+	&#13;
+	existsCheck('Z06 - v', 'Allgemeines', 'kennungPlan')&#13;
+	&#13;
+	existsCheck('Z10 - v', 'Allgemeines', 'nameBehoerde')&#13;
+	existsCheck('Z11 - v', 'Allgemeines', 'strasse')&#13;
+	existsCheck('Z12 - v', 'Allgemeines', 'hausnr')&#13;
+	existsCheck('Z13 - v', 'Allgemeines', 'ort')&#13;
+	existsCheck('Z14 - v', 'Allgemeines', 'plz')&#13;
+	existsCheck('Z15 - v', 'Allgemeines', 'kennungBehoerde')&#13;
+		&#13;
+	dateCheck('Z17 - k', 'Z17 - v', 'Allgemeines', 'startDatum', 'dd.MM.yyyy')&#13;
+	dateCheck('Z18 - k', null, 'Allgemeines', 'endDatum', 'dd.MM.yyyy')&#13;
+	&#13;
+	urlCheck('Z20 - k', null, 'Allgemeines', 'linkZumPlan')&#13;
+	&#13;
+	&#13;
+	//Validate sheet 'Öffentlichkeitsbeteiligung'&#13;
+	urlCheck('Z04 - k', null, 'Öffentlichkeitsbeteiligung', 'link')&#13;
+	dateCheck('Z06 - k', 'Z06 - v', 'Öffentlichkeitsbeteiligung', 'startDatum', 'dd.MM.yyyy')&#13;
+	dateCheck('Z07 - k', 'Z07 - v', 'Öffentlichkeitsbeteiligung', 'endDatum', 'dd.MM.yyyy')&#13;
+	&#13;
+	def mittel = _snippets.helperFunctions.CODELIST_ConsultationMeansText_DE()&#13;
+	mittel.each { m -&gt; &#13;
+		codelistCheck(m, null, 'Öffentlichkeitsbeteiligung', m, CODELIST_Boolean_DE() )&#13;
+	}&#13;
+	def interessentraeger = _snippets.helperFunctions.CODELIST_stakeholdersTypeText_DE()&#13;
+	interessentraeger.each { i -&gt; &#13;
+		codelistCheck(i, null, 'Öffentlichkeitsbeteiligung', i, CODELIST_Boolean_DE() )&#13;
+	}&#13;
+	&#13;
+	codelistCheck('Z28 - k', 'Z28 - v', 'Öffentlichkeitsbeteiligung', 'kommentareEingegangen', CODELIST_Boolean_DE() )&#13;
+	codelistCheck('Z29 - k', 'Z29 - v', 'Öffentlichkeitsbeteiligung', 'kommentareAufgenommen', CODELIST_Boolean_DE() )&#13;
+	codelistCheck('Z31 - k', 'Z31 - v', 'Öffentlichkeitsbeteiligung', 'lapUeberarbeitet', CODELIST_Boolean_DE() )&#13;
+	conditionalCheck('Z32 - v', 'Öffentlichkeitsbeteiligung', 'lapUeberarbeitet', 'lapUeberarbeitetKommentar', ['Ja'])&#13;
+	&#13;
+	&#13;
+	//Validate sheet 'Lärmkartierung'&#13;
+	numberCheck('Z03 - k', 'Z03 - v', 'Lärmkartierung', 'personen_Lnight55')&#13;
+	numberCheck('Z04 - k', 'Z04 - v', 'Lärmkartierung', 'personen_Lnight55')&#13;
+	existsCheck('Z05 - v', 'Lärmkartierung', 'beschreibungProbleme')&#13;
+	def prioritiesAll = _snippets.helperFunctions.CODELIST_PrioritisationCriteriaText_DE()&#13;
+	prioritiesAll.each { p -&gt; &#13;
+		codelistCheck("${p}", null, 'Lärmkartierung', p, CODELIST_Boolean_DE() )&#13;
+	}&#13;
+	&#13;
+	&#13;
+	//Validate sheet 'Maßnahmen'&#13;
+	def measuresAll = _snippets.helperFunctions.CODELIST_RoadMeasureText_DE()&#13;
+	measuresAll.each { m -&gt; &#13;
+		codelistCheck("${m} - geplant", null, 'Maßnahmen', "${m}_geplant", CODELIST_Boolean_DE() )&#13;
+		codelistCheck("${m} - vorhanden", null, 'Maßnahmen', "${m}_vorhanden", CODELIST_Boolean_DE() )&#13;
+	}&#13;
+	existsCheck('Z03 - v', 'Maßnahmen', 'nutzen')&#13;
+	&#13;
+	&#13;
+	//Validate sheet 'Wirkungen'&#13;
+	numberCheck('Z03 - k', 'Z03 - v', 'Wirkungen', 'personenReduktion')&#13;
+	codelistCheck('Z08 - k', 'Z08 - v', 'Wirkungen', 'strategie', CODELIST_Boolean_DE() )&#13;
+	conditionalCheck('Z09 - v', 'Wirkungen', 'strategie', 'strategieErlaeuterung', ['Ja'])&#13;
+	numberCheck('Z11 - k', null, 'Wirkungen', 'kostenGesamt')&#13;
+	codelistCheck('Z13 - k', 'Z13 - v', 'Wirkungen', 'ruhigeGebiete', CODELIST_Boolean_DE() )&#13;
+	codelistCheck('Z15 - k', 'Z15 - v', 'Wirkungen', 'pruefungUmsetzung', CODELIST_Boolean_DE() )&#13;
+	conditionalCheck('Z16 - v', 'Wirkungen', 'pruefungUmsetzung', 'pruefungUmsetzungErlaueterung', ['Ja'])&#13;
+	codelistCheck('Z18 - k', 'Z18 - v', 'Wirkungen', 'pruefungWirksamkeit', CODELIST_Boolean_DE() )&#13;
+	conditionalCheck('Z19 - v', 'Wirkungen', 'pruefungWirksamkeit', 'pruefungWirksamkeitErlaeuterung', ['Ja'])&#13;
+	codelistCheck('Z19 - k', null, 'Wirkungen', 'pruefungWirksamkeitErlaeuterung', CODELIST_EvaluationMechanismValue_DE() )&#13;
+	&#13;
+	&#13;
+	//To Do Validate sheet Ruhige_Gebiete&#13;
+&#13;
+&#13;
+}&#13;
+&#13;
+//assign values to target sheet NoiseActionPlan MajorRoad&#13;
+withTransformationContext {	&#13;
+	def c = _.context.collector(it)&#13;
+	_target {&#13;
+		actionPlanId_identifier( c.Allgemeines.kennungPlan.value() )&#13;
+		&#13;
+		legalContext_actionPlanStartDate( _snippets.helperFunctions.formatDate(c.Allgemeines.startDatum.value()) )&#13;
+		legalContext_actionPlanEndDate( _snippets.helperFunctions.formatDate(c.Allgemeines.endDatum.value()) )&#13;
+		legalContext_actionPlanDocument_citationLink( c.Allgemeines.linkZumPlan.value() )&#13;
+		&#13;
+		publicConsultation_consultationDocumentationSummary( c.Öffentlichkeitsbeteiligung.beschreibung.value() )&#13;
+		publicConsultation_consultationDocumentationOnline( c.Öffentlichkeitsbeteiligung.link.value() )&#13;
+		publicConsultation_consultationStartDate( _snippets.helperFunctions.formatDate(c.Öffentlichkeitsbeteiligung.startDatum.value()) )&#13;
+		publicConsultation_consultationEndDate( _snippets.helperFunctions.formatDate(c.Öffentlichkeitsbeteiligung.endDatum.value()) )&#13;
+		publicConsultation_otherConsultationMeans( c.Öffentlichkeitsbeteiligung.mittelAndere.value() )&#13;
+		&#13;
+		//get codelist values for 'mittel' like classified in lookup-table 'BeteiligungMittel'&#13;
+		def mittel = c.Öffentlichkeitsbeteiligung.mittel.values()&#13;
+		def mittel_classified = _snippets.helperFunctions.classifyListValues( mittel, '67142f52-4a80-4e31-8978-0ea3fbc40bf8' )&#13;
+		publicConsultation_consultationMeans( mittel_classified.join("; ") )&#13;
+		&#13;
+		//get codelist values for 'interessentraeger' like classified in lookup-table 'BeteiligungInteressentraeger'&#13;
+		def interessentraeger&#13;
+		def interessentraeger_classified = _snippets.helperFunctions.classifyListValues(interessentraeger, '93474127-9a08-4b69-8e92-eb86286e7efd')&#13;
+		publicConsultation_stakeholdersType( interessentraeger_classified.join("; ") )&#13;
+		&#13;
+		publicConsultation_otherStakeholdersType( c.Öffentlichkeitsbeteiligung.interessentraegerAndere.value() )&#13;
+		publicConsultation_numberOfParticipants( c.Öffentlichkeitsbeteiligung.anzahlTeilnehmer.value() )&#13;
+		publicConsultation_commentsReceived( _snippets.helperFunctions.classifyJaNein(c.Öffentlichkeitsbeteiligung.kommentareEingegangen.value()) )&#13;
+		publicConsultation_commentsIncludedInNAP( _snippets.helperFunctions.classifyJaNein(c.Öffentlichkeitsbeteiligung.kommentareAufgenommen.value()) )&#13;
+		publicConsultation_NAPReviewed( _snippets.helperFunctions.classifyJaNein(c.Öffentlichkeitsbeteiligung.lapUeberarbeitet.value()) )&#13;
+		publicConsultation_reviewExplanation( c.Öffentlichkeitsbeteiligung.lapUeberarbeitetKommentar.value() )&#13;
+		&#13;
+		longTermStrategy( _snippets.helperFunctions.classifyJaNein(c.Wirkungen.strategie.value()) )&#13;
+		longTermStrategyExplanation( c.Wirkungen.strategieErlaeuterung.value() )&#13;
+		&#13;
+		estimatedOverallCost( c.Wirkungen.kostenGesamt.value() )&#13;
+		if ( c.Wirkungen.kostenGesamt.value() ) {&#13;
+			costCurrency( 'Euro' )&#13;
+		}&#13;
+		&#13;
+		quietAreas( _snippets.helperFunctions.classifyJaNein(c.Wirkungen.ruhigeGebiete.value()) )&#13;
+		&#13;
+		implementationMechanism( _snippets.helperFunctions.classifyJaNein(c.Wirkungen.pruefungUmsetzung.value()) )&#13;
+		implementationMechanismDescription( c.Wirkungen.pruefungUmsetzungErlaueterung.value() )&#13;
+		&#13;
+		resultsEvaluationMechanism( _snippets.helperFunctions.classifyJaNein(c.Wirkungen.pruefungWirksamkeit.value()) )&#13;
+		&#13;
+		//get codelist values for 'pruefungWirksamkeitErlaeuterung' like classified in lookup-table 'PruefungWirksamkeit'&#13;
+		def pruefWirksamkeitKom = c.Wirkungen.pruefungWirksamkeitErlaeuterung.values()&#13;
+		def pruefWirksamkeitKom_classified = _snippets.helperFunctions.classifyListValues(pruefWirksamkeitKom, 'b1756c75-cbd2-4d0f-bf99-620f0867535a')&#13;
+		resultsEvaluationMechanismDescription( pruefWirksamkeitKom_classified.join("; ")  )&#13;
+		&#13;
+	}&#13;
+}
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.retype" id="Ce461c0b0-6b41-4917-909b-6099e0a1871d" priority="highest">
+        <source>
+            <class>
+                <type name="Allgemeines"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NoiseActionPlanMajorRoad"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+// This groovy script collects the information from sheet 'Allgemeines'&#13;
+// No target is created.&#13;
+&#13;
+def bezeichnung = _source.p.Bezeichnung.value()&#13;
+def wert = _source.p.Wert.value()&#13;
+def types = ['Gemeinde', 'Verbandsgemeinde', 'Amt (MV)', 'Regierungsbezirk']&#13;
+&#13;
+withTransformationContext {&#13;
+	def c = _.context.collector(it)&#13;
+	if(bezeichnung){&#13;
+		if (bezeichnung.contains('Vollständiger Name der Behörde')){&#13;
+			c.Allgemeines.nameBehoerde &lt;&lt; wert&#13;
+		}&#13;
+		else if (bezeichnung.contains('Name')){&#13;
+			c.Allgemeines.name &lt;&lt; wert&#13;
+		}&#13;
+		else if (bezeichnung.contains('Bundesland')){&#13;
+			c.Allgemeines.bundesland &lt;&lt; wert&#13;
+		}&#13;
+		else if (bezeichnung.contains('Amtlicher Gemeindeschlüssel (AGS)') || bezeichnung.contains('Regionalschlüssel (RS)')){&#13;
+			c.Allgemeines.ags_rs &lt;&lt; wert&#13;
+		}&#13;
+		else if (bezeichnung.contains('Kennung des Lärmaktionsplans')){&#13;
+			c.Allgemeines.kennungPlan &lt;&lt; wert&#13;
+		}&#13;
+		else if (bezeichnung.contains('Straße')){&#13;
+			c.Allgemeines.strasse &lt;&lt; wert&#13;
+		}&#13;
+		else if (bezeichnung.contains('Hausnummer')){&#13;
+			c.Allgemeines.hausnr &lt;&lt; wert&#13;
+		}&#13;
+		else if (bezeichnung.contains('Ort')){&#13;
+			c.Allgemeines.ort &lt;&lt; wert&#13;
+		}&#13;
+		else if (bezeichnung.contains('PLZ')){&#13;
+			c.Allgemeines.plz &lt;&lt; wert&#13;
+		}&#13;
+		else if (bezeichnung.contains('Kennung der zuständigen Behörde')){&#13;
+			c.Allgemeines.kennungBehoerde &lt;&lt; wert&#13;
+		}&#13;
+		else if (bezeichnung.contains('Annahme des Lärmaktionsplans (Datum)')){&#13;
+			c.Allgemeines.startDatum &lt;&lt; wert&#13;
+		}&#13;
+		else if (bezeichnung.contains('Voraussichtlicher Abschluss der Umsetzung des Lärmaktionsplans (Datum)')){&#13;
+			c.Allgemeines.endDatum &lt;&lt; wert&#13;
+		}&#13;
+		else if (bezeichnung.contains('Link zur Webseite des Lärmaktionsplans')){&#13;
+			c.Allgemeines.linkZumPlan &lt;&lt; wert&#13;
+		}&#13;
+		else if (bezeichnung.contains('Informationen über Lärmgrenzwerte, die als Kriterien für die Evaluierung und Umsetzung von Maßnahmen zur Bekämpfung und Minderung von Lärm in dem von dem Aktionsplan erfassten Gebiet verwendet werden.')){&#13;
+			c.Allgemeines.infoGrenzwerte &lt;&lt; wert&#13;
+		}&#13;
+	}&#13;
+	else {&#13;
+		if ( wert in types ){&#13;
+			c.Allgemeines.typ &lt;&lt; wert&#13;
+		}&#13;
+	}&#13;
+	&#13;
+}
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.retype" id="C8712c566-63cd-4c1b-8e14-d91c6695c4da" priority="highest">
+        <source>
+            <class>
+                <type name="Öffentlichkeitsbeteiligung"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NoiseActionPlanMajorRoad"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+// This groovy script collects the information from table 'Öffentlichkeitsbeteiligung'&#13;
+// No target is created.&#13;
+&#13;
+def bezeichnung = _source.p.Bezeichnung.value()&#13;
+def wert = _source.p.Wert.value()&#13;
+def mittel = _snippets.helperFunctions.CODELIST_ConsultationMeansText_DE()&#13;
+def interessentraeger = _snippets.helperFunctions.CODELIST_stakeholdersTypeText_DE()&#13;
+&#13;
+withTransformationContext {&#13;
+	def c = _.context.collector(it)&#13;
+	if(bezeichnung){&#13;
+		if (bezeichnung.contains('Inhaltliche Zusammenfassung der Öffentlichkeitsbeteiligung')){&#13;
+			c.Öffentlichkeitsbeteiligung.beschreibung &lt;&lt; wert&#13;
+		}	&#13;
+		else if (bezeichnung.contains('Link zur Webseite mit Dokumenten der Öffentlichkeitsbeteiligung')){&#13;
+			c.Öffentlichkeitsbeteiligung.link &lt;&lt; wert&#13;
+		}&#13;
+		else if (bezeichnung.contains('Anfangsdatum der Öffentlichkeitsbeteiligung')){&#13;
+			c.Öffentlichkeitsbeteiligung.startDatum &lt;&lt; wert&#13;
+		}&#13;
+		else if (bezeichnung.contains('Enddatum der Öffentlichkeitsbeteiligung')){&#13;
+			c.Öffentlichkeitsbeteiligung.endDatum &lt;&lt; wert&#13;
+		}&#13;
+		else if (mittel.contains(bezeichnung) &amp;&amp; wert == 'Ja'){&#13;
+			c.Öffentlichkeitsbeteiligung.mittel &lt;&lt; bezeichnung&#13;
+		}&#13;
+		else if (bezeichnung.contains('Andere Mittel/Instrumente')){&#13;
+			c.Öffentlichkeitsbeteiligung.mittelAndere &lt;&lt; wert&#13;
+		}&#13;
+		else if (interessentraeger.contains(bezeichnung) &amp;&amp; wert == 'Ja'){&#13;
+			c.Öffentlichkeitsbeteiligung.interessentraeger &lt;&lt; bezeichnung&#13;
+		}&#13;
+		else if (bezeichnung.contains('Andere Interessenträger')){&#13;
+			c.Öffentlichkeitsbeteiligung.mittelAndere &lt;&lt; wert&#13;
+		}&#13;
+		else if (bezeichnung.contains('Anzahl der Personen, die an der Öffentlichkeits-beteiligung teilgenommen haben')){&#13;
+			c.Öffentlichkeitsbeteiligung.anzahlTeilnehmer &lt;&lt; wert&#13;
+		}&#13;
+		else if (bezeichnung.contains('Angabe, ob im Laufe der Öffentlichkeits-beteiligung Stellungnahmen eingegangen sind')){&#13;
+			c.Öffentlichkeitsbeteiligung.kommentareEingegangen &lt;&lt; wert&#13;
+		}&#13;
+		else if (bezeichnung.contains('Angabe, ob die während der Öffentlichkeits-beteiligung eingegangenen Stellungnahmen in den LAP aufgenommen wurden')){&#13;
+			c.Öffentlichkeitsbeteiligung.kommentareAufgenommen &lt;&lt; wert&#13;
+		}&#13;
+		else if (bezeichnung.contains('Angabe, ob der LAP nach der Öffentlichkeits-beteiligung überarbeitet wurde')){&#13;
+			c.Öffentlichkeitsbeteiligung.lapUeberarbeitet &lt;&lt; wert&#13;
+		}&#13;
+		else if (bezeichnung.contains('Wenn ja, Erläuterung, wie der Lärmaktionsplan nach der Öffentlichkeits-beteiligung überarbeitet wurde')){&#13;
+			c.Öffentlichkeitsbeteiligung.lapUeberarbeitetKommentar &lt;&lt; wert&#13;
+		}&#13;
+		&#13;
+		&#13;
+		if ( bezeichnung in mittel || bezeichnung in interessentraeger) {&#13;
+			c.Maßnahmen."${bezeichnung}" &lt;&lt; wert&#13;
+		}&#13;
+		&#13;
+	}&#13;
+}&#13;
+
+</core:text>
+        </complexParameter>
+    </cell>
+</alignment>

@@ -1,0 +1,455 @@
+{
+	"schemas": [
+		{
+			"namespace": "http://www.esdi-humboldt.eu/hale/xls",
+			"typeIndex": [
+				{
+					"ref": 0,
+					"name": "Allgemeines"
+				},
+				{
+					"ref": 1,
+					"name": "L\u00e4rmkartierung"
+				},
+				{
+					"ref": 2,
+					"name": "Ma\u00dfnahmen"
+				},
+				{
+					"ref": 3,
+					"name": "Ruhige_Gebiete"
+				},
+				{
+					"ref": 4,
+					"name": "Wirkungen"
+				},
+				{
+					"ref": 5,
+					"name": "\u00d6ffentlichkeitsbeteiligung"
+				},
+				{
+					"ref": 6,
+					"name": "Codelisten"
+				}
+			],
+			"mappingRelevant": [0,1,2,3,4,5],
+			"types": [
+				{
+					"id": 0,
+					"location": "file:/C:/Users/AnnaTamm/Box%20Sync/staff/Projects/2022-15%20UBA%20DE%20END%20II/Transformations/Roads/LAP_HVS_2024_v230717_schema.xlsx",
+					"name": "Allgemeines",
+					"constraints": {
+						"abstract": false,
+						"has-value": false,
+						"mappable": true,
+						"mapping-relevant": true
+					},
+					"declares": [
+						{
+							"name": "Bezeichnung",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": true,
+								"xsd_attribute": false
+							},
+							"propertyType": {
+								"name": "java.lang.String",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true
+								}
+							}
+						},
+						{
+							"name": "Wert",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": true,
+								"xsd_attribute": false
+							},
+							"propertyType": {
+								"name": "java.lang.String",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true
+								}
+							}
+						}
+					]
+				},
+				{
+					"id": 1,
+					"location": "file:/C:/Users/AnnaTamm/Box%20Sync/staff/Projects/2022-15%20UBA%20DE%20END%20II/Transformations/Roads/LAP_HVS_2024_v230717_schema.xlsx",
+					"name": "L\u00e4rmkartierung",
+					"constraints": {
+						"abstract": false,
+						"has-value": false,
+						"mappable": true,
+						"mapping-relevant": true
+					},
+					"declares": [
+						{
+							"name": "Bezeichnung",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"name": "java.lang.String",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true
+								}
+							}
+						},
+						{
+							"name": "Wert",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"name": "java.lang.String",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true
+								}
+							}
+						}
+					]
+				},
+				{
+					"id": 2,
+					"location": "file:/C:/Users/AnnaTamm/Box%20Sync/staff/Projects/2022-15%20UBA%20DE%20END%20II/Transformations/Roads/LAP_HVS_2024_v230717_schema.xlsx",
+					"name": "Ma\u00dfnahmen",
+					"constraints": {
+						"abstract": false,
+						"has-value": false,
+						"mappable": true,
+						"mapping-relevant": true
+					},
+					"declares": [
+						{
+							"name": "Bezeichnung",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"name": "java.lang.String",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true
+								}
+							}
+						},
+						{
+							"name": "LeerB",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"name": "java.lang.String",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true
+								}
+							}
+						},
+						{
+							"name": "vorhandeneMa\u00dfnahme",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"name": "java.lang.String",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true
+								}
+							}
+						},
+						{
+							"name": "LeerD",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"name": "java.lang.String",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true
+								}
+							}
+						},
+						{
+							"name": "LeerE",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"name": "java.lang.String",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true
+								}
+							}
+						},
+						{
+							"name": "geplanteMa\u00dfnahme",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"name": "java.lang.String",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true
+								}
+							}
+						},
+						{
+							"name": "LeerG",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"name": "java.lang.String",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true
+								}
+							}
+						},
+						{
+							"name": "Erl\u00e4uterungNutzen",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"name": "java.lang.String",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true
+								}
+							}
+						}
+					]
+				},
+				{
+					"id": 3,
+					"location": "file:/C:/Users/AnnaTamm/Box%20Sync/staff/Projects/2022-15%20UBA%20DE%20END%20II/Transformations/Roads/LAP_HVS_2024_v230717_schema.xlsx",
+					"name": "Ruhige_Gebiete",
+					"constraints": {
+						"abstract": false,
+						"has-value": false,
+						"mappable": true,
+						"mapping-relevant": true
+					},
+					"declares": [
+						{
+							"name": "lfd_Nr",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"name": "java.lang.String",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true
+								}
+							}
+						},
+						{
+							"name": "Kennung",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"name": "java.lang.String",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true
+								}
+							}
+						},
+						{
+							"name": "Name",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"name": "java.lang.String",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true
+								}
+							}
+						},
+						{
+							"name": "Land_Ballungsraum",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"name": "java.lang.String",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true
+								}
+							}
+						},
+						{
+							"name": "Art",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"name": "java.lang.String",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true
+								}
+							}
+						},
+						{
+							"name": "Schutzma\u00dfnahmen",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"name": "java.lang.String",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true
+								}
+							}
+						}
+					]
+				},
+				{
+					"id": 4,
+					"location": "file:/C:/Users/AnnaTamm/Box%20Sync/staff/Projects/2022-15%20UBA%20DE%20END%20II/Transformations/Roads/LAP_HVS_2024_v230717_schema.xlsx",
+					"name": "Wirkungen",
+					"constraints": {
+						"abstract": false,
+						"has-value": false,
+						"mappable": true,
+						"mapping-relevant": true
+					},
+					"declares": [
+						{
+							"name": "Bezeichnung",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"name": "java.lang.String",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true
+								}
+							}
+						},
+						{
+							"name": "Wert",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"name": "java.lang.String",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true
+								}
+							}
+						}
+					]
+				},
+				{
+					"id": 5,
+					"location": "file:/C:/Users/AnnaTamm/Box%20Sync/staff/Projects/2022-15%20UBA%20DE%20END%20II/Transformations/Roads/LAP_HVS_2024_v230717_schema.xlsx",
+					"name": "\u00d6ffentlichkeitsbeteiligung",
+					"constraints": {
+						"abstract": false,
+						"has-value": false,
+						"mappable": true,
+						"mapping-relevant": true
+					},
+					"declares": [
+						{
+							"name": "Bezeichnung",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"name": "java.lang.String",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true
+								}
+							}
+						},
+						{
+							"name": "Wert",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"name": "java.lang.String",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true
+								}
+							}
+						}
+					]
+				},
+				{
+					"id": 6,
+					"location": "file:/C:/Users/AnnaTamm/Box%20Sync/staff/Projects/2022-15%20UBA%20DE%20END%20II/Transformations/Roads/LAP_HVS_2024_v230717_schema.xlsx",
+					"name": "Codelisten",
+					"constraints": {
+						"abstract": false,
+						"has-value": false,
+						"mappable": true,
+						"mapping-relevant": true
+					},
+					"declares": [
+						{
+							"name": "Codelisten-Bittenicht\u00e4ndernoderl\u00f6schen",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"name": "java.lang.String",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true
+								}
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}
