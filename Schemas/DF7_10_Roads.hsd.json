@@ -5,49 +5,181 @@
 			"typeIndex": [
 				{
 					"ref": 0,
-					"name": "ESTATUnitReference"
+					"name": "CodelistProperties"
 				},
 				{
 					"ref": 1,
-					"name": "NAP_MajorRoad"
+					"name": "DatasetDefaultProperties"
 				},
 				{
 					"ref": 2,
-					"name": "NAP_MajorRoadCompetentAuthority"
+					"name": "ESTATUnitReference"
 				},
 				{
 					"ref": 3,
-					"name": "NAP_MajorRoadLimitValues"
+					"name": "NAP_MajorRoad"
 				},
 				{
 					"ref": 4,
-					"name": "NAP_RoadMappingResultDetail"
+					"name": "NAP_MajorRoadCompetentAuthority"
 				},
 				{
 					"ref": 5,
-					"name": "NAP_RoadReductionHealthImpact_1"
+					"name": "NAP_MajorRoadLimitValues"
 				},
 				{
 					"ref": 6,
-					"name": "NAP_RoadReductionHealthImpact_2"
+					"name": "NAP_RoadMappingResultDetail"
 				},
 				{
 					"ref": 7,
-					"name": "NAP_RoadReductionHealthImpact_3"
+					"name": "NAP_RoadReductionHealthImpact_1"
 				},
 				{
 					"ref": 8,
-					"name": "NAP_RoadReductionMeasure"
+					"name": "NAP_RoadReductionHealthImpact_2"
 				},
 				{
 					"ref": 9,
+					"name": "NAP_RoadReductionHealthImpact_3"
+				},
+				{
+					"ref": 10,
+					"name": "NAP_RoadReductionMeasure"
+				},
+				{
+					"ref": 11,
 					"name": "NoiseActionPlanMajorRoad"
 				}
 			],
-			"mappingRelevant": [0,1,2,3,4,5,6,7,8,9],
+			"mappingRelevant": [0,1,2,3,4,5,6,7,8,9,10,11],
 			"types": [
 				{
 					"id": 0,
+					"location": "file:/C:/Users/AnnaTamm/Box%20Sync/staff/Projects/2022-15%20UBA%20DE%20END%20II/Transformations/Roads/Noise%20action%20plan%20for%20major%20road%20(DF7_10).xlsx",
+					"name": "CodelistProperties",
+					"constraints": {
+						"abstract": false,
+						"has-value": false,
+						"mappable": true,
+						"mapping-relevant": true
+					},
+					"declares": [
+						{
+							"name": "tableName",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"name": "java.lang.String",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true
+								}
+							}
+						},
+						{
+							"name": "propertyName",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"name": "java.lang.String",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true
+								}
+							}
+						},
+						{
+							"name": "codelist",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"name": "java.lang.String",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true
+								}
+							}
+						}
+					]
+				},
+				{
+					"id": 1,
+					"location": "file:/C:/Users/AnnaTamm/Box%20Sync/staff/Projects/2022-15%20UBA%20DE%20END%20II/Transformations/Roads/Noise%20action%20plan%20for%20major%20road%20(DF7_10).xlsx",
+					"name": "DatasetDefaultProperties",
+					"constraints": {
+						"abstract": false,
+						"has-value": false,
+						"mappable": true,
+						"mapping-relevant": true
+					},
+					"declares": [
+						{
+							"name": "tableName",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"name": "java.lang.String",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true
+								}
+							}
+						},
+						{
+							"name": "propertyName",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"name": "java.lang.String",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true
+								}
+							}
+						},
+						{
+							"name": "attribute",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"name": "java.lang.String",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true
+								}
+							}
+						},
+						{
+							"name": "defaultValue",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"name": "java.lang.String",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true
+								}
+							}
+						}
+					]
+				},
+				{
+					"id": 2,
 					"location": "file:/C:/Users/AnnaTamm/Box%20Sync/staff/Projects/2022-15%20UBA%20DE%20END%20II/Transformations/Roads/Noise%20action%20plan%20for%20major%20road%20(DF7_10)_schema.xlsx",
 					"name": "ESTATUnitReference",
 					"constraints": {
@@ -116,7 +248,7 @@
 					]
 				},
 				{
-					"id": 1,
+					"id": 3,
 					"location": "file:/C:/Users/AnnaTamm/Box%20Sync/staff/Projects/2022-15%20UBA%20DE%20END%20II/Transformations/Roads/Noise%20action%20plan%20for%20major%20road%20(DF7_10)_schema.xlsx",
 					"name": "NAP_MajorRoad",
 					"constraints": {
@@ -199,7 +331,7 @@
 					]
 				},
 				{
-					"id": 2,
+					"id": 4,
 					"location": "file:/C:/Users/AnnaTamm/Box%20Sync/staff/Projects/2022-15%20UBA%20DE%20END%20II/Transformations/Roads/Noise%20action%20plan%20for%20major%20road%20(DF7_10)_schema.xlsx",
 					"name": "NAP_MajorRoadCompetentAuthority",
 					"constraints": {
@@ -240,7 +372,7 @@
 					]
 				},
 				{
-					"id": 3,
+					"id": 5,
 					"location": "file:/C:/Users/AnnaTamm/Box%20Sync/staff/Projects/2022-15%20UBA%20DE%20END%20II/Transformations/Roads/Noise%20action%20plan%20for%20major%20road%20(DF7_10)_schema.xlsx",
 					"name": "NAP_MajorRoadLimitValues",
 					"constraints": {
@@ -309,7 +441,7 @@
 					]
 				},
 				{
-					"id": 4,
+					"id": 6,
 					"location": "file:/C:/Users/AnnaTamm/Box%20Sync/staff/Projects/2022-15%20UBA%20DE%20END%20II/Transformations/Roads/Noise%20action%20plan%20for%20major%20road%20(DF7_10)_schema.xlsx",
 					"name": "NAP_RoadMappingResultDetail",
 					"constraints": {
@@ -420,7 +552,7 @@
 					]
 				},
 				{
-					"id": 5,
+					"id": 7,
 					"location": "file:/C:/Users/AnnaTamm/Box%20Sync/staff/Projects/2022-15%20UBA%20DE%20END%20II/Transformations/Roads/Noise%20action%20plan%20for%20major%20road%20(DF7_10)_schema.xlsx",
 					"name": "NAP_RoadReductionHealthImpact_1",
 					"constraints": {
@@ -489,7 +621,7 @@
 					]
 				},
 				{
-					"id": 6,
+					"id": 8,
 					"location": "file:/C:/Users/AnnaTamm/Box%20Sync/staff/Projects/2022-15%20UBA%20DE%20END%20II/Transformations/Roads/Noise%20action%20plan%20for%20major%20road%20(DF7_10)_schema.xlsx",
 					"name": "NAP_RoadReductionHealthImpact_2",
 					"constraints": {
@@ -600,7 +732,7 @@
 					]
 				},
 				{
-					"id": 7,
+					"id": 9,
 					"location": "file:/C:/Users/AnnaTamm/Box%20Sync/staff/Projects/2022-15%20UBA%20DE%20END%20II/Transformations/Roads/Noise%20action%20plan%20for%20major%20road%20(DF7_10)_schema.xlsx",
 					"name": "NAP_RoadReductionHealthImpact_3",
 					"constraints": {
@@ -669,14 +801,25 @@
 					]
 				},
 				{
-					"id": 8,
+					"id": 10,
 					"location": "file:/C:/Users/AnnaTamm/Box%20Sync/staff/Projects/2022-15%20UBA%20DE%20END%20II/Transformations/Roads/Noise%20action%20plan%20for%20major%20road%20(DF7_10)_schema.xlsx",
 					"name": "NAP_RoadReductionMeasure",
 					"constraints": {
 						"abstract": false,
+						"enumeration": {
+							"@type": "properties",
+							"@value": {"allowOthers":true}
+
+						},
+						"geometry-metadata": {
+							"@type": "properties",
+							"@value": {"dimension":0}
+
+						},
 						"has-value": false,
 						"mappable": true,
-						"mapping-relevant": true
+						"mapping-relevant": true,
+						"xsd_elements": []
 					},
 					"declares": [
 						{
@@ -808,14 +951,25 @@
 					]
 				},
 				{
-					"id": 9,
+					"id": 11,
 					"location": "file:/C:/Users/AnnaTamm/Box%20Sync/staff/Projects/2022-15%20UBA%20DE%20END%20II/Transformations/Roads/Noise%20action%20plan%20for%20major%20road%20(DF7_10)_schema.xlsx",
 					"name": "NoiseActionPlanMajorRoad",
 					"constraints": {
 						"abstract": false,
+						"enumeration": {
+							"@type": "properties",
+							"@value": {"allowOthers":true}
+
+						},
+						"geometry-metadata": {
+							"@type": "properties",
+							"@value": {"dimension":0}
+
+						},
 						"has-value": false,
 						"mappable": true,
-						"mapping-relevant": true
+						"mapping-relevant": true,
+						"xsd_elements": []
 					},
 					"declares": [
 						{
