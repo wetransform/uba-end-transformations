@@ -37,7 +37,7 @@
         <setting name="escape">\</setting>
     </resource>
     <resource action-id="eu.esdihumboldt.hale.lookup.import" provider-id="eu.esdihumboldt.hale.io.csv.reader.lookup">
-        <setting name="charset">ISO-8859-1</setting>
+        <setting name="charset">UTF-8</setting>
         <setting name="ignoreEmptyStrings">false</setting>
         <setting name="resourceId">32c747f4-d11e-4fc2-a75e-e08b0aab6071</setting>
         <setting name="quote">"</setting>
