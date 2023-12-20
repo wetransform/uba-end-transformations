@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <alignment xmlns="http://www.esdi-humboldt.eu/hale/alignment">
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.create" id="Cd2c0eb42-1857-4e92-ac44-3c6b1d6ab98f" priority="normal">
+        <target>
+            <class>
+                <type name="NAP_MajorRoad"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+withTransformationContext {&#13;
+	def c = _.context.collector(it)&#13;
+	&#13;
+	_target {&#13;
+		actionPlanId_identifier( c.Allgemeines.kennungPlan.value() )&#13;
+		allInLAUCode( c.Allgemeines.ags_rs.value() )&#13;
+	}&#13;
+}
+</core:text>
+        </complexParameter>
+    </cell>
     <cell relation="eu.esdihumboldt.cst.functions.groovy.create" id="C89bc6f2b-3ab1-4d09-b7c9-afe8eea986de" priority="normal">
         <target>
             <class>
