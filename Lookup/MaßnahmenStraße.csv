@@ -1,39 +1,39 @@
-MaßnahmenDE,MaßnahmenEN_Text,MaßnahmenEN_Label
-Maßnahmen am Straßenbelag,Road surface measures,roadSurface
-Lärmarme Reifen,Low-noise tyres,lowNoiseTyres
+MaÃŸnahmenDE,MaÃŸnahmenEN_Text,MaÃŸnahmenEN_Label
+MaÃŸnahmen am StraÃŸenbelag,Road surface measures,roadSurface
+LÃ¤rmarme Reifen,Low-noise tyres,lowNoiseTyres
 Leise Motoren,Quiet engines,quietEngines
-Maßnahmen an der Auspuffanlage,Measures at the exhaust,exhaust
-Umrüstung auf leisere öffentliche Verkehrsmittel und Komponenten,Renewal to quieter public transport fleet including components,quietPublicTransport
-Zeitliche Beschränkung für LKW,Time restriction for heavy vehicles,timeRestrictionHGV
-Zeitliche Beschränkung für PKW,Time restriction for passenger vehicles,timeRestrictionPassenger
+MaÃŸnahmen an der Auspuffanlage,Measures at the exhaust,exhaust
+UmrÃ¼stung auf leisere Ã¶ffentliche Verkehrsmittel und Komponenten,Renewal to quieter public transport fleet including components,quietPublicTransport
+Zeitliche BeschrÃ¤nkung fÃ¼r LKW,Time restriction for heavy vehicles,timeRestrictionHGV
+Zeitliche BeschrÃ¤nkung fÃ¼r PKW,Time restriction for passenger vehicles,timeRestrictionPassenger
 Verringerung der Fahrgeschwindigkeit und Lichtsignalsteuerung,Reduction of driving speeds and traffic signalling,speedReduction
 Kreisverkehre und Kreuzungen,Roundabouts and junctions,roundaboutsJunctions
-Bauliche Maßnahmen zur Verkehrsberuhigung,Physical measures for traffic calming,physicalTrafficCalming
+Bauliche MaÃŸnahmen zur Verkehrsberuhigung,Physical measures for traffic calming,physicalTrafficCalming
 Ausweisung von verkehrsberuhigten Zonen,Designation of traffic-calmed zones from road,trafficCalmedZones
-Stärkung des öffentlichen Verkehrs,Enhancing public transport vehicles and infrastructures,publicTransportIncrease
-Verbesserung der Infrastruktur für Radfahrer und Fußgänger,Enhancing infrastructure for cycling and walking,cyclingWalkingIncrease
-Intelligente Mobilität,Smart mobility,smartMobility
-Veränderung/Reduzierung der Fahrspuren,Change/reduction in traffic lanes,reductionTrafficFlows
-Fahrverbote und Umleitungen für LKW,Bans and re-routing of heavy vehicles,bansReroutingHGV
-Fahrverbote und Umleitungen für PKW,Bans and re-routing of passenger vehicles,bansReroutingPassenger
+StÃ¤rkung des Ã¶ffentlichen Verkehrs,Enhancing public transport vehicles and infrastructures,publicTransportIncrease
+Verbesserung der Infrastruktur fÃ¼r Radfahrer und FuÃŸgÃ¤nger,Enhancing infrastructure for cycling and walking,cyclingWalkingIncrease
+Intelligente MobilitÃ¤t,Smart mobility,smartMobility
+VerÃ¤nderung/Reduzierung der Fahrspuren,Change/reduction in traffic lanes,reductionTrafficFlows
+Fahrverbote und Umleitungen fÃ¼r LKW,Bans and re-routing of heavy vehicles,bansReroutingHGV
+Fahrverbote und Umleitungen fÃ¼r PKW,Bans and re-routing of passenger vehicles,bansReroutingPassenger
 Parkraumbewirtschaftung,Parking management,parkingManagement
 City-Maut,Congestion charges,congestionCharges
-Lärmschutzwände und Instandhaltung,Noise barriers and maintenance,noiseBarrier
-Grüne Lärmschutzwände und Instandhaltung,Green noise barriers and maintenance,greenNoiseBarrier
+LÃ¤rmschutzwÃ¤nde und Instandhaltung,Noise barriers and maintenance,noiseBarrier
+GrÃ¼ne LÃ¤rmschutzwÃ¤nde und Instandhaltung,Green noise barriers and maintenance,greenNoiseBarrier
 Schallschutzfenster,Window insulation,windowInsulation
-Sonstige Maßnahmen zur Schalldämmung,Other insulation,otherInsulation
-Flächennutzungsplanung/Bauleitplanung,Planning measures and ordinances between receivers and road sources,planningAndOrdinance
-Lärmreduzierung für sensible Gebiete,Reduced noise for sensitive areas,sensitiveAreaPlanning
-Abstandsflächen/Pufferzonen,Buffer zones,bufferZones
-Verfügbarkeit von ruhigen Gebieten,Availability of quiet areas,quietArea
-Verfügbarkeit von Grünflächen,Availability of green areas,greenArea
-Maßnahmen zur Verbesserung des akustischen Raumes,Soundscape measures,soundscape
-Neubau von Umgehungsstraßen oder -brücken,New bypass bridge road,newBypassBridgeRoad
+Sonstige MaÃŸnahmen zur SchalldÃ¤mmung,Other insulation,otherInsulation
+FlÃ¤chennutzungsplanung/Bauleitplanung,Planning measures and ordinances between receivers and road sources,planningAndOrdinance
+LÃ¤rmreduzierung fÃ¼r sensible Gebiete,Reduced noise for sensitive areas,sensitiveAreaPlanning
+AbstandsflÃ¤chen/Pufferzonen,Buffer zones,bufferZones
+VerfÃ¼gbarkeit von ruhigen Gebieten,Availability of quiet areas,quietArea
+VerfÃ¼gbarkeit von GrÃ¼nflÃ¤chen,Availability of green areas,greenArea
+MaÃŸnahmen zur Verbesserung des akustischen Raumes,Soundscape measures,soundscape
+Neubau von UmgehungsstraÃŸen oder -brÃ¼cken,New bypass bridge road,newBypassBridgeRoad
 Neubau von Tunneln,New tunnel,newTunnel
-Sperrung von Straßen,Closure of roads,closureRoad
+Sperrung von StraÃŸen,Closure of roads,closureRoad
 Vermittlung von Informationen,Information dissemination,informationDissemination
 Beschwerdemanagement,Complaint management,complaintManagement
-Förderung der lärmarmen Mobilität,Promoting quiet mobility,promotingQuietMobility
-Förderung des öffentlichen Verkehrs,Promoting public transport,promotingPublicTransport
-Förderung von Carsharing,Promoting car sharing,promotingCarSharing
-Bildungs- und Aufklärungsaktivitäten,Education and awareness raising activities,educationAwarenessActivities
+FÃ¶rderung der lÃ¤rmarmen MobilitÃ¤t,Promoting quiet mobility,promotingQuietMobility
+FÃ¶rderung des Ã¶ffentlichen Verkehrs,Promoting public transport,promotingPublicTransport
+FÃ¶rderung von Carsharing,Promoting car sharing,promotingCarSharing
+Bildungs- und AufklÃ¤rungsaktivitÃ¤ten,Education and awareness raising activities,educationAwarenessActivities
