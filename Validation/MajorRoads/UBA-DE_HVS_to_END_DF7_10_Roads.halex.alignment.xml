@@ -31,12 +31,9 @@ withTransformationContext {&#13;
 withTransformationContext {&#13;
 	def c = _.context.collector(it)&#13;
 	&#13;
-	def infoGrenzwert = c.Allgemeines.infoGrenzwert.value()&#13;
-	if(infoGrenzwert){&#13;
-		_target {&#13;
-			actionPlanId_identifier( c.Allgemeines.kennungPlan.value() )&#13;
-			limitValues_otherCriteriaLimitDetail( infoGrenzwert )&#13;
-		}&#13;
+	_target {&#13;
+		actionPlanId_identifier( c.Allgemeines.kennungPlan.value() )&#13;
+		limitValues_otherCriteriaDescription( c.Allgemeines.infoGrenzwert.value() )&#13;
 	}&#13;
 }
 </core:text>
