@@ -35,9 +35,25 @@ def exists() {
     }
 }
 
+def isEmpty() {
+    { args ->
+        if (!args['value']) {
+            return true
+        }
+
+        false
+    }
+}
+
 def isEqualTo(value) {
     { args, v ->
         args['value'] == v
+    }.rcurry(value)
+}
+
+def isNotEqualTo(value) {
+    { args, v ->
+        args['value'] != v
     }.rcurry(value)
 }
 
