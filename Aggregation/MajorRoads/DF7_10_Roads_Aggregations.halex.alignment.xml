@@ -93,9 +93,10 @@ def SHEET = 'NAP_MajorRoad'&#13;
 _snippets.end_Checks {&#13;
 	registerType(SHEET)&#13;
 	&#13;
-	uniqueCheck('TU104', SHEET, [' actionPlanId_identifier', 'roadIdIdentifier', 'allInLAUCode', 'allInNUTSCode', 'allInCountry'])&#13;
+	uniqueCheck('TU104', SHEET, ['actionPlanId_identifier', 'roadIdIdentifier', 'allInLAUCode', 'allInNUTSCode', 'allInCountry'])&#13;
 	freetextCheck('LEN', 'FC96', SHEET, 'actionPlanId_identifier')&#13;
 }&#13;
+&#13;
 
 </core:text>
         </complexParameter>
