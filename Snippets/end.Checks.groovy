@@ -366,7 +366,7 @@ def generalCheck(String codeInvalid, String sheet, List fields, String message, 
 		def valid = validator.call(['value':values.join('+'), 'sheet':sheet, 'field':fields.join('+')])
 		
 		if (!valid) {
-			_log.error("${codeInvalid}: The values ${values} for the fields ${fields} ${message} [${sheet}]${id}")
+			_log.error("${codeInvalid}: The values ${values} for the fields ${fields} ${message} [${sheet}]")
 		}
 
 		valid
