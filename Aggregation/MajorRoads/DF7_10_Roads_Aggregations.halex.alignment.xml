@@ -374,7 +374,7 @@ _snippets.end_Checks {&#13;
 	//To Do: END_RT44 Mismatching of roadIdIdentifier for actionPlanId_identifier between the tables: NAP_MajorRoad and NAP_RoadReductionMeasure -&gt; für UBA-DE theoretisch nicht relevant, da keine RoadIDs?&#13;
 	&#13;
 	nandCheck('END_TO27', SHEET, ['existingMeasure', 'plannedMeasureDetail_plannedMeasure'], 'The fields existingMeasure and plannedMeasureDetail_plannedMeasure must not both contain the value noMeasure', isEqualTo('noMeasure'))&#13;
-	conditionalCheck('END_TO26', SHEET, 'plannedMeasureDetail_allMeasuresInCost', 'plannedMeasureDetail_measuresInCost', String message, isEqualTo('No'), isNotEqualTo('noMeasure'))&#13;
+	conditionalCheck('END_TO26', SHEET, 'plannedMeasureDetail_allMeasuresInCost', 'plannedMeasureDetail_measuresInCost', 'The field measuresInCost must not contain the value noMeasure when allMeasuresInCost is No for that action plan', isEqualTo('No'), isNotEqualTo('noMeasure'))&#13;
 &#13;
 }
 </core:text>
