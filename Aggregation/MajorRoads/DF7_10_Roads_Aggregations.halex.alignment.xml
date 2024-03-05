@@ -270,9 +270,25 @@ _snippets.end_Checks {&#13;
 	freetextCheck('LEN', 'FC126', SHEET, 'explanationMethod')&#13;
 	&#13;
 	customCheck('END_DV62', null, SHEET, 'nrOfPeople', 'must be greater than or equal to 0', isGreaterThanOrEqual0())&#13;
-&#13;
+	&#13;
 }&#13;
-
+&#13;
+//END_RC30&#13;
+//When not providing numberExperiencingReduction by actionPlanId_identifier (in table NAP_RoadReductionHealthImpact_1), &#13;
+//at least one of the following attributes must be provided: numberHAReduction, mumberHSDReduction, mumberHDReduction&#13;
+&#13;
+withTransformationContext {&#13;
+	def c = _.context.collector(it)&#13;
+	&#13;
+	def nrOfPeople = _source.p.nrOfPeople.value()&#13;
+	def actionPlanId = _source.p.actionPlanId_identifier.value()&#13;
+	&#13;
+	if (!nrOfPeople &amp;&amp; !c.numberHAReduction[actionPlanId].value() &amp;&amp; !c.numberHSDReduction[actionPlanId].value() &amp;&amp; !c.numberIHDReduction[actionPlanId].value()) {&#13;
+		_log.error("END_RC30: When not providing nrOfPeople by actionPlanId_identifier " +&#13;
+				"in table NAP_RailReductionHealthImpact_1, at least one of the following attributes must " +&#13;
+				"be provided in table NAP_RailReductionHealthImpact_2: numberHAReduction, numberHSDReduction, numberIHDReduction")&#13;
+	}&#13;
+}
 </core:text>
         </complexParameter>
     </cell>
@@ -289,6 +305,30 @@ _snippets.end_Checks {&#13;
         </target>
         <parameter value="true" name="ignoreNamespaces"/>
         <parameter value="true" name="structuralRename"/>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.retype" id="C6d3ec89d-65ed-4c4a-b995-f37e63f3190c" priority="higher">
+        <source>
+            <class>
+                <type name="NAP_RoadReductionHealthImpact_2"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NAP_RoadReductionHealthImpact_2"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+withTransformationContext{&#13;
+	def c = _.context.collector(it)&#13;
+	def actionPlanId = _source.p.actionPlanId_identifier.value()&#13;
+	&#13;
+	c.numberHAReduction[actionPlanId] &lt;&lt; _source.p.numberHAReduction.value()&#13;
+	c.numberHSDReduction[actionPlanId] &lt;&lt; _source.p.numberHSDReduction.value()&#13;
+	c.numberIHDReduction[actionPlanId] &lt;&lt; _source.p.numberIHDReduction.value()&#13;
+}
+</core:text>
+        </complexParameter>
     </cell>
     <cell relation="eu.esdihumboldt.cst.functions.groovy.retype" id="C3868ebe5-9641-4802-8b80-239daed3e456" priority="normal">
         <source>
