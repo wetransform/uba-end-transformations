@@ -69,6 +69,7 @@ withTransformationContext {&#13;
 	_target {&#13;
 		actionPlanId_identifier( c.Allgemeines.kennungPlan.value() )&#13;
 		limitValues_otherCriteriaDescription( c.Allgemeines.infoGrenzwert.value() )&#13;
+		limitValues_noiseLimitReportIdIdentifier( 'LR_DE_00_1' )&#13;
 	}&#13;
 }
 </core:text>
@@ -160,7 +161,7 @@ withTransformationContext {&#13;
 	&#13;
 	_target {&#13;
 		actionPlanId_identifier( c.Allgemeines.kennungPlan.value() )&#13;
-		explanationMethod( c.Wirkungen.personenReduktionMethode.value() )&#13;
+		explanationMethod( 'A person is considered to be exposed to noise above an LDEN value of 55 dB(A) or an LNight value of 50 dB(A). The required reduction shall be at least 1 dB.' )&#13;
 		nrOfPeople( c.Wirkungen.personenReduktion.value() )&#13;
 	}&#13;
 }
@@ -441,6 +442,8 @@ withTransformationContext {	&#13;
 		legalContext_actionPlanStartDate( _snippets.helperFunctions.formatDate(c.Allgemeines.startDatum.value()) )&#13;
 		legalContext_actionPlanEndDate( _snippets.helperFunctions.formatDate(c.Allgemeines.endDatum.value()) )&#13;
 		legalContext_actionPlanDocument_citationLink( c.Allgemeines.linkZumPlan.value() )&#13;
+		legalContext_actionPlanDocument_citationLevel( 'sub-national' )&#13;
+		legalContext_actionPlanDocument_citationType( 'documentCitation' )&#13;
 		&#13;
 		publicConsultation_consultationDocumentationSummary( c.Öffentlichkeitsbeteiligung.beschreibung.value() )&#13;
 		publicConsultation_consultationDocumentationOnline( c.Öffentlichkeitsbeteiligung.link.value() )&#13;
