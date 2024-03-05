@@ -74,6 +74,24 @@ _target {&#13;
 </core:text>
         </complexParameter>
     </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.create" id="C3383b9ef-38fa-451a-9731-b5a851325890" priority="normal">
+        <target>
+            <class>
+                <type name="ESTATUnitReference"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+_target {&#13;
+	ESTATLAUReferenceLink( 'https://ec.europa.eu/eurostat/web/gisco/geodata/reference-data/administrative-units-statistical-units/lau' )&#13;
+	ESTATLAUReferenceTitle( 'Local Administrative Units (LAU) 2022; Source: Eurostat' )&#13;
+	&#13;
+	ESTATNUTSReferenceLink( 'https://ec.europa.eu/eurostat/web/gisco/geodata/reference-data/administrative-units-statistical-units/nuts' )&#13;
+	ESTATNUTSReferenceTitle( 'NUTS 2021, Version date: 2020-01-20, Scale: 1:1M, Source: Eurostat' )&#13;
+}
+</core:text>
+        </complexParameter>
+    </cell>
     <cell relation="eu.esdihumboldt.cst.functions.groovy.retype" id="C750be061-3ef0-4afd-bed2-2724bd1e2814" priority="normal">
         <source>
             <class>
