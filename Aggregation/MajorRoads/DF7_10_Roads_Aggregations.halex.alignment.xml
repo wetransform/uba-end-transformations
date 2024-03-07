@@ -116,6 +116,8 @@ _snippets.end_Checks {&#13;
 	&#13;
 	codelistCheck('END_RT37', null, SHEET, 'allInLAUCode', CODELIST_LauIdValue(), true)&#13;
 	codelistCheck('END_RT38', null, SHEET, 'allInNUTSCode', CODELIST_NutsIdValue(), true)&#13;
+	&#13;
+	xorCheck('END_RC14', SHEET, ['allInCountry','allInLAUCode','allInNUTSCode','roadIdIdentifier'], 'Only one reference level is expected to be provided for each actionPlan: roadIdIdentifier, allInLAUCode, allInNUTSCode or allInCountry', exists())&#13;
 }&#13;
 &#13;
 
