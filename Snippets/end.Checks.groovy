@@ -505,6 +505,34 @@ def conditionalCheck(String code, String sheet, String fieldA, List<String> fiel
     }
 }
 
+// Applies a validator to a list of fields. If it does not return true for excatly one field, the check fails (XOR).
+def xorCheck(String code, String sheet, List fields, String message, validator) {
+	def alignmentMode = _project.vars.ALIGNMENT_MODE
+	withTransformationContext {
+		def c = _.context.collector(it)
+
+		def matches = false
+		def fieldsAndValues = ''
+		fields?.each { f ->
+			def value
+			switch (alignmentMode){
+				case 'aggregation':
+					value = sanitize(_source.p[f].value())
+					break
+				case 'validation':
+					value = sanitize(c[sheet][f].value())
+					break
+			}
+			fieldsAndValues = "${fieldsAndValues}[${f} = ${value}]"
+			matches ^= validator.call(['value':value, 'sheet':sheet, 'field':f])
+		}
+
+		if (!matches) {
+			_log.error("${code}: ${message} [${sheet}]$fieldsAndValues")
+		}
+	}
+}
+
 // Applies a validator to a list of fields. If it returns false for all fields, the check fails (OR).
 def orCheck(String code, String sheet, List fields, String message, validator) {
 	def alignmentMode = _project.vars.ALIGNMENT_MODE
