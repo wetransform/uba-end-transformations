@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<alignment xmlns="http://www.esdi-humboldt.eu/hale/alignment">
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.create" id="C7b92364e-8ea4-4a7a-b472-54f91ddc0eff" priority="normal">
+        <target>
+            <class>
+                <type name="CodelistProperties" ns="http://www.esdi-humboldt.eu/hale/gpkg"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+def codelistProperty(table, property, cl) {&#13;
+	_target {&#13;
+		tableName(table)&#13;
+		propertyName(property)&#13;
+		codelist(cl)&#13;
+	}&#13;
+}&#13;
+&#13;
+codelistProperty('NoiseActionPlanCoverageArea', 'zoneType', 'http://inspire.ec.europa.eu/codelist/ZoneTypeCode')&#13;
+codelistProperty('NoiseActionPlanCoverageArea', 'environmentalDomain', 'http://inspire.ec.europa.eu/codelist/EnvironmentalDomain')&#13;
+codelistProperty('NoiseActionPlanCoverageArea', 'specialisedZoneType', 'http://dd.eionet.europa.eu/vocabulary/inspire/SpecialisedZoneTypeCode')&#13;
+codelistProperty('NoiseActionPlanCoverageArea', 'competentAuthority_role', 'http://inspire.ec.europa.eu/codelist/RelatedPartyRoleValue')&#13;
+codelistProperty('NoiseActionPlanCoverageArea', 'legalBasis_level', 'http://inspire.ec.europa.eu/codelist/LegislationLevelValue')
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.numeric.sequentialid" id="C10703a5b-8532-4623-9f89-c261cdca8a7b" priority="normal">
+        <target>
+            <property>
+                <type name="CodelistProperties" ns="http://www.esdi-humboldt.eu/hale/gpkg"/>
+                <child name="id"/>
+            </property>
+        </target>
+        <parameter value="" name="prefix"/>
+        <parameter value="type" name="sequence"/>
+        <parameter value="1" name="startValue"/>
+        <parameter value="" name="suffix"/>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.create" id="C4759160b-e531-4368-b931-32d869f37025" priority="lowest">
+        <target>
+            <class>
+                <type name="DatasetDefaultProperties" ns="http://www.esdi-humboldt.eu/hale/gpkg"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+// Check if any tables were present that are mandatory&#13;
+def expectedTypes = [&#13;
+	'NoiseActionPlanCoverageArea':'TB1'&#13;
+]&#13;
+def presentTypes&#13;
+&#13;
+withTransformationContext {&#13;
+	def c = _.context.collector(it)&#13;
+	if (c['typesFound'].values()) {&#13;
+		_log.info("typesFound is ${c['typesFound'].values()}")&#13;
+		presentTypes = c['typesFound'].values()[0];&#13;
+		_log.info("presentTypes is ${presentTypes}")&#13;
+	}&#13;
+}&#13;
+&#13;
+expectedTypes.each { expectedType, errorCode -&gt;&#13;
+	_log.info("expectedType = ${expectedType}")&#13;
+	if (!(presentTypes?.contains(expectedType))) {&#13;
+		def message = "Mandatory table ${expectedType} has no records"&#13;
+		_log.error("${errorCode}: ${message}")&#13;
+	}&#13;
+}	&#13;
+&#13;
+// Assign default values&#13;
+def datasetDefaultProperty(table, property, attr, defaultVal) {&#13;
+	_target {&#13;
+		attribute( attr )&#13;
+		defaultValue( defaultVal )&#13;
+		propertyName( property )&#13;
+		tableName( table )&#13;
+	}&#13;
+}&#13;
+&#13;
+datasetDefaultProperty('NoiseActionPlanCoverageArea', 'designationPeriod', 'nilReason', 'http://inspire.ec.europa.eu/codelist/VoidReasonValue/Unpopulated')&#13;
+datasetDefaultProperty('NoiseActionPlanCoverageArea', 'beginLifespanVersion', 'nilReason', 'http://inspire.ec.europa.eu/codelist/VoidReasonValue/Unpopulated')&#13;
+datasetDefaultProperty('NoiseActionPlanCoverageArea', 'zoneType', 'href', 'http://inspire.ec.europa.eu/codelist/ZoneTypeCode/noiseRestrictionZone')&#13;
+datasetDefaultProperty('NoiseActionPlanCoverageArea', 'specialisedZoneType', 'href', 'http://dd.eionet.europa.eu/vocabulary/inspire/SpecialisedZoneTypeCode/noiseActionPlanArea')&#13;
+datasetDefaultProperty('NoiseActionPlanCoverageArea', 'environmentalDomain', 'href', 'http://inspire.ec.europa.eu/codelist/EnvironmentalDomain/noise')&#13;
+datasetDefaultProperty('NoiseActionPlanCoverageArea', 'competentAuthority', 'nilReason', 'http://inspire.ec.europa.eu/codelist/VoidReasonValue/Unpopulated')&#13;
+datasetDefaultProperty('NoiseActionPlanCoverageArea', 'legalBasis_link', 'href', 'http://data.europa.eu/eli/dir/2002/49/oj')&#13;
+datasetDefaultProperty('NoiseActionPlanCoverageArea', 'legalBasis_level', 'href', 'http://inspire.ec.europa.eu/codelist/LegislationLevelValue/european')&#13;
+&#13;
+
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.numeric.sequentialid" id="Caf659e4f-17d4-4814-98e1-929fd2c36aff" priority="normal">
+        <target>
+            <property>
+                <type name="DatasetDefaultProperties" ns="http://www.esdi-humboldt.eu/hale/gpkg"/>
+                <child name="id"/>
+            </property>
+        </target>
+        <parameter value="" name="prefix"/>
+        <parameter value="type" name="sequence"/>
+        <parameter value="1" name="startValue"/>
+        <parameter value="" name="suffix"/>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.retype" id="C790858cd-cfad-489b-b2ba-718e86d58170" priority="normal">
+        <source>
+            <class>
+                <type name="NoiseActionPlanCoverageArea" ns="http://www.esdi-humboldt.eu/hale/gpkg"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NoiseActionPlanCoverageArea" ns="http://www.esdi-humboldt.eu/hale/gpkg"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+def SHEET = 'NoiseActionPlanCoverageArea'&#13;
+&#13;
+_snippets.end_Checks {&#13;
+	registerType(SHEET)&#13;
+	&#13;
+	integerCheck('FT33', 'FC32', SHEET, 'id')&#13;
+	existsCheck('FC36', SHEET, 'inspireId_localId')&#13;
+	existsCheck('FC38', SHEET, 'inspireId_namespace')&#13;
+	existsCheck('FC47', SHEET, 'geometry')&#13;
+	&#13;
+	uniqueCheck('TU31', SHEET, 'id')&#13;
+	&#13;
+	existsCheck('FC33', SHEET, 'actionPlanIdIdentifier')&#13;
+	uniqueCheck('TU49', SHEET, 'actionPlanIdIdentifier')&#13;
+&#13;
+	uniqueCheck('TU50', SHEET, ['inspireId_localId', 'inspireId_namespace'])&#13;
+}
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.hale.align.retype" id="C40c14e04-9b62-4915-b76d-552eb5cd7426" priority="normal">
+        <source>
+            <class>
+                <type name="NoiseActionPlanCoverageArea" ns="http://www.esdi-humboldt.eu/hale/gpkg"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NoiseActionPlanCoverageArea" ns="http://www.esdi-humboldt.eu/hale/gpkg"/>
+            </class>
+        </target>
+        <parameter value="true" name="ignoreNamespaces"/>
+        <complexParameter name="skipRootProperty">
+            <core:name xmlns:core="http://www.esdi-humboldt.eu/hale/core">id</core:name>
+        </complexParameter>
+        <parameter value="true" name="structuralRename"/>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.numeric.sequentialid" id="Ced814090-3fb1-47e1-8b75-34c6fde751ae" priority="normal">
+        <target>
+            <property>
+                <type name="NoiseActionPlanCoverageArea" ns="http://www.esdi-humboldt.eu/hale/gpkg"/>
+                <child name="id"/>
+            </property>
+        </target>
+        <parameter value="" name="prefix"/>
+        <parameter value="type" name="sequence"/>
+        <parameter value="1" name="startValue"/>
+        <parameter value="" name="suffix"/>
+    </cell>
+</alignment>
