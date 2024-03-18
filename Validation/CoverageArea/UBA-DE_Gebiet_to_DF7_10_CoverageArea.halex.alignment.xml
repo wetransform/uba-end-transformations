@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<alignment xmlns="http://www.esdi-humboldt.eu/hale/alignment">
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.create" id="Caf16a473-6fd1-441f-8055-847ea9c1d870" priority="normal">
+        <target>
+            <class>
+                <type name="NoiseActionPlanCoverageArea" ns="http://www.esdi-humboldt.eu/hale/gpkg"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+//assign values to target sheet NoiseActionPlanCoverageArea&#13;
+withTransformationContext {	&#13;
+	def c = _.context.collector(it)&#13;
+	&#13;
+	_target {&#13;
+		actionPlanIdIdentifier( c.Allgemeines.kennungPlan.value() )&#13;
+		inspireId_localId( "${c.Allgemeines.kennungPlan.value()}_1" )&#13;
+		geometry( c.Geometrie.value() )&#13;
+	}&#13;
+}
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.retype" id="C2fd24e6b-1f87-4a81-ae02-6b7650139aec" priority="highest">
+        <source>
+            <class>
+                <type name="Allgemeines"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NoiseActionPlanCoverageArea" ns="http://www.esdi-humboldt.eu/hale/gpkg"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+// This groovy script collects the information from sheet 'Allgemeines'&#13;
+// No target is created.&#13;
+&#13;
+def bezeichnung = _source.p.Bezeichnung.value()&#13;
+def wert = _source.p.Wert.value()&#13;
+&#13;
+withTransformationContext {&#13;
+	def c = _.context.collector(it)&#13;
+	if(bezeichnung){&#13;
+		if (bezeichnung.contains('Kennung des Lärmaktionsplans')){&#13;
+			c.Allgemeines.kennungPlan &lt;&lt; wert&#13;
+		}&#13;
+		else if (bezeichnung.contains('Amtlicher Gemeindeschlüssel (AGS)') || bezeichnung.contains('Regionalschlüssel (RS)')){&#13;
+			c.Allgemeines.ags_rs &lt;&lt; wert&#13;
+		}&#13;
+	}&#13;
+}
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.retype" id="C82f1599e-eaab-485f-88b5-e3c646efd6d7" priority="higher">
+        <source>
+            <class>
+                <type name="LAP_Gebiet" ns="http://www.esdi-humboldt.eu/hale/shp"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NoiseActionPlanCoverageArea" ns="http://www.esdi-humboldt.eu/hale/gpkg"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+// This groovy script collects the geometry from 'LAP_Gebiet'&#13;
+// No target is created.&#13;
+&#13;
+withTransformationContext {&#13;
+	def c = _.context.collector(it)&#13;
+	&#13;
+	if (_source.p.filename.value() &amp;&amp; !c.Allgemeines.KennungPlan) {&#13;
+		_log.error("No actionPlanIdentifier provided for Geometry in LAP_Gebiet")&#13;
+	}&#13;
+	&#13;
+	if (_source.p.filename.value() &amp;&amp; c.Allgemeines.KennungPlan == _source.p.actionPlan.value()){&#13;
+		c.LAP_Gebiet.vorhanden &lt;&lt; true&#13;
+		c.Geometrie &lt;&lt; _source.p.the_geom.value()&#13;
+	}&#13;
+}
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.retype" id="C82633185-68f4-4bb6-bd41-796dccb073b1" priority="high">
+        <source>
+            <class>
+                <type name="VG250_GEM" ns="http://www.esdi-humboldt.eu/hale/shp">
+                    <condition lang="CQL">GF = '4'</condition>
+                </type>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NoiseActionPlanCoverageArea" ns="http://www.esdi-humboldt.eu/hale/gpkg"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+// This groovy script collects the respective geometry&#13;
+// No target is created.&#13;
+&#13;
+withTransformationContext {&#13;
+	def c = _.context.collector(it)&#13;
+	&#13;
+	if (!c.LAP_Gebiet.vorhanden.value() &amp;&amp;  _source.p.AGS.value() == c.Allgemeines.ags_rs.value()){&#13;
+		c.Geometrie &lt;&lt; _source.p.the_geom.value()&#13;
+	}&#13;
+}&#13;
+
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.retype" id="C5f3c085d-aae6-4356-b98f-32f0584bc47a" priority="high">
+        <source>
+            <class>
+                <type name="VG250_RBZ" ns="http://www.esdi-humboldt.eu/hale/shp">
+                    <condition lang="CQL">GF = '4'</condition>
+                </type>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NoiseActionPlanCoverageArea" ns="http://www.esdi-humboldt.eu/hale/gpkg"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+// This groovy script collects the respective geometry&#13;
+// No target is created.&#13;
+&#13;
+withTransformationContext {&#13;
+	def c = _.context.collector(it)&#13;
+	&#13;
+	if (!c.LAP_Gebiet.vorhanden.value() &amp;&amp;  _source.p.ARS.value() == c.Allgemeines.ags_rs.value()){&#13;
+		c.Geometrie &lt;&lt; _source.p.the_geom.value()&#13;
+	}&#13;
+}
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.retype" id="Cbdf28ddd-65d4-4b56-9c3b-9cb6a525aa43" priority="high">
+        <source>
+            <class>
+                <type name="VG250_VWG" ns="http://www.esdi-humboldt.eu/hale/shp">
+                    <condition lang="CQL">GF = '4'</condition>
+                </type>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NoiseActionPlanCoverageArea" ns="http://www.esdi-humboldt.eu/hale/gpkg"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+// This groovy script collects the respective geometry&#13;
+// No target is created.&#13;
+&#13;
+withTransformationContext {&#13;
+	def c = _.context.collector(it)&#13;
+	&#13;
+	if (!c.LAP_Gebiet.vorhanden.value() &amp;&amp;  _source.p.ARS.value() == c.Allgemeines.ags_rs.value()){&#13;
+		c.Geometrie &lt;&lt; _source.p.the_geom.value()&#13;
+	}&#13;
+}
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.numeric.sequentialid" id="Cd399ecad-a719-4548-bfd7-c592a9ee9575" priority="normal">
+        <target>
+            <property>
+                <type name="NoiseActionPlanCoverageArea" ns="http://www.esdi-humboldt.eu/hale/gpkg"/>
+                <child name="id"/>
+            </property>
+        </target>
+        <parameter value="" name="prefix"/>
+        <parameter value="type" name="sequence"/>
+        <parameter value="1" name="startValue"/>
+        <parameter value="" name="suffix"/>
+    </cell>
+    <cell relation="eu.esdihumboldt.hale.align.assign" id="C1d67c32e-46d0-4d8c-81ec-33c0cf1a9cc5" priority="normal">
+        <target>
+            <property>
+                <type name="NoiseActionPlanCoverageArea" ns="http://www.esdi-humboldt.eu/hale/gpkg"/>
+                <child name="inspireId_namespace"/>
+            </property>
+        </target>
+        <parameter value="end_actionplan_majorroad_DE" name="value"/>
+    </cell>
+    <cell relation="eu.esdihumboldt.hale.align.assign" id="C5d5853f3-828d-4378-b346-f5322cf25826" priority="normal">
+        <target>
+            <property>
+                <type name="NoiseActionPlanCoverageArea" ns="http://www.esdi-humboldt.eu/hale/gpkg"/>
+                <child name="inspireId_versionId"/>
+            </property>
+        </target>
+        <parameter value="2024" name="value"/>
+    </cell>
+</alignment>
