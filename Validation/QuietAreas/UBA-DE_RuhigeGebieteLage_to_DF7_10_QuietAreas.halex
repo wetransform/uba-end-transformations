@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<hale-project version="5.2.0.SNAPSHOT">
+    <name>UBA-DE Ruhige Gebiete Lage nach DF7_10 QuietAreas</name>
+    <author>AnnaTamm</author>
+    <created>2023-12-12T17:05:23.497+01:00</created>
+    <modified>2024-03-18T08:49:23.834+01:00</modified>
+    <save-config action-id="project.save" provider-id="eu.esdihumboldt.hale.io.project.hale25.xml.writer">
+        <setting name="charset">UTF-8</setting>
+        <setting name="projectFiles.separate">false</setting>
+        <setting name="contentType">eu.esdihumboldt.hale.io.project.hale25.xml</setting>
+        <setting name="target">file:/C:/Users/AnnaTamm/gitRepos/uba-end-transformations/Validation/QuietAreas/UBA-DE_RuhigeGebieteLage_to_DF7_10_QuietAreas.halex</setting>
+    </save-config>
+    <resource action-id="eu.esdihumboldt.hale.io.schema.read.target" provider-id="eu.esdihumboldt.hale.common.schema.persist.hsd.json.read">
+        <setting name="charset">UTF-8</setting>
+        <setting name="resourceId">ff0b8a9c-e225-42d5-b126-25794c04052e</setting>
+        <setting name="source">file:/C:/Users/AnnaTamm/gitRepos/uba-end-transformations/Schemas/DF7_10_QuietAreas.hsd.json</setting>
+        <setting name="contentType">eu.esdihumboldt.hale.common.schema.hsd.json</setting>
+    </resource>
+    <resource action-id="eu.esdihumboldt.hale.io.schema.read.source" provider-id="eu.esdihumboldt.hale.common.schema.persist.hsd.json.read">
+        <setting name="charset">UTF-8</setting>
+        <setting name="resourceId">212c27f3-dab6-4432-8bfc-f186f2ffb384</setting>
+        <setting name="source">file:/C:/Users/AnnaTamm/gitRepos/uba-end-transformations/Schemas/DF7_10_UBA-DE_RuhigeGebiete.hsd.json</setting>
+        <setting name="contentType">eu.esdihumboldt.hale.common.schema.hsd.json</setting>
+    </resource>
+    <resource action-id="eu.esdihumboldt.hale.io.groovy.snippets.load" provider-id="eu.esdihumboldt.hale.io.groovy.snippets">
+        <setting name="identifier">end_Checks</setting>
+        <setting name="charset">UTF-8</setting>
+        <setting name="resourceId">828e3be2-6b3b-46af-bc02-c208e21aecc5</setting>
+        <setting name="source">file:/C:/Users/AnnaTamm/gitRepos/uba-end-transformations/Snippets/end.Checks.groovy</setting>
+        <setting name="contentType">eu.esdihumboldt.hale.io.groovy</setting>
+        <setting name="autoReload">true</setting>
+    </resource>
+    <file name="alignment.xml" location="UBA-DE_RuhigeGebieteLage_to_DF7_10_QuietAreas.halex.alignment.xml"/>
+    <file name="styles.sld" location="UBA-DE_RuhigeGebieteLage_to_DF7_10_QuietAreas.halex.styles.sld"/>
+    <property name="defaultGeometry:{http://www.esdi-humboldt.eu/hale/gpkg}QuietArea/1">geometry</property>
+    <property name="defaultGeometry:{http://www.esdi-humboldt.eu/hale/gpkg}QuietArea/count">1</property>
+    <property name="defaultGeometry:{http://www.esdi-humboldt.eu/hale/shp}LAP_Ruhige_Gebiete_Lage/1">the_geom</property>
+    <property name="defaultGeometry:{http://www.esdi-humboldt.eu/hale/shp}LAP_Ruhige_Gebiete_Lage/count">1</property>
+    <property name="resource-722466c5-5fe1-47d3-9f2b-ddc99799cfa5:defaultCRS:{http://www.esdi-humboldt.eu/hale/shp}LAP_Ruhige_Gebiete_Lage/the_geom">code:EPSG:25832</property>
+    <property name="resource-f690ed32-f4ab-4328-8d48-f8513ac199c7:defaultCRS:{http://www.esdi-humboldt.eu/hale/shp}LAP_Ruhige_Gebiete_Lage/the_geom">code:EPSG:25832</property>
+    <complex-property name="variables">
+        <core:properties xmlns:core="http://www.esdi-humboldt.eu/hale/core">
+            <core:property name="ALIGNMENT_MODE">
+                <core:value value="aggregation"/>
+            </core:property>
+            <core:property name="MAX_FREETEXT_LENGTH">
+                <core:value value="4000"/>
+            </core:property>
+        </core:properties>
+    </complex-property>
+</hale-project>
