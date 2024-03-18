@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<hale-project version="5.2.0.SNAPSHOT">
+    <name>UBA-DE Gebiet nach DF7_10 CoverageArea</name>
+    <author>AnnaTamm</author>
+    <created>2023-12-12T15:56:37.402+01:00</created>
+    <modified>2024-03-18T08:44:29.889+01:00</modified>
+    <save-config action-id="project.save" provider-id="eu.esdihumboldt.hale.io.project.hale25.xml.writer">
+        <setting name="charset">UTF-8</setting>
+        <setting name="projectFiles.separate">false</setting>
+        <setting name="contentType">eu.esdihumboldt.hale.io.project.hale25.xml</setting>
+        <setting name="target">file:/C:/Users/AnnaTamm/gitRepos/uba-end-transformations/Validation/CoverageArea/UBA-DE_Gebiet_to_DF7_10_CoverageArea.halex</setting>
+    </save-config>
+    <resource action-id="eu.esdihumboldt.hale.io.schema.read.target" provider-id="eu.esdihumboldt.hale.common.schema.persist.hsd.json.read">
+        <setting name="charset">UTF-8</setting>
+        <setting name="resourceId">e0874307-4475-4db9-89a9-c071e1f53c4a</setting>
+        <setting name="source">file:/C:/Users/AnnaTamm/gitRepos/uba-end-transformations/Schemas/DF7_10_CoverageArea.hsd.json</setting>
+        <setting name="contentType">eu.esdihumboldt.hale.common.schema.hsd.json</setting>
+    </resource>
+    <resource action-id="eu.esdihumboldt.hale.io.schema.read.source" provider-id="eu.esdihumboldt.hale.common.schema.persist.hsd.json.read">
+        <setting name="charset">UTF-8</setting>
+        <setting name="resourceId">6373dd5b-0bfe-4b8e-a170-c3bf4a8222ca</setting>
+        <setting name="source">file:/C:/Users/AnnaTamm/gitRepos/uba-end-transformations/Schemas/DF7_10_UBA-DE_CoverageArea.hsd.json</setting>
+        <setting name="contentType">eu.esdihumboldt.hale.common.schema.hsd.json</setting>
+    </resource>
+    <resource action-id="eu.esdihumboldt.hale.io.groovy.snippets.load" provider-id="eu.esdihumboldt.hale.io.groovy.snippets">
+        <setting name="identifier">end_Checks</setting>
+        <setting name="charset">UTF-8</setting>
+        <setting name="resourceId">a561f3cc-8a02-40a2-aa00-915ccf428955</setting>
+        <setting name="source">file:/C:/Users/AnnaTamm/gitRepos/uba-end-transformations/Snippets/end.Checks.groovy</setting>
+        <setting name="contentType">eu.esdihumboldt.hale.io.groovy</setting>
+        <setting name="autoReload">true</setting>
+    </resource>
+    <file name="alignment.xml" location="UBA-DE_Gebiet_to_DF7_10_CoverageArea.halex.alignment.xml"/>
+    <file name="styles.sld" location="UBA-DE_Gebiet_to_DF7_10_CoverageArea.halex.styles.sld"/>
+    <property name="defaultGeometry:{http://www.esdi-humboldt.eu/hale/gpkg}NoiseActionPlanCoverageArea/1">geometry</property>
+    <property name="defaultGeometry:{http://www.esdi-humboldt.eu/hale/gpkg}NoiseActionPlanCoverageArea/count">1</property>
+    <property name="defaultGeometry:{http://www.esdi-humboldt.eu/hale/shp}LAP_Gebiet/1">the_geom</property>
+    <property name="defaultGeometry:{http://www.esdi-humboldt.eu/hale/shp}LAP_Gebiet/count">1</property>
+    <property name="defaultGeometry:{http://www.esdi-humboldt.eu/hale/shp}VG250_GEM/1">the_geom</property>
+    <property name="defaultGeometry:{http://www.esdi-humboldt.eu/hale/shp}VG250_GEM/count">1</property>
+    <property name="defaultGeometry:{http://www.esdi-humboldt.eu/hale/shp}VG250_RBZ/1">the_geom</property>
+    <property name="defaultGeometry:{http://www.esdi-humboldt.eu/hale/shp}VG250_RBZ/count">1</property>
+    <property name="defaultGeometry:{http://www.esdi-humboldt.eu/hale/shp}VG250_VWG/1">the_geom</property>
+    <property name="defaultGeometry:{http://www.esdi-humboldt.eu/hale/shp}VG250_VWG/count">1</property>
+    <complex-property name="variables">
+        <core:properties xmlns:core="http://www.esdi-humboldt.eu/hale/core">
+            <core:property name="ALIGNMENT_MODE">
+                <core:value value=""/>
+            </core:property>
+        </core:properties>
+    </complex-property>
+</hale-project>
