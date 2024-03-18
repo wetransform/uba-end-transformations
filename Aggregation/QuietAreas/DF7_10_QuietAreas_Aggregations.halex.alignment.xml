@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<alignment xmlns="http://www.esdi-humboldt.eu/hale/alignment">
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.create" id="C1227e253-fc04-4c9b-823d-0f187ab64517" priority="normal">
+        <target>
+            <class>
+                <type name="CodelistProperties" ns="http://www.esdi-humboldt.eu/hale/gpkg"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+def codelistProperty(table, property, cl) {&#13;
+	_target {&#13;
+		tableName(table)&#13;
+		propertyName(property)&#13;
+		codelist(cl)&#13;
+	}&#13;
+}&#13;
+&#13;
+codelistProperty('QuietAreaDocumentation', 'citationType', 'http://dd.eionet.europa.eu/vocabulary/inspire/CitationTypeValue')&#13;
+codelistProperty('QuietAreaDocumentation', 'citationLevel', 'http://inspire.ec.europa.eu/codelist/LegislationLevelValue')&#13;
+&#13;
+codelistProperty('QuietArea', 'quietAreaName_localNameLanguage', 'http://dd.eionet.europa.eu/vocabulary/common/iso639-3')&#13;
+codelistProperty('QuietArea', 'protectionFrom', 'http://dd.eionet.europa.eu/vocabulary/noise/NoiseSourceValue')&#13;
+codelistProperty('QuietArea', 'specialisedZoneType', 'http://dd.eionet.europa.eu/vocabulary/inspire/SpecialisedZoneTypeCode')&#13;
+codelistProperty('QuietArea', 'zoneType', 'http://inspire.ec.europa.eu/codelist/ZoneTypeCode')&#13;
+codelistProperty('QuietArea', 'competentAuthority_role', 'http://inspire.ec.europa.eu/codelist/RelatedPartyRoleValue')&#13;
+codelistProperty('QuietArea', 'environmentalDomain', 'http://inspire.ec.europa.eu/codelist/EnvironmentalDomain')&#13;
+codelistProperty('QuietArea', 'quietAreaId_identifierScheme', 'http://dd.eionet.europa.eu/vocabulary/inspire/IdentifierScheme')&#13;
+
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.numeric.sequentialid" id="C2ca55198-45e4-4805-9678-f5e75ae0e9de" priority="normal">
+        <target>
+            <property>
+                <type name="CodelistProperties" ns="http://www.esdi-humboldt.eu/hale/gpkg"/>
+                <child name="id"/>
+            </property>
+        </target>
+        <parameter value="" name="prefix"/>
+        <parameter value="type" name="sequence"/>
+        <parameter value="1" name="startValue"/>
+        <parameter value="" name="suffix"/>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.create" id="C608d28a4-82e1-47df-a3d2-e2f522821ad4" priority="lowest">
+        <target>
+            <class>
+                <type name="DatasetDefaultProperties" ns="http://www.esdi-humboldt.eu/hale/gpkg"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+// Check if any tables were present that are mandatory&#13;
+def expectedTypes = [&#13;
+	'QuietArea':'TB1',&#13;
+	'QuietAreaDocumentation':'TB28',&#13;
+]&#13;
+def presentTypes&#13;
+&#13;
+withTransformationContext {&#13;
+	def c = _.context.collector(it)&#13;
+	if (c['typesFound'].values()) {&#13;
+		_log.info("typesFound is ${c['typesFound'].values()}")&#13;
+		presentTypes = c['typesFound'].values()[0];&#13;
+		_log.info("presentTypes is ${presentTypes}")&#13;
+	}&#13;
+}&#13;
+&#13;
+expectedTypes.each { expectedType, errorCode -&gt;&#13;
+	_log.info("expectedType = ${expectedType}")&#13;
+	if (!(presentTypes?.contains(expectedType))) {&#13;
+		def message = "Mandatory table ${expectedType} has no records"&#13;
+		_log.error("${errorCode}: ${message}")&#13;
+	}&#13;
+}	&#13;
+&#13;
+// Assign default values&#13;
+def datasetDefaultProperty(table, property, attr, defaultVal) {&#13;
+	_target {&#13;
+		attribute( attr )&#13;
+		defaultValue( defaultVal )&#13;
+		propertyName( property )&#13;
+		tableName( table )&#13;
+	}&#13;
+}&#13;
+&#13;
+datasetDefaultProperty('QuietArea', 'competentAuthority', 'nilReason', 'http://inspire.ec.europa.eu/codelist/VoidReasonValue/Unpopulated')&#13;
+datasetDefaultProperty('QuietArea', 'designationPeriod', 'nilReason', 'http://inspire.ec.europa.eu/codelist/VoidReasonValue/Unpopulated')&#13;
+datasetDefaultProperty('QuietArea', 'legalBasis_link', 'href', 'http://data.europa.eu/eli/dir/2002/49/oj')&#13;
+datasetDefaultProperty('QuietArea', 'legalBasis_level', 'href', 'https://inspire.ec.europa.eu/codelist/LegislationLevelValue/european')&#13;
+datasetDefaultProperty('QuietArea', 'beginLifespanVersion', 'nilReason', 'http://inspire.ec.europa.eu/codelist/VoidReasonValue/Unpopulated')&#13;
+datasetDefaultProperty('QuietArea', 'zoneType', 'href', 'http://inspire.ec.europa.eu/codelist/ZoneTypeCode/noiseRestrictionZone')&#13;
+datasetDefaultProperty('QuietArea', 'environmentalDomain', 'href', 'http://inspire.ec.europa.eu/codelist/EnvironmentalDomain/noise')&#13;
+datasetDefaultProperty('QuietArea', 'quietAreaId_IdentifierScheme', 'href', 'http://dd.eionet.europa.eu/vocabulary/inspire/IdentifierScheme/EUENDCode')&#13;
+
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.numeric.sequentialid" id="C523eee87-90a4-45bb-ade9-58953d33ca9f" priority="normal">
+        <target>
+            <property>
+                <type name="DatasetDefaultProperties" ns="http://www.esdi-humboldt.eu/hale/gpkg"/>
+                <child name="id"/>
+            </property>
+        </target>
+        <parameter value="" name="prefix"/>
+        <parameter value="type" name="sequence"/>
+        <parameter value="1" name="startValue"/>
+        <parameter value="" name="suffix"/>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.retype" id="C834bac34-c578-4259-bad6-becc0470c174" priority="normal">
+        <source>
+            <class>
+                <type name="QuietArea" ns="http://www.esdi-humboldt.eu/hale/gpkg"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="QuietArea" ns="http://www.esdi-humboldt.eu/hale/gpkg"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+def SHEET = 'QuietArea'&#13;
+&#13;
+_snippets.end_Checks {&#13;
+	registerType(SHEET)&#13;
+	&#13;
+	integerCheck('FT3', 'FC2', SHEET, 'id')&#13;
+	existsCheck('FC5', SHEET, 'quietAreaId_identifier')&#13;
+	codelistCheck('TC7', null, SHEET, 'quietAreaName_localNameLanguage', CODELIST_LanguageTypeValue())&#13;
+	existsCheck('FC10', SHEET, 'quietAreaType')&#13;
+	&#13;
+	existsCheck('FC18', SHEET, 'inspireId_localId')&#13;
+	existsCheck('FC20', SHEET, 'inspireId_namespace')&#13;
+	existsCheck('FC70', SHEET, 'protectionMeasure')&#13;
+	&#13;
+	codelistCheck('TC24', 'FC23', SHEET, 'specialisedZoneType', CODELIST_SpecialisedZoneTypeValue())&#13;
+	codelistCheck('TC44', null, SHEET, 'protectionFrom', CODELIST_NoiseSourceValue_All())&#13;
+	&#13;
+	uniqueCheck('TU55', SHEET, 'quietAreaId_identifier')&#13;
+	uniqueCheck('TU69', SHEET, ['inspireId_localId', 'inspireId_namespace'])&#13;
+	&#13;
+	existsCheck('FC97', SHEET, 'geometry')&#13;
+	&#13;
+}&#13;
+&#13;
+withTransformationContext{&#13;
+	def c = _.context.collector(it)&#13;
+	c.quietAreaId_identifier &lt;&lt; _source.p.quietAreaId_identifier.value()&#13;
+}&#13;
+
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.hale.align.retype" id="C3f95ef63-8435-4d26-bb40-82747370a5fc" priority="normal">
+        <source>
+            <class>
+                <type name="QuietArea" ns="http://www.esdi-humboldt.eu/hale/gpkg"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="QuietArea" ns="http://www.esdi-humboldt.eu/hale/gpkg"/>
+            </class>
+        </target>
+        <parameter value="true" name="ignoreNamespaces"/>
+        <complexParameter name="skipRootProperty">
+            <core:name xmlns:core="http://www.esdi-humboldt.eu/hale/core">id</core:name>
+        </complexParameter>
+        <parameter value="true" name="structuralRename"/>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.numeric.sequentialid" id="C0d4dd7f3-3615-4881-83d8-6f5715536ca8" priority="normal">
+        <target>
+            <property>
+                <type name="QuietArea" ns="http://www.esdi-humboldt.eu/hale/gpkg"/>
+                <child name="id"/>
+            </property>
+        </target>
+        <parameter value="" name="prefix"/>
+        <parameter value="type" name="sequence"/>
+        <parameter value="1" name="startValue"/>
+        <parameter value="" name="suffix"/>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.retype" id="C3c8fa7e0-5620-4030-a185-9d342aee5d9d" priority="normal">
+        <source>
+            <class>
+                <type name="QuietAreaDocumentation" ns="http://www.esdi-humboldt.eu/hale/gpkg"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="QuietAreaDocumentation" ns="http://www.esdi-humboldt.eu/hale/gpkg"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+def SHEET = 'QuietAreaDocumentation'&#13;
+withTransformationContext{&#13;
+	_snippets.end_Checks {&#13;
+		registerType(SHEET)&#13;
+		&#13;
+		existsCheck('FC34', SHEET, 'citationLink')&#13;
+		codelistCheck('TC38', 'FC37', SHEET, 'citationLevel', CODELIST_CitationLevelValue())&#13;
+		codelistCheck('TC44', 'FC43', SHEET, 'citationType', CODELIST_CitationTypeValue())&#13;
+		&#13;
+		dateCheck('FT86', null, SHEET, 'citationDate', 'yyyy-MM-dd')&#13;
+		&#13;
+		def c = _.context.collector(it)&#13;
+		codelistCheck('FC56', 'TC57', SHEET, 'quietAreaId_identifier', c.quietAreaId_identifier.values())&#13;
+	}&#13;
+}&#13;
+&#13;
+
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.hale.align.retype" id="C531d6d40-b0e3-47b9-91d6-3c7c43e4d254" priority="normal">
+        <source>
+            <class>
+                <type name="QuietAreaDocumentation" ns="http://www.esdi-humboldt.eu/hale/gpkg"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="QuietAreaDocumentation" ns="http://www.esdi-humboldt.eu/hale/gpkg"/>
+            </class>
+        </target>
+        <parameter value="true" name="ignoreNamespaces"/>
+        <complexParameter name="skipRootProperty">
+            <core:name xmlns:core="http://www.esdi-humboldt.eu/hale/core">id</core:name>
+        </complexParameter>
+        <parameter value="true" name="structuralRename"/>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.numeric.sequentialid" id="Cc95ab196-ea5f-4d55-86e6-79081b265252" priority="normal">
+        <target>
+            <property>
+                <type name="QuietAreaDocumentation" ns="http://www.esdi-humboldt.eu/hale/gpkg"/>
+                <child name="id"/>
+            </property>
+        </target>
+        <parameter value="" name="prefix"/>
+        <parameter value="type" name="sequence"/>
+        <parameter value="1" name="startValue"/>
+        <parameter value="" name="suffix"/>
+    </cell>
+</alignment>
