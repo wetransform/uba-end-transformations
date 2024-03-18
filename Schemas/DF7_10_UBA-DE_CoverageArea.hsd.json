@@ -1,0 +1,1548 @@
+{
+	"schemas": [
+		{
+			"namespace": "http://www.esdi-humboldt.eu/hale/schema/combine",
+			"typeIndex": [
+				{
+					"ref": 0,
+					"name": "actionPlan",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp"
+				},
+				{
+					"ref": 1,
+					"name": "ADE",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp"
+				},
+				{
+					"ref": 2,
+					"name": "AGS",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp"
+				},
+				{
+					"ref": 3,
+					"name": "AGS_0",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp"
+				},
+				{
+					"ref": 4,
+					"name": "ARS",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp"
+				},
+				{
+					"ref": 5,
+					"name": "ARS_0",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp"
+				},
+				{
+					"ref": 6,
+					"name": "BEGINN",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp"
+				},
+				{
+					"ref": 7,
+					"name": "BEM",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp"
+				},
+				{
+					"ref": 8,
+					"name": "BEZ",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp"
+				},
+				{
+					"ref": 9,
+					"name": "BSG",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp"
+				},
+				{
+					"ref": 10,
+					"name": "DLM_ID",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp"
+				},
+				{
+					"ref": 11,
+					"name": "FK_S3",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp"
+				},
+				{
+					"ref": 12,
+					"name": "GEN",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp"
+				},
+				{
+					"ref": 13,
+					"name": "GF",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp"
+				},
+				{
+					"ref": 14,
+					"name": "IBZ",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp"
+				},
+				{
+					"ref": 15,
+					"name": "LAP_Gebiet",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp"
+				},
+				{
+					"ref": 16,
+					"name": "MultiPolygon",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp"
+				},
+				{
+					"ref": 17,
+					"name": "NBD",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp"
+				},
+				{
+					"ref": 18,
+					"name": "NUTS",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp"
+				},
+				{
+					"ref": 19,
+					"name": "OBJID",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp"
+				},
+				{
+					"ref": 20,
+					"name": "SDV_ARS",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp"
+				},
+				{
+					"ref": 21,
+					"name": "SN_G",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp"
+				},
+				{
+					"ref": 22,
+					"name": "SN_K",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp"
+				},
+				{
+					"ref": 23,
+					"name": "SN_L",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp"
+				},
+				{
+					"ref": 24,
+					"name": "SN_R",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp"
+				},
+				{
+					"ref": 25,
+					"name": "SN_V1",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp"
+				},
+				{
+					"ref": 26,
+					"name": "SN_V2",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp"
+				},
+				{
+					"ref": 27,
+					"name": "VG250_GEM",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp"
+				},
+				{
+					"ref": 28,
+					"name": "VG250_RBZ",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp"
+				},
+				{
+					"ref": 29,
+					"name": "VG250_VWG",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp"
+				},
+				{
+					"ref": 30,
+					"name": "WSK",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp"
+				},
+				{
+					"ref": 31,
+					"name": "Allgemeines"
+				}
+			],
+			"mappingRelevant": [15,27,28,29,31],
+			"types": [
+				{
+					"id": 0,
+					"location": "file:/C:/Users/AnnaTamm/Box%20Sync/staff/Projects/2022-15%20UBA%20DE%20END%20II/Daten%20und%20Vorlagen/LAP_Gebiet/LAP_Gebiet.shp",
+					"name": "actionPlan",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp",
+					"constraints": {
+						"binding": "java.lang.String",
+						"enumeration": {
+							"@type": "properties",
+							"@value": {"allowOthers":true}
+
+						},
+						"geometry-metadata": {
+							"@type": "properties",
+							"@value": {"dimension":0}
+
+						},
+						"has-value": true,
+						"mappable": false,
+						"mapping-relevant": false
+					}
+				},
+				{
+					"id": 1,
+					"location": "file:/C:/Users/AnnaTamm/Box%20Sync/staff/Projects/2022-15%20UBA%20DE%20END%20II/Daten%20und%20Vorlagen/vg250_01-01.utm32s.shape.ebenen/vg250_ebenen_0101/VG250_GEM.shp",
+					"name": "ADE",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp",
+					"constraints": {
+						"binding": "java.lang.Integer",
+						"has-value": true,
+						"mappable": false,
+						"mapping-relevant": false
+					}
+				},
+				{
+					"id": 2,
+					"location": "file:/C:/Users/AnnaTamm/Box%20Sync/staff/Projects/2022-15%20UBA%20DE%20END%20II/Daten%20und%20Vorlagen/vg250_01-01.utm32s.shape.ebenen/vg250_ebenen_0101/VG250_GEM.shp",
+					"name": "AGS",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp",
+					"constraints": {
+						"binding": "java.lang.String",
+						"has-value": true,
+						"mappable": false,
+						"mapping-relevant": false
+					}
+				},
+				{
+					"id": 3,
+					"location": "file:/C:/Users/AnnaTamm/Box%20Sync/staff/Projects/2022-15%20UBA%20DE%20END%20II/Daten%20und%20Vorlagen/vg250_01-01.utm32s.shape.ebenen/vg250_ebenen_0101/VG250_GEM.shp",
+					"name": "AGS_0",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp",
+					"constraints": {
+						"binding": "java.lang.String",
+						"has-value": true,
+						"mappable": false,
+						"mapping-relevant": false
+					}
+				},
+				{
+					"id": 4,
+					"location": "file:/C:/Users/AnnaTamm/Box%20Sync/staff/Projects/2022-15%20UBA%20DE%20END%20II/Daten%20und%20Vorlagen/vg250_01-01.utm32s.shape.ebenen/vg250_ebenen_0101/VG250_GEM.shp",
+					"name": "ARS",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp",
+					"constraints": {
+						"binding": "java.lang.String",
+						"enumeration": {
+							"@type": "properties",
+							"@value": {"allowOthers":true}
+
+						},
+						"geometry-metadata": {
+							"@type": "properties",
+							"@value": {"dimension":0}
+
+						},
+						"has-value": true,
+						"mappable": false,
+						"mapping-relevant": false
+					}
+				},
+				{
+					"id": 5,
+					"location": "file:/C:/Users/AnnaTamm/Box%20Sync/staff/Projects/2022-15%20UBA%20DE%20END%20II/Daten%20und%20Vorlagen/vg250_01-01.utm32s.shape.ebenen/vg250_ebenen_0101/VG250_GEM.shp",
+					"name": "ARS_0",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp",
+					"constraints": {
+						"binding": "java.lang.String",
+						"has-value": true,
+						"mappable": false,
+						"mapping-relevant": false
+					}
+				},
+				{
+					"id": 6,
+					"location": "file:/C:/Users/AnnaTamm/Box%20Sync/staff/Projects/2022-15%20UBA%20DE%20END%20II/Daten%20und%20Vorlagen/vg250_01-01.utm32s.shape.ebenen/vg250_ebenen_0101/VG250_GEM.shp",
+					"name": "BEGINN",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp",
+					"constraints": {
+						"binding": "java.util.Date",
+						"has-value": true,
+						"mappable": false,
+						"mapping-relevant": false
+					}
+				},
+				{
+					"id": 7,
+					"location": "file:/C:/Users/AnnaTamm/Box%20Sync/staff/Projects/2022-15%20UBA%20DE%20END%20II/Daten%20und%20Vorlagen/vg250_01-01.utm32s.shape.ebenen/vg250_ebenen_0101/VG250_GEM.shp",
+					"name": "BEM",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp",
+					"constraints": {
+						"binding": "java.lang.String",
+						"has-value": true,
+						"mappable": false,
+						"mapping-relevant": false
+					}
+				},
+				{
+					"id": 8,
+					"location": "file:/C:/Users/AnnaTamm/Box%20Sync/staff/Projects/2022-15%20UBA%20DE%20END%20II/Daten%20und%20Vorlagen/vg250_01-01.utm32s.shape.ebenen/vg250_ebenen_0101/VG250_GEM.shp",
+					"name": "BEZ",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp",
+					"constraints": {
+						"binding": "java.lang.String",
+						"has-value": true,
+						"mappable": false,
+						"mapping-relevant": false
+					}
+				},
+				{
+					"id": 9,
+					"location": "file:/C:/Users/AnnaTamm/Box%20Sync/staff/Projects/2022-15%20UBA%20DE%20END%20II/Daten%20und%20Vorlagen/vg250_01-01.utm32s.shape.ebenen/vg250_ebenen_0101/VG250_GEM.shp",
+					"name": "BSG",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp",
+					"constraints": {
+						"binding": "java.lang.Integer",
+						"has-value": true,
+						"mappable": false,
+						"mapping-relevant": false
+					}
+				},
+				{
+					"id": 10,
+					"location": "file:/C:/Users/AnnaTamm/Box%20Sync/staff/Projects/2022-15%20UBA%20DE%20END%20II/Daten%20und%20Vorlagen/vg250_01-01.utm32s.shape.ebenen/vg250_ebenen_0101/VG250_GEM.shp",
+					"name": "DLM_ID",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp",
+					"constraints": {
+						"binding": "java.lang.String",
+						"has-value": true,
+						"mappable": false,
+						"mapping-relevant": false
+					}
+				},
+				{
+					"id": 11,
+					"location": "file:/C:/Users/AnnaTamm/Box%20Sync/staff/Projects/2022-15%20UBA%20DE%20END%20II/Daten%20und%20Vorlagen/vg250_01-01.utm32s.shape.ebenen/vg250_ebenen_0101/VG250_GEM.shp",
+					"name": "FK_S3",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp",
+					"constraints": {
+						"binding": "java.lang.String",
+						"has-value": true,
+						"mappable": false,
+						"mapping-relevant": false
+					}
+				},
+				{
+					"id": 12,
+					"location": "file:/C:/Users/AnnaTamm/Box%20Sync/staff/Projects/2022-15%20UBA%20DE%20END%20II/Daten%20und%20Vorlagen/vg250_01-01.utm32s.shape.ebenen/vg250_ebenen_0101/VG250_GEM.shp",
+					"name": "GEN",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp",
+					"constraints": {
+						"binding": "java.lang.String",
+						"has-value": true,
+						"mappable": false,
+						"mapping-relevant": false
+					}
+				},
+				{
+					"id": 13,
+					"location": "file:/C:/Users/AnnaTamm/Box%20Sync/staff/Projects/2022-15%20UBA%20DE%20END%20II/Daten%20und%20Vorlagen/vg250_01-01.utm32s.shape.ebenen/vg250_ebenen_0101/VG250_GEM.shp",
+					"name": "GF",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp",
+					"constraints": {
+						"binding": "java.lang.Integer",
+						"has-value": true,
+						"mappable": false,
+						"mapping-relevant": false
+					}
+				},
+				{
+					"id": 14,
+					"location": "file:/C:/Users/AnnaTamm/Box%20Sync/staff/Projects/2022-15%20UBA%20DE%20END%20II/Daten%20und%20Vorlagen/vg250_01-01.utm32s.shape.ebenen/vg250_ebenen_0101/VG250_GEM.shp",
+					"name": "IBZ",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp",
+					"constraints": {
+						"binding": "java.lang.Integer",
+						"has-value": true,
+						"mappable": false,
+						"mapping-relevant": false
+					}
+				},
+				{
+					"id": 15,
+					"name": "LAP_Gebiet",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp",
+					"constraints": {
+						"abstract": false,
+						"binding": "eu.esdihumboldt.hale.common.instance.model.Instance",
+						"enumeration": {
+							"@type": "properties",
+							"@value": {"allowOthers":true}
+
+						},
+						"geometry-metadata": {
+							"@type": "properties",
+							"@value": {"dimension":0}
+
+						},
+						"has-value": false,
+						"mappable": true,
+						"mapping-relevant": true,
+						"xsd_elements": []
+					},
+					"declares": [
+						{
+							"name": "the_geom",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true,
+								"xsd_attribute": false
+							},
+							"propertyType": {
+								"ref": 16
+							}
+						},
+						{
+							"name": "actionPlan",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true,
+								"xsd_attribute": false
+							},
+							"propertyType": {
+								"ref": 0
+							}
+						},
+						{
+							"name": "filename",
+							"namespace": "http://www.esdi-humboldt.eu/hale/shp/augment",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": true,
+								"xsd_attribute": false
+							},
+							"propertyType": {
+								"name": "filenameType",
+								"namespace": "http://www.esdi-humboldt.eu/hale/shp/augment",
+								"constraints": {
+									"binding": "java.lang.String",
+									"enumeration": {
+										"@type": "properties",
+										"@value": {"allowOthers":true}
+
+									},
+									"geometry-metadata": {
+										"@type": "properties",
+										"@value": {"dimension":0}
+
+									},
+									"has-value": true,
+									"mappable": false,
+									"mapping-relevant": false
+								}
+							}
+						}
+					]
+				},
+				{
+					"id": 16,
+					"location": "file:/C:/Users/AnnaTamm/Box%20Sync/staff/Projects/2022-15%20UBA%20DE%20END%20II/Daten%20und%20Vorlagen/LAP_Gebiet/LAP_Gebiet.shp",
+					"name": "MultiPolygon",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp",
+					"constraints": {
+						"binding": "eu.esdihumboldt.hale.common.schema.geometry.GeometryProperty",
+						"enumeration": {
+							"@type": "properties",
+							"@value": {"allowOthers":true}
+
+						},
+						"geometry-metadata": {
+							"@type": "properties",
+							"@value": {"dimension":0}
+
+						},
+						"geometry-type": "org.locationtech.jts.geom.Geometry",
+						"has-value": true,
+						"mappable": false,
+						"mapping-relevant": false
+					}
+				},
+				{
+					"id": 17,
+					"location": "file:/C:/Users/AnnaTamm/Box%20Sync/staff/Projects/2022-15%20UBA%20DE%20END%20II/Daten%20und%20Vorlagen/vg250_01-01.utm32s.shape.ebenen/vg250_ebenen_0101/VG250_GEM.shp",
+					"name": "NBD",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp",
+					"constraints": {
+						"binding": "java.lang.String",
+						"has-value": true,
+						"mappable": false,
+						"mapping-relevant": false
+					}
+				},
+				{
+					"id": 18,
+					"location": "file:/C:/Users/AnnaTamm/Box%20Sync/staff/Projects/2022-15%20UBA%20DE%20END%20II/Daten%20und%20Vorlagen/vg250_01-01.utm32s.shape.ebenen/vg250_ebenen_0101/VG250_GEM.shp",
+					"name": "NUTS",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp",
+					"constraints": {
+						"binding": "java.lang.String",
+						"has-value": true,
+						"mappable": false,
+						"mapping-relevant": false
+					}
+				},
+				{
+					"id": 19,
+					"location": "file:/C:/Users/AnnaTamm/Box%20Sync/staff/Projects/2022-15%20UBA%20DE%20END%20II/Daten%20und%20Vorlagen/vg250_01-01.utm32s.shape.ebenen/vg250_ebenen_0101/VG250_GEM.shp",
+					"name": "OBJID",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp",
+					"constraints": {
+						"binding": "java.lang.String",
+						"has-value": true,
+						"mappable": false,
+						"mapping-relevant": false
+					}
+				},
+				{
+					"id": 20,
+					"location": "file:/C:/Users/AnnaTamm/Box%20Sync/staff/Projects/2022-15%20UBA%20DE%20END%20II/Daten%20und%20Vorlagen/vg250_01-01.utm32s.shape.ebenen/vg250_ebenen_0101/VG250_GEM.shp",
+					"name": "SDV_ARS",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp",
+					"constraints": {
+						"binding": "java.lang.String",
+						"has-value": true,
+						"mappable": false,
+						"mapping-relevant": false
+					}
+				},
+				{
+					"id": 21,
+					"location": "file:/C:/Users/AnnaTamm/Box%20Sync/staff/Projects/2022-15%20UBA%20DE%20END%20II/Daten%20und%20Vorlagen/vg250_01-01.utm32s.shape.ebenen/vg250_ebenen_0101/VG250_GEM.shp",
+					"name": "SN_G",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp",
+					"constraints": {
+						"binding": "java.lang.String",
+						"has-value": true,
+						"mappable": false,
+						"mapping-relevant": false
+					}
+				},
+				{
+					"id": 22,
+					"location": "file:/C:/Users/AnnaTamm/Box%20Sync/staff/Projects/2022-15%20UBA%20DE%20END%20II/Daten%20und%20Vorlagen/vg250_01-01.utm32s.shape.ebenen/vg250_ebenen_0101/VG250_GEM.shp",
+					"name": "SN_K",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp",
+					"constraints": {
+						"binding": "java.lang.String",
+						"has-value": true,
+						"mappable": false,
+						"mapping-relevant": false
+					}
+				},
+				{
+					"id": 23,
+					"location": "file:/C:/Users/AnnaTamm/Box%20Sync/staff/Projects/2022-15%20UBA%20DE%20END%20II/Daten%20und%20Vorlagen/vg250_01-01.utm32s.shape.ebenen/vg250_ebenen_0101/VG250_GEM.shp",
+					"name": "SN_L",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp",
+					"constraints": {
+						"binding": "java.lang.String",
+						"has-value": true,
+						"mappable": false,
+						"mapping-relevant": false
+					}
+				},
+				{
+					"id": 24,
+					"location": "file:/C:/Users/AnnaTamm/Box%20Sync/staff/Projects/2022-15%20UBA%20DE%20END%20II/Daten%20und%20Vorlagen/vg250_01-01.utm32s.shape.ebenen/vg250_ebenen_0101/VG250_GEM.shp",
+					"name": "SN_R",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp",
+					"constraints": {
+						"binding": "java.lang.String",
+						"has-value": true,
+						"mappable": false,
+						"mapping-relevant": false
+					}
+				},
+				{
+					"id": 25,
+					"location": "file:/C:/Users/AnnaTamm/Box%20Sync/staff/Projects/2022-15%20UBA%20DE%20END%20II/Daten%20und%20Vorlagen/vg250_01-01.utm32s.shape.ebenen/vg250_ebenen_0101/VG250_GEM.shp",
+					"name": "SN_V1",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp",
+					"constraints": {
+						"binding": "java.lang.String",
+						"has-value": true,
+						"mappable": false,
+						"mapping-relevant": false
+					}
+				},
+				{
+					"id": 26,
+					"location": "file:/C:/Users/AnnaTamm/Box%20Sync/staff/Projects/2022-15%20UBA%20DE%20END%20II/Daten%20und%20Vorlagen/vg250_01-01.utm32s.shape.ebenen/vg250_ebenen_0101/VG250_GEM.shp",
+					"name": "SN_V2",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp",
+					"constraints": {
+						"binding": "java.lang.String",
+						"has-value": true,
+						"mappable": false,
+						"mapping-relevant": false
+					}
+				},
+				{
+					"id": 27,
+					"name": "VG250_GEM",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp",
+					"constraints": {
+						"abstract": false,
+						"binding": "eu.esdihumboldt.hale.common.instance.model.Instance",
+						"has-value": false,
+						"mappable": true,
+						"mapping-relevant": true
+					},
+					"declares": [
+						{
+							"name": "the_geom",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true,
+								"xsd_attribute": false
+							},
+							"propertyType": {
+								"ref": 16
+							}
+						},
+						{
+							"name": "OBJID",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true,
+								"xsd_attribute": false
+							},
+							"propertyType": {
+								"ref": 19
+							}
+						},
+						{
+							"name": "BEGINN",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true,
+								"xsd_attribute": false
+							},
+							"propertyType": {
+								"ref": 6
+							}
+						},
+						{
+							"name": "ADE",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true,
+								"xsd_attribute": false
+							},
+							"propertyType": {
+								"ref": 1
+							}
+						},
+						{
+							"name": "GF",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true,
+								"xsd_attribute": false
+							},
+							"propertyType": {
+								"ref": 13
+							}
+						},
+						{
+							"name": "BSG",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true,
+								"xsd_attribute": false
+							},
+							"propertyType": {
+								"ref": 9
+							}
+						},
+						{
+							"name": "ARS",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true,
+								"xsd_attribute": false
+							},
+							"propertyType": {
+								"ref": 4
+							}
+						},
+						{
+							"name": "AGS",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true,
+								"xsd_attribute": false
+							},
+							"propertyType": {
+								"ref": 2
+							}
+						},
+						{
+							"name": "SDV_ARS",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true,
+								"xsd_attribute": false
+							},
+							"propertyType": {
+								"ref": 20
+							}
+						},
+						{
+							"name": "GEN",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true,
+								"xsd_attribute": false
+							},
+							"propertyType": {
+								"ref": 12
+							}
+						},
+						{
+							"name": "BEZ",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true,
+								"xsd_attribute": false
+							},
+							"propertyType": {
+								"ref": 8
+							}
+						},
+						{
+							"name": "IBZ",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true,
+								"xsd_attribute": false
+							},
+							"propertyType": {
+								"ref": 14
+							}
+						},
+						{
+							"name": "BEM",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true,
+								"xsd_attribute": false
+							},
+							"propertyType": {
+								"ref": 7
+							}
+						},
+						{
+							"name": "NBD",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true,
+								"xsd_attribute": false
+							},
+							"propertyType": {
+								"ref": 17
+							}
+						},
+						{
+							"name": "SN_L",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true,
+								"xsd_attribute": false
+							},
+							"propertyType": {
+								"ref": 23
+							}
+						},
+						{
+							"name": "SN_R",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true,
+								"xsd_attribute": false
+							},
+							"propertyType": {
+								"ref": 24
+							}
+						},
+						{
+							"name": "SN_K",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true,
+								"xsd_attribute": false
+							},
+							"propertyType": {
+								"ref": 22
+							}
+						},
+						{
+							"name": "SN_V1",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true,
+								"xsd_attribute": false
+							},
+							"propertyType": {
+								"ref": 25
+							}
+						},
+						{
+							"name": "SN_V2",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true,
+								"xsd_attribute": false
+							},
+							"propertyType": {
+								"ref": 26
+							}
+						},
+						{
+							"name": "SN_G",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true,
+								"xsd_attribute": false
+							},
+							"propertyType": {
+								"ref": 21
+							}
+						},
+						{
+							"name": "FK_S3",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true,
+								"xsd_attribute": false
+							},
+							"propertyType": {
+								"ref": 11
+							}
+						},
+						{
+							"name": "NUTS",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true,
+								"xsd_attribute": false
+							},
+							"propertyType": {
+								"ref": 18
+							}
+						},
+						{
+							"name": "ARS_0",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true,
+								"xsd_attribute": false
+							},
+							"propertyType": {
+								"ref": 5
+							}
+						},
+						{
+							"name": "AGS_0",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true,
+								"xsd_attribute": false
+							},
+							"propertyType": {
+								"ref": 3
+							}
+						},
+						{
+							"name": "WSK",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true,
+								"xsd_attribute": false
+							},
+							"propertyType": {
+								"ref": 30
+							}
+						},
+						{
+							"name": "DLM_ID",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true,
+								"xsd_attribute": false
+							},
+							"propertyType": {
+								"ref": 10
+							}
+						},
+						{
+							"name": "filename",
+							"namespace": "http://www.esdi-humboldt.eu/hale/shp/augment",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": true,
+								"xsd_attribute": false
+							},
+							"propertyType": {
+								"name": "filenameType",
+								"namespace": "http://www.esdi-humboldt.eu/hale/shp/augment",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true,
+									"mappable": false,
+									"mapping-relevant": false
+								}
+							}
+						}
+					]
+				},
+				{
+					"id": 28,
+					"name": "VG250_RBZ",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp",
+					"constraints": {
+						"abstract": false,
+						"binding": "eu.esdihumboldt.hale.common.instance.model.Instance",
+						"has-value": false,
+						"mappable": true,
+						"mapping-relevant": true
+					},
+					"declares": [
+						{
+							"name": "the_geom",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"ref": 16
+							}
+						},
+						{
+							"name": "OBJID",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"ref": 19
+							}
+						},
+						{
+							"name": "BEGINN",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"ref": 6
+							}
+						},
+						{
+							"name": "ADE",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"ref": 1
+							}
+						},
+						{
+							"name": "GF",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"ref": 13
+							}
+						},
+						{
+							"name": "BSG",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"ref": 9
+							}
+						},
+						{
+							"name": "ARS",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"ref": 4
+							}
+						},
+						{
+							"name": "AGS",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"ref": 2
+							}
+						},
+						{
+							"name": "SDV_ARS",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"ref": 20
+							}
+						},
+						{
+							"name": "GEN",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"ref": 12
+							}
+						},
+						{
+							"name": "BEZ",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"ref": 8
+							}
+						},
+						{
+							"name": "IBZ",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"ref": 14
+							}
+						},
+						{
+							"name": "BEM",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"ref": 7
+							}
+						},
+						{
+							"name": "NBD",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"ref": 17
+							}
+						},
+						{
+							"name": "SN_L",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"ref": 23
+							}
+						},
+						{
+							"name": "SN_R",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"ref": 24
+							}
+						},
+						{
+							"name": "SN_K",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"ref": 22
+							}
+						},
+						{
+							"name": "SN_V1",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"ref": 25
+							}
+						},
+						{
+							"name": "SN_V2",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"ref": 26
+							}
+						},
+						{
+							"name": "SN_G",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"ref": 21
+							}
+						},
+						{
+							"name": "FK_S3",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"ref": 11
+							}
+						},
+						{
+							"name": "NUTS",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"ref": 18
+							}
+						},
+						{
+							"name": "ARS_0",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"ref": 5
+							}
+						},
+						{
+							"name": "AGS_0",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"ref": 3
+							}
+						},
+						{
+							"name": "WSK",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"ref": 30
+							}
+						},
+						{
+							"name": "DLM_ID",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"ref": 10
+							}
+						},
+						{
+							"name": "filename",
+							"namespace": "http://www.esdi-humboldt.eu/hale/shp/augment",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"name": "filenameType",
+								"namespace": "http://www.esdi-humboldt.eu/hale/shp/augment",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true,
+									"mappable": false,
+									"mapping-relevant": false
+								}
+							}
+						}
+					]
+				},
+				{
+					"id": 29,
+					"name": "VG250_VWG",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp",
+					"constraints": {
+						"abstract": false,
+						"binding": "eu.esdihumboldt.hale.common.instance.model.Instance",
+						"has-value": false,
+						"mappable": true,
+						"mapping-relevant": true
+					},
+					"declares": [
+						{
+							"name": "the_geom",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"ref": 16
+							}
+						},
+						{
+							"name": "OBJID",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"ref": 19
+							}
+						},
+						{
+							"name": "BEGINN",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"ref": 6
+							}
+						},
+						{
+							"name": "ADE",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"ref": 1
+							}
+						},
+						{
+							"name": "GF",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"ref": 13
+							}
+						},
+						{
+							"name": "BSG",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"ref": 9
+							}
+						},
+						{
+							"name": "ARS",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"ref": 4
+							}
+						},
+						{
+							"name": "AGS",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"ref": 2
+							}
+						},
+						{
+							"name": "SDV_ARS",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"ref": 20
+							}
+						},
+						{
+							"name": "GEN",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"ref": 12
+							}
+						},
+						{
+							"name": "BEZ",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"ref": 8
+							}
+						},
+						{
+							"name": "IBZ",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"ref": 14
+							}
+						},
+						{
+							"name": "BEM",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"ref": 7
+							}
+						},
+						{
+							"name": "NBD",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"ref": 17
+							}
+						},
+						{
+							"name": "SN_L",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"ref": 23
+							}
+						},
+						{
+							"name": "SN_R",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"ref": 24
+							}
+						},
+						{
+							"name": "SN_K",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"ref": 22
+							}
+						},
+						{
+							"name": "SN_V1",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"ref": 25
+							}
+						},
+						{
+							"name": "SN_V2",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"ref": 26
+							}
+						},
+						{
+							"name": "SN_G",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"ref": 21
+							}
+						},
+						{
+							"name": "FK_S3",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"ref": 11
+							}
+						},
+						{
+							"name": "NUTS",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"ref": 18
+							}
+						},
+						{
+							"name": "ARS_0",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"ref": 5
+							}
+						},
+						{
+							"name": "AGS_0",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"ref": 3
+							}
+						},
+						{
+							"name": "WSK",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"ref": 30
+							}
+						},
+						{
+							"name": "DLM_ID",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"ref": 10
+							}
+						},
+						{
+							"name": "filename",
+							"namespace": "http://www.esdi-humboldt.eu/hale/shp/augment",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"name": "filenameType",
+								"namespace": "http://www.esdi-humboldt.eu/hale/shp/augment",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true,
+									"mappable": false,
+									"mapping-relevant": false
+								}
+							}
+						}
+					]
+				},
+				{
+					"id": 30,
+					"location": "file:/C:/Users/AnnaTamm/Box%20Sync/staff/Projects/2022-15%20UBA%20DE%20END%20II/Daten%20und%20Vorlagen/vg250_01-01.utm32s.shape.ebenen/vg250_ebenen_0101/VG250_GEM.shp",
+					"name": "WSK",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp",
+					"constraints": {
+						"binding": "java.util.Date",
+						"has-value": true,
+						"mappable": false,
+						"mapping-relevant": false
+					}
+				},
+				{
+					"id": 31,
+					"location": "file:/C:/Users/AnnaTamm/Box%20Sync/staff/Projects/2022-15%20UBA%20DE%20END%20II/Transformations/Roads/LAP_HVS_2024_v230717_schema.xlsx",
+					"name": "Allgemeines",
+					"constraints": {
+						"abstract": false,
+						"has-value": false,
+						"mappable": true,
+						"mapping-relevant": true
+					},
+					"declares": [
+						{
+							"name": "Bezeichnung",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": true,
+								"xsd_attribute": false
+							},
+							"propertyType": {
+								"name": "java.lang.String",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true
+								}
+							}
+						},
+						{
+							"name": "Wert",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": true,
+								"xsd_attribute": false
+							},
+							"propertyType": {
+								"name": "java.lang.String",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true
+								}
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}
