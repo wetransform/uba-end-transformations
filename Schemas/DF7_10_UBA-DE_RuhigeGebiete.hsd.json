@@ -1,0 +1,276 @@
+{
+	"schemas": [
+		{
+			"namespace": "http://www.esdi-humboldt.eu/hale/schema/combine",
+			"typeIndex": [
+				{
+					"ref": 0,
+					"name": "Allgemeines"
+				},
+				{
+					"ref": 2,
+					"name": "LAP_Ruhige_Gebiete_Lage",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp"
+				},
+				{
+					"ref": 5,
+					"name": "MultiPolygon",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp"
+				},
+				{
+					"ref": 6,
+					"name": "quietArea",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp"
+				},
+				{
+					"ref": 7,
+					"name": "Ruhige_Gebiete"
+				}
+			],
+			"mappingRelevant": [2,7],
+			"types": [
+				{
+					"id": 0,
+					"location": "file:/C:/Users/AnnaTamm/Box%20Sync/staff/Projects/2022-15%20UBA%20DE%20END%20II/Transformations/Roads/LAP_HVS_2024_v230717_schema.xlsx",
+					"name": "Allgemeines",
+					"constraints": {
+						"abstract": false,
+						"has-value": false,
+						"mappable": true,
+						"mapping-relevant": true
+					},
+					"declares": [
+						{
+							"name": "Bezeichnung",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": true,
+								"xsd_attribute": false
+							},
+							"propertyType": {
+								"name": "java.lang.String",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true
+								}
+							}
+						},
+						{
+							"name": "Wert",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": true,
+								"xsd_attribute": false
+							},
+							"propertyType": {
+								"name": "java.lang.String",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true
+								}
+							}
+						}
+					]
+				},
+				{
+					"id": 2,
+					"name": "LAP_Ruhige_Gebiete_Lage",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp",
+					"constraints": {
+						"abstract": false,
+						"binding": "eu.esdihumboldt.hale.common.instance.model.Instance",
+						"has-value": false,
+						"mappable": true,
+						"mapping-relevant": true
+					},
+					"declares": [
+						{
+							"name": "the_geom",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true,
+								"xsd_attribute": false
+							},
+							"propertyType": {
+								"ref": 5
+							}
+						},
+						{
+							"name": "quietArea",
+							"constraints": {
+								"cardinality": "0..1",
+								"nillable": true,
+								"xsd_attribute": false
+							},
+							"propertyType": {
+								"ref": 6
+							}
+						},
+						{
+							"name": "filename",
+							"namespace": "http://www.esdi-humboldt.eu/hale/shp/augment",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": true,
+								"xsd_attribute": false
+							},
+							"propertyType": {
+								"name": "filenameType",
+								"namespace": "http://www.esdi-humboldt.eu/hale/shp/augment",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true,
+									"mappable": false,
+									"mapping-relevant": false
+								}
+							}
+						}
+					]
+				},
+				{
+					"id": 5,
+					"location": "file:/C:/Users/AnnaTamm/Box%20Sync/staff/Projects/2022-15%20UBA%20DE%20END%20II/Daten%20und%20Vorlagen/LAP_Ruhige_Gebiete_Lage/LAP_Ruhige_Gebiete_Lage.shp",
+					"name": "MultiPolygon",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp",
+					"constraints": {
+						"binding": "eu.esdihumboldt.hale.common.schema.geometry.GeometryProperty",
+						"geometry-type": "org.locationtech.jts.geom.Geometry",
+						"has-value": true,
+						"mappable": false,
+						"mapping-relevant": false
+					}
+				},
+				{
+					"id": 6,
+					"location": "file:/C:/Users/AnnaTamm/Box%20Sync/staff/Projects/2022-15%20UBA%20DE%20END%20II/Daten%20und%20Vorlagen/LAP_Ruhige_Gebiete_Lage/LAP_Ruhige_Gebiete_Lage.shp",
+					"name": "quietArea",
+					"namespace": "http://www.esdi-humboldt.eu/hale/shp",
+					"constraints": {
+						"binding": "java.lang.String",
+						"enumeration": {
+							"@type": "properties",
+							"@value": {"allowOthers":true}
+
+						},
+						"geometry-metadata": {
+							"@type": "properties",
+							"@value": {"dimension":0}
+
+						},
+						"has-value": true,
+						"mappable": false,
+						"mapping-relevant": false
+					}
+				},
+				{
+					"id": 7,
+					"location": "file:/C:/Users/AnnaTamm/Box%20Sync/staff/Projects/2022-15%20UBA%20DE%20END%20II/Transformations/Roads/LAP_HVS_2024_v230717_schema.xlsx",
+					"name": "Ruhige_Gebiete",
+					"constraints": {
+						"abstract": false,
+						"enumeration": {
+							"@type": "properties",
+							"@value": {"allowOthers":true}
+
+						},
+						"geometry-metadata": {
+							"@type": "properties",
+							"@value": {"dimension":0}
+
+						},
+						"has-value": false,
+						"mappable": true,
+						"mapping-relevant": true,
+						"xsd_elements": []
+					},
+					"declares": [
+						{
+							"name": "lfd_Nr",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"name": "java.lang.String",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true
+								}
+							}
+						},
+						{
+							"name": "Kennung",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"name": "java.lang.String",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true
+								}
+							}
+						},
+						{
+							"name": "Name",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"name": "java.lang.String",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true
+								}
+							}
+						},
+						{
+							"name": "Land_Ballungsraum",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"name": "java.lang.String",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true
+								}
+							}
+						},
+						{
+							"name": "Art",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"name": "java.lang.String",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true
+								}
+							}
+						},
+						{
+							"name": "Schutzma\u00dfnahmen",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"name": "java.lang.String",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true
+								}
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}
