@@ -231,8 +231,12 @@ def CODELIST_Boolean_DE() {
     ['Ja', 'Nein']
 }
 
-def CODELIST_NoiseSourceValue() {
+def CODELIST_NoiseSourceValue_Agglomerations() {
     ['agglomerationAir', 'agglomerationIndustry', 'agglomerationRailway', 'agglomerationRoad', 'agglomerationMajorRoad', 'agglomerationMajorRailway', 'agglomerationMajorAirport']
+}
+
+def CODELIST_NoiseSourceValue_All() {
+    ['agglomerationAir', 'agglomerationIndustry', 'agglomerationRailway', 'agglomerationRoad', 'agglomerationMajorRoad', 'agglomerationMajorRailway', 'agglomerationMajorAirport', 'agglomerationAllSources', 'allSources', 'majorAirport', 'majorAllSources', 'majorRailway', 'majorRoad']
 }
 
 def CODELIST_PrioritisationCriteriaValue() {
@@ -312,6 +316,15 @@ def CODELIST_CitationLevelValue() {
 
 def CODELIST_CitationTypeValue() {
 	['documentCitation', 'legislationCitation', 'resourceCitation']
+}
+
+def CODELIST_LanguageTypeValue() {
+	['bul', 'ces', 'dan', 'deu', 'ell', 'eng', 'est', 'fin', 'fra', 'gle', 'hrv', 'hun', 'ita', 'lav', 'lit', 'mlt', 
+	'nld', 'nor', 'pol', 'por', 'ron', 'slk', 'slv', 'spa', 'swe']
+}
+
+def CODELIST_SpecialisedZoneTypeValue() {
+	['quietAreaInAgglomeration', 'quietAreaInOpenCountry']
 }
 
 def CODELIST_kvkNr() {
