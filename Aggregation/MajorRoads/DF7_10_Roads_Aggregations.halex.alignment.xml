@@ -430,7 +430,7 @@ _snippets.end_Checks {&#13;
 	&#13;
 	uniqueCheck('TU109', SHEET, ['actionPlanId_identifier', 'roadIdIdentifier'])&#13;
 	&#13;
-	nandCheck('END_TO27', SHEET, ['existingMeasure', 'plannedMeasureDetail_plannedMeasure'], 'The fields existingMeasure and plannedMeasureDetail_plannedMeasure must not both contain the value noMeasure', isEqualTo('noMeasure'))&#13;
+	nandCheck('END_TO27', SHEET, ['existingMeasure', 'plannedMeasureDetail_plannedMeasure'], 'The fields existingMeasure and plannedMeasureDetail_plannedMeasure must not both contain the value noMeasure', isEqualTo('noMeasure'), true)&#13;
 	conditionalCheck('END_TO26', SHEET, 'plannedMeasureDetail_allMeasuresInCost', 'plannedMeasureDetail_measuresInCost', 'The field measuresInCost must not contain the value noMeasure when allMeasuresInCost is No for that action plan', isEqualTo('No'), isNotEqualTo('noMeasure'))&#13;
 &#13;
 }
