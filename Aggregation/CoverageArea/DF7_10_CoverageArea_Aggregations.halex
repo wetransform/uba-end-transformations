@@ -8,25 +8,25 @@
         <setting name="charset">UTF-8</setting>
         <setting name="projectFiles.separate">false</setting>
         <setting name="contentType">eu.esdihumboldt.hale.io.project.hale25.xml</setting>
-        <setting name="target">file:/C:/Users/AnnaTamm/gitRepos/uba-end-transformations/Aggregation/CoverageArea/DF7_10_CoverageArea_Aggregations.halex</setting>
+        <setting name="target">DF7_10_CoverageArea_Aggregations.halex</setting>
     </save-config>
     <resource action-id="eu.esdihumboldt.hale.io.schema.read.source" provider-id="eu.esdihumboldt.hale.common.schema.persist.hsd.json.read">
         <setting name="charset">UTF-8</setting>
         <setting name="resourceId">f3995b4a-d956-448a-8d22-c10446c572b9</setting>
-        <setting name="source">file:/C:/Users/AnnaTamm/gitRepos/uba-end-transformations/Schemas/DF7_10_CoverageArea.hsd.json</setting>
+        <setting name="source">../../Schemas/DF7_10_CoverageArea.hsd.json</setting>
         <setting name="contentType">eu.esdihumboldt.hale.common.schema.hsd.json</setting>
     </resource>
     <resource action-id="eu.esdihumboldt.hale.io.schema.read.target" provider-id="eu.esdihumboldt.hale.common.schema.persist.hsd.json.read">
         <setting name="charset">UTF-8</setting>
         <setting name="resourceId">628171e0-de1c-4a3a-9735-bbbe61d0dca1</setting>
-        <setting name="source">file:/C:/Users/AnnaTamm/gitRepos/uba-end-transformations/Schemas/DF7_10_CoverageArea.hsd.json</setting>
+        <setting name="source">../../Schemas/DF7_10_CoverageArea.hsd.json</setting>
         <setting name="contentType">eu.esdihumboldt.hale.common.schema.hsd.json</setting>
     </resource>
     <resource action-id="eu.esdihumboldt.hale.io.groovy.snippets.load" provider-id="eu.esdihumboldt.hale.io.groovy.snippets">
         <setting name="identifier">end_Checks</setting>
         <setting name="charset">UTF-8</setting>
         <setting name="resourceId">37398b3d-e470-4ca3-9cd3-25c575adebf7</setting>
-        <setting name="source">file:/C:/Users/AnnaTamm/gitRepos/uba-end-transformations/Snippets/end.Checks.groovy</setting>
+        <setting name="source">../../Snippets/end.Checks.groovy</setting>
         <setting name="contentType">eu.esdihumboldt.hale.io.groovy</setting>
         <setting name="autoReload">true</setting>
     </resource>
