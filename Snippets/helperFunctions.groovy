@@ -3,7 +3,7 @@ import eu.esdihumboldt.hale.ui.HaleUI;
 import eu.esdihumboldt.hale.common.core.io.*;
 import java.text.SimpleDateFormat;
 
-def getLookupTableValue(value, tableId){
+def getLookupTableValue(value, tableId) {
 	// retrieve Lookup table
 	LookupService ls = HaleUI.getServiceProvider().getService(LookupService.class)
 	LookupTableInfo lithTable = ls.getTable(tableId)
@@ -14,7 +14,7 @@ def getLookupTableValue(value, tableId){
 	return result
 }
 
-def getLookupTableKeys(tableId){
+def getLookupTableKeys(tableId) {
 	// retrieve Lookup table
 	LookupService ls = HaleUI.getServiceProvider().getService(LookupService.class)
 	LookupTableInfo lithTable = ls.getTable(tableId)
@@ -61,7 +61,7 @@ def classifyListValues (valueList, tableId) {
 }
 
 def classifyJaNein (value) {
-	switch(value){
+	switch(value) {
 		case 'Ja':
 			return 'Yes'
 		case 'Nein':
@@ -69,7 +69,7 @@ def classifyJaNein (value) {
 	}
 }
 
-def formatDate(dateString){
+def formatDate(dateString) {
 	// Input date format dd.MM.yyyy as string, output yyy-MM-dd
 	if (dateString) {
 		try {

@@ -139,7 +139,7 @@ def hasNumberOfDigits(numberOfDigitsList) {
     { digits, args ->
 		def result = false
 		digits.each{ d ->	
-			if (args['value'].length() == d){
+			if (args['value'].length() == d) {
 				result = true
 			}
 		}
@@ -374,7 +374,7 @@ def generalCheck(String codeInvalid, String sheet, List fields, String message, 
 		
 		def values = []
 		fields.each { f ->
-			switch (alignmentMode){
+			switch (alignmentMode) {
 				case 'aggregation':
 					values << sanitize(_source.p[f].value()).toString()
 					break
@@ -400,7 +400,7 @@ def generalCheck(String codeInvalid, String codeMissing, String sheet, String fi
 		def c = _.context.collector(it)
 		def value
 		def id
-		switch (alignmentMode){
+		switch (alignmentMode) {
 			case 'aggregation':
 				value = sanitize(_source.p[field].value())
 				id = idField ? "[${idField} = ${_source.p[idField].value()}]" : ''
@@ -480,7 +480,7 @@ def conditionalCheck(String code, String sheet, String fieldA, String fieldB, St
 		def a
 		def b
 		def id
-		switch (alignmentMode){
+		switch (alignmentMode) {
 			case 'aggregation':
 				a = sanitize(_source.p[fieldA].value())
 				b = sanitize(_source.p[fieldB].value())
@@ -529,7 +529,7 @@ def xorCheck(String code, String sheet, List fields, String message, validator) 
 		def fieldsAndValues = ''
 		fields?.each { f ->
 			def value
-			switch (alignmentMode){
+			switch (alignmentMode) {
 				case 'aggregation':
 					value = sanitize(_source.p[f].value())
 					break
@@ -557,7 +557,7 @@ def orCheck(String code, String sheet, List fields, String message, validator) {
 		def fieldsAndValues = ''
 		fields?.each { f ->
 			def value
-			switch (alignmentMode){
+			switch (alignmentMode) {
 				case 'aggregation':
 					value = sanitize(_source.p[f].value())
 					break
@@ -585,7 +585,7 @@ def nandCheck(String code, String sheet, List fields, String message, validator)
 		def fieldsAndValues = ''
 		fields?.each { f ->
 			def value
-			switch (alignmentMode){
+			switch (alignmentMode) {
 				case 'aggregation':
 					value = sanitize(_source.p[f].value())
 					break
@@ -610,7 +610,7 @@ def nandCheck(String code, String sheet, String fieldA, String fieldB, String me
 		
 		def a
 		def b
-		switch (alignmentMode){
+		switch (alignmentMode) {
 			case 'aggregation':
 				a = sanitize(_source.p[fieldA].value())
 				b = sanitize(_source.p[fieldB].value())
@@ -654,7 +654,7 @@ def xnorCheck(String code, String sheet, String fieldA, String fieldB, String me
 		
 		def a
 		def b
-		switch (alignmentMode){
+		switch (alignmentMode) {
 			case 'aggregation':
 				a = sanitize(_source.p[fieldA].value())
 				b = sanitize(_source.p[fieldB].value())
