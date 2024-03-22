@@ -367,7 +367,7 @@ def sanitize(Object value) {
     value
 }
 
-def generalCheck(String codeInvalid, String sheet, List fields, String message, Closure validator, String idField = null) {
+def generalCheck(String codeInvalid, String sheet, List fields, String message, Closure validator, String idField = null, boolean isWarning = false) {
 	def alignmentMode = _project.vars.ALIGNMENT_MODE
 	withTransformationContext {
 		def c = _.context.collector(it)
@@ -387,14 +387,20 @@ def generalCheck(String codeInvalid, String sheet, List fields, String message, 
 		def valid = validator.call(['value':values.join('+'), 'sheet':sheet, 'field':fields.join('+')])
 		
 		if (!valid) {
-			_log.error("${codeInvalid}: The values ${values} for the fields ${fields} ${message} [${sheet}]")
+			def msg = "${codeInvalid}: The values ${values} for the fields ${fields} ${message} [${sheet}]${id}"
+			if (isWarning) {
+				_log.warn(msg)
+			}
+			else {
+				_log.error(msg)
+			}
 		}
 
 		valid
 	}
 }
 
-def generalCheck(String codeInvalid, String codeMissing, String sheet, String field, String message, Closure validator, String idField = null) {
+def generalCheck(String codeInvalid, String codeMissing, String sheet, String field, String message, Closure validator, String idField = null, boolean isWarning = false) {
 	def alignmentMode = _project.vars.ALIGNMENT_MODE
 	withTransformationContext {
 		def c = _.context.collector(it)
@@ -420,11 +426,23 @@ def generalCheck(String codeInvalid, String codeMissing, String sheet, String fi
 
 		if (value) {
 			if (!valid) {
-				_log.error("${codeInvalid}: The value \'${value}\' for ${field} ${message} [${sheet}]${id}")
+				def msg = "${codeInvalid}: The value \'${value}\' for ${field} ${message} [${sheet}]${id}"
+				if (isWarning) {
+					_log.warn(msg)
+				}
+				else {
+					_log.error(msg)
+				}
 			}
 		}
 		else if (codeMissing) {
-			_log.error("${codeMissing}: The value for ${field} must not be missing or empty [${sheet}]${id}")
+			def msg = "${codeMissing}: The value for ${field} must not be missing or empty [${sheet}]${id}"
+			if (isWarning) {
+				_log.warn(msg)
+			}
+			else {
+				_log.error(msg)
+			}
 		}
 		
 		valid
@@ -434,46 +452,48 @@ def generalCheck(String codeInvalid, String codeMissing, String sheet, String fi
 
 
 
-def codelistCheck(String codeInvalid, String codeMissing, String sheet, String field, List codelist, boolean multipleAllowed = false, String idField = null) {
+def codelistCheck(String codeInvalid, String codeMissing, String sheet, String field, List codelist, boolean multipleAllowed = false, String idField = null, boolean isWarning = false) {
     generalCheck(codeInvalid, codeMissing, sheet, field,
         multipleAllowed ? "contains elements that are not a valid member of the codelist [${codelist.join(', ')}]" : "is not a valid member of the codelist [${codelist.join(', ')}]", 
-        isValidCode(codelist, codeInvalid, multipleAllowed))
+        isValidCode(codelist, codeInvalid, multipleAllowed),
+		idField, isWarning)
 }
 
-def dateCheck(String codeInvalid, String codeMissing, String sheet, String field, String dateFormat) {
-    generalCheck(codeInvalid, codeMissing, sheet, field, 'is not a valid date', isValidDate(dateFormat))
+def dateCheck(String codeInvalid, String codeMissing, String sheet, String field, String dateFormat, boolean isWarning = false) {
+    generalCheck(codeInvalid, codeMissing, sheet, field, 'is not a valid date', isValidDate(dateFormat), null, isWarning)
 }
 
-def existsCheck(String codeMissing, String sheet, String field) {
-    generalCheck(null, codeMissing, sheet, field, null, exists())
+def existsCheck(String codeMissing, String sheet, String field, boolean isWarning = false) {
+    generalCheck(null, codeMissing, sheet, field, null, exists(), null, isWarning)
 }
 
-def urlCheck(String codeInvalid, String codeMissing, String sheet, String field, String mustStartWith = null) {
+def urlCheck(String codeInvalid, String codeMissing, String sheet, String field, String mustStartWith = null, boolean isWarning = false) {
     generalCheck(codeInvalid, codeMissing, sheet, field, 'is not a valid URL',
-        mustStartWith ? isValidUrlThatStartsWith(mustStartWith) : isValidUrl())
+        mustStartWith ? isValidUrlThatStartsWith(mustStartWith) : isValidUrl(),
+		null, isWarning)
 }
 
-def costCheck(String codeInvalid, String codeMissing, String sheet, String field) {
-    generalCheck(codeInvalid, codeMissing, sheet, field, 'is not a valid whole or decimal number', isValidNumber())
+def costCheck(String codeInvalid, String codeMissing, String sheet, String field, boolean isWarning = false) {
+    generalCheck(codeInvalid, codeMissing, sheet, field, 'is not a valid whole or decimal number', isValidNumber(), null, isWarning)
 }
 
-def numberCheck(String codeInvalid, String codeMissing, String sheet, String field, Locale locale = Locale.getDefault()) {
-    generalCheck(codeInvalid, codeMissing, sheet, field, 'is not a valid whole or decimal number', isValidNumber())
+def numberCheck(String codeInvalid, String codeMissing, String sheet, String field, Locale locale = Locale.getDefault(), boolean isWarning = false) {
+    generalCheck(codeInvalid, codeMissing, sheet, field, 'is not a valid whole or decimal number', isValidNumber(), null, isWarning)
 }
 
-def integerCheck(String codeInvalid, String codeMissing, String sheet, String field) {
-    generalCheck(codeInvalid, codeMissing, sheet, field, 'is not a valid whole number', isValidInteger())
+def integerCheck(String codeInvalid, String codeMissing, String sheet, String field, boolean isWarning = false) {
+    generalCheck(codeInvalid, codeMissing, sheet, field, 'is not a valid whole number', isValidInteger(), null, isWarning)
 }
 
-def freetextCheck(String codeInvalid, String codeMissing, String sheet, String field, long maxLength = _project.vars.MAX_FREETEXT_LENGTH as long) {
-    generalCheck(codeInvalid, codeMissing, sheet, field, "is too long (max. allowed length is ${maxLength})", isNotTooLong(maxLength))
+def freetextCheck(String codeInvalid, String codeMissing, String sheet, String field, long maxLength = _project.vars.MAX_FREETEXT_LENGTH as long, boolean isWarning = false) {
+    generalCheck(codeInvalid, codeMissing, sheet, field, "is too long (max. allowed length is ${maxLength})", isNotTooLong(maxLength), null, isWarning)
 }
 
-def customCheck(String codeInvalid, String codeMissing, String sheet, field, String message, validator) {
-    generalCheck(codeInvalid, codeMissing, sheet, field, message, validator)
+def customCheck(String codeInvalid, String codeMissing, String sheet, field, String message, validator, boolean isWarning = false) {
+    generalCheck(codeInvalid, codeMissing, sheet, field, message, validator, null, isWarning)
 }
 
-def conditionalCheck(String code, String sheet, String fieldA, String fieldB, String message, validatorA, validatorB, String idField = null) {
+def conditionalCheck(String code, String sheet, String fieldA, String fieldB, String message, validatorA, validatorB, String idField = null, boolean isWarning = false) {
 	def alignmentMode = _project.vars.ALIGNMENT_MODE
 	withTransformationContext {
 		def c = _.context.collector(it)
@@ -498,29 +518,35 @@ def conditionalCheck(String code, String sheet, String fieldA, String fieldB, St
 		def validB = validatorB.call(['value':b, 'sheet':sheet, 'field':fieldB])
 
 		if (validA && !validB) {
-			_log.error("${code}: ${message} [${sheet}][${fieldA} = ${a}]$id")
+			def msg = "${code}: ${message} [${sheet}][${fieldA} = ${a}]$id"
+			if (isWarning) {
+				_log.warn(msg)
+			}
+			else {
+				_log.error(msg)
+			}
 		}
 	}
 }
 
-def conditionalCheck(String code, String sheet, String fieldA, String fieldB, String idField = null) {
-    conditionalCheck(code, sheet, fieldA, fieldB, "If ${fieldA} is reported, ${fieldB} has to be provided", exists(), exists(), idField)
+def conditionalCheck(String code, String sheet, String fieldA, String fieldB, String idField = null, boolean isWarning = false) {
+    conditionalCheck(code, sheet, fieldA, fieldB, "If ${fieldA} is reported, ${fieldB} has to be provided", exists(), exists(), idField, isWarning)
 }
 
-def conditionalCheck(String code, String sheet, String fieldA, String fieldB, List fieldAConditionalValues, String idField = null) {
+def conditionalCheck(String code, String sheet, String fieldA, String fieldB, List fieldAConditionalValues, String idField = null, boolean isWarning = false) {
     conditionalCheck(code, sheet, fieldA, fieldB,
         "The field ${fieldB} has to be provided if ${fieldA} is one of ${fieldAConditionalValues}",
-        listContainsValue(fieldAConditionalValues), exists(), idField)
+        listContainsValue(fieldAConditionalValues), exists(), idField, isWarning)
 }
 
-def conditionalCheck(String code, String sheet, String fieldA, List<String> fieldB, List fieldAConditionalValues, String idField = null) {
+def conditionalCheck(String code, String sheet, String fieldA, List<String> fieldB, List fieldAConditionalValues, String idField = null, boolean isWarning = false) {
     fieldB?.each { b ->
-        conditionalCheck(code, sheet, fieldA, b, fieldAConditionalValues, idField)
+        conditionalCheck(code, sheet, fieldA, b, fieldAConditionalValues, idField, isWarning)
     }
 }
 
 // Applies a validator to a list of fields. If it does not return true for excatly one field, the check fails (XOR).
-def xorCheck(String code, String sheet, List fields, String message, validator) {
+def xorCheck(String code, String sheet, List fields, String message, validator, boolean isWarning = false) {
 	def alignmentMode = _project.vars.ALIGNMENT_MODE
 	withTransformationContext {
 		def c = _.context.collector(it)
@@ -542,13 +568,19 @@ def xorCheck(String code, String sheet, List fields, String message, validator) 
 		}
 
 		if (!matches) {
-			_log.error("${code}: ${message} [${sheet}]$fieldsAndValues")
+			def msg = "${code}: ${message} [${sheet}]$fieldsAndValues"
+			if (isWarning) {
+				_log.warn(msg)
+			}
+			else {
+				_log.error(msg)
+			}
 		}
 	}
 }
 
 // Applies a validator to a list of fields. If it returns false for all fields, the check fails (OR).
-def orCheck(String code, String sheet, List fields, String message, validator) {
+def orCheck(String code, String sheet, List fields, String message, validator, boolean isWarning = false) {
 	def alignmentMode = _project.vars.ALIGNMENT_MODE
 	withTransformationContext {
 		def c = _.context.collector(it)
@@ -570,13 +602,19 @@ def orCheck(String code, String sheet, List fields, String message, validator) {
 		}
 
 		if (!matches) {
-			_log.error("${code}: ${message} [${sheet}]$fieldsAndValues")
+			def msg = "${code}: ${message} [${sheet}]$fieldsAndValues"
+			if (isWarning) {
+				_log.warn(msg)
+			}
+			else {
+				_log.error(msg)
+			}
 		}
 	}
 }
 
 // Applies a validator to a list of fields. If it returns true for all fields, the check fails (NAND).
-def nandCheck(String code, String sheet, List fields, String message, validator) {
+def nandCheck(String code, String sheet, List fields, String message, validator, boolean isWarning = false) {
     def alignmentMode = _project.vars.ALIGNMENT_MODE
 	withTransformationContext {
 		def c = _.context.collector(it)
@@ -598,12 +636,18 @@ def nandCheck(String code, String sheet, List fields, String message, validator)
 		}
 
 		if (matches) {
-			_log.error("${code}: ${message} [${sheet}]$fieldsAndValues")
+			def msg = "${code}: ${message} [${sheet}]$fieldsAndValues"
+			if (isWarning) {
+				_log.warn(msg)
+			}
+			else {
+				_log.error(msg)
+			}
 		}
 	}
 }
 
-def nandCheck(String code, String sheet, String fieldA, String fieldB, String message, validatorA, validatorB) {
+def nandCheck(String code, String sheet, String fieldA, String fieldB, String message, validatorA, validatorB, boolean isWarning = false) {
 	def alignmentMode = _project.vars.ALIGNMENT_MODE
 	withTransformationContext {
 		def c = _.context.collector(it)
@@ -626,28 +670,34 @@ def nandCheck(String code, String sheet, String fieldA, String fieldB, String me
 		def validB = validatorB.call(['value':b, 'sheet':sheet, 'field':fieldB])
 
 		if (validA && validB) {
-			_log.error("${code}: ${message} [${sheet}][${fieldA} = ${a}][${fieldB} = ${b}]")
+			def msg = "${code}: ${message} [${sheet}][${fieldA} = ${a}][${fieldB} = ${b}]"
+			if (isWarning) {
+				_log.warn(msg)
+			}
+			else {
+				_log.error(msg)
+			}
 		}
 	}
 }
 
-def nandCheck(String code, String sheet, String fieldA, String fieldB) {
-    nandCheck(code, sheet, fieldA, fieldB, "If ${fieldA} is reported, ${fieldB} must not be reported", exists(), exists())    
+def nandCheck(String code, String sheet, String fieldA, String fieldB, boolean isWarning = false) {
+    nandCheck(code, sheet, fieldA, fieldB, "If ${fieldA} is reported, ${fieldB} must not be reported", exists(), exists(), isWarning)    
 }
 
-def nandCheck(String code, String sheet, String fieldA, String fieldB, List fieldAConditionalValues) {
+def nandCheck(String code, String sheet, String fieldA, String fieldB, List fieldAConditionalValues, boolean isWarning = false) {
     nandCheck(code, sheet, fieldA, fieldB,
         "The field ${fieldB} must not be provided if ${fieldA} is one of ${fieldAConditionalValues}",
-        listContainsValue(fieldAConditionalValues), exists())
+        listContainsValue(fieldAConditionalValues), exists(), isWarning)
 }
 
-def nandCheck(String code, String sheet, String fieldA, List<String> fieldB, List fieldAConditionalValues) {
+def nandCheck(String code, String sheet, String fieldA, List<String> fieldB, List fieldAConditionalValues, boolean isWarning = false) {
     fieldB?.each { b ->
-        nandCheck(code, sheet, fieldA, b, fieldAConditionalValues)
+        nandCheck(code, sheet, fieldA, b, fieldAConditionalValues, isWarning)
     }
 }
 
-def xnorCheck(String code, String sheet, String fieldA, String fieldB, String message, validatorA, validatorB) {
+def xnorCheck(String code, String sheet, String fieldA, String fieldB, String message, validatorA, validatorB, boolean isWarning = false) {
     def alignmentMode = _project.vars.ALIGNMENT_MODE
 	withTransformationContext {
 		def c = _.context.collector(it)
@@ -671,19 +721,25 @@ def xnorCheck(String code, String sheet, String fieldA, String fieldB, String me
 		def validB = validatorB.call(['value':b, 'sheet':sheet, 'field':fieldB])
 
 		if ((validA && !validB) || (!validA && validB)) { // hack to avoid call to java.lang.Boolean.compareTo
-			_log.error("${code}: The values for ${fieldA} and ${fieldB} ${message} [${sheet}][${fieldA} = ${a}][${fieldB} = ${b}]")
+			def msg = "${code}: The values for ${fieldA} and ${fieldB} ${message} [${sheet}][${fieldA} = ${a}][${fieldB} = ${b}]"
+			if (isWarning) {
+				_log.warn(msg)
+			}
+			else {
+				_log.error(msg)
+			}
 		}
 	}
 }
 
-def xnorCheck(String code, String sheet, String fieldA, String fieldB) {
-    xnorCheck(code, sheet, fieldA, fieldB, 'must be either both provided or both not provided', exists(), exists())
+def xnorCheck(String code, String sheet, String fieldA, String fieldB, boolean isWarning = false) {
+    xnorCheck(code, sheet, fieldA, fieldB, 'must be either both provided or both not provided', exists(), exists(), isWarning)
 }
 
-def uniqueCheck(String code, String sheet, String field) {
-    generalCheck(code, null, sheet, field, 'must be unique within the table', isUnique())
+def uniqueCheck(String code, String sheet, String field, boolean isWarning = false) {
+    generalCheck(code, null, sheet, field, 'must be unique within the table', isUnique(), null, isWarning)
 }
 
-def uniqueCheck(String code, String sheet, List fields) {
-    generalCheck(code, sheet, fields, 'must be unique within the table', isUnique())
+def uniqueCheck(String code, String sheet, List fields, boolean isWarning = false) {
+    generalCheck(code, sheet, fields, 'must be unique within the table', isUnique(), null, isWarning)
 }
