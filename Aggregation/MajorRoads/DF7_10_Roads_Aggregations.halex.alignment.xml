@@ -74,6 +74,24 @@ _target {&#13;
 </core:text>
         </complexParameter>
     </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.create" id="C3383b9ef-38fa-451a-9731-b5a851325890" priority="normal">
+        <target>
+            <class>
+                <type name="ESTATUnitReference"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+_target {&#13;
+	ESTATLAUReferenceLink( 'https://ec.europa.eu/eurostat/web/gisco/geodata/reference-data/administrative-units-statistical-units/lau' )&#13;
+	ESTATLAUReferenceTitle( 'Local Administrative Units (LAU) 2022; Source: Eurostat' )&#13;
+	&#13;
+	ESTATNUTSReferenceLink( 'https://ec.europa.eu/eurostat/web/gisco/geodata/reference-data/administrative-units-statistical-units/nuts' )&#13;
+	ESTATNUTSReferenceTitle( 'NUTS 2021, Version date: 2020-01-20, Scale: 1:1M, Source: Eurostat' )&#13;
+}
+</core:text>
+        </complexParameter>
+    </cell>
     <cell relation="eu.esdihumboldt.cst.functions.groovy.retype" id="C750be061-3ef0-4afd-bed2-2724bd1e2814" priority="normal">
         <source>
             <class>
@@ -95,6 +113,11 @@ _snippets.end_Checks {&#13;
 	&#13;
 	uniqueCheck('TU104', SHEET, ['actionPlanId_identifier', 'roadIdIdentifier', 'allInLAUCode', 'allInNUTSCode', 'allInCountry'])&#13;
 	freetextCheck('LEN', 'FC96', SHEET, 'actionPlanId_identifier')&#13;
+	&#13;
+	codelistCheck('END_RT37', null, SHEET, 'allInLAUCode', CODELIST_LauIdValue(), true)&#13;
+	codelistCheck('END_RT38', null, SHEET, 'allInNUTSCode', CODELIST_NutsIdValue(), true)&#13;
+	&#13;
+	xorCheck('END_RC14', SHEET, ['allInCountry','allInLAUCode','allInNUTSCode','roadIdIdentifier'], 'Only one reference level is expected to be provided for each actionPlan: roadIdIdentifier, allInLAUCode, allInNUTSCode or allInCountry', exists())&#13;
 }&#13;
 &#13;
 
@@ -270,9 +293,25 @@ _snippets.end_Checks {&#13;
 	freetextCheck('LEN', 'FC126', SHEET, 'explanationMethod')&#13;
 	&#13;
 	customCheck('END_DV62', null, SHEET, 'nrOfPeople', 'must be greater than or equal to 0', isGreaterThanOrEqual0())&#13;
-&#13;
+	&#13;
 }&#13;
-
+&#13;
+//END_RC30&#13;
+//When not providing numberExperiencingReduction by actionPlanId_identifier (in table NAP_RoadReductionHealthImpact_1), &#13;
+//at least one of the following attributes must be provided: numberHAReduction, mumberHSDReduction, mumberHDReduction&#13;
+&#13;
+withTransformationContext {&#13;
+	def c = _.context.collector(it)&#13;
+	&#13;
+	def nrOfPeople = _source.p.nrOfPeople.value()&#13;
+	def actionPlanId = _source.p.actionPlanId_identifier.value()&#13;
+	&#13;
+	if (!nrOfPeople &amp;&amp; !c.numberHAReduction[actionPlanId].value() &amp;&amp; !c.numberHSDReduction[actionPlanId].value() &amp;&amp; !c.numberIHDReduction[actionPlanId].value()) {&#13;
+		_log.error("END_RC30: When not providing nrOfPeople by actionPlanId_identifier " +&#13;
+				"in table NAP_RailReductionHealthImpact_1, at least one of the following attributes must " +&#13;
+				"be provided in table NAP_RailReductionHealthImpact_2: numberHAReduction, numberHSDReduction, numberIHDReduction")&#13;
+	}&#13;
+}
 </core:text>
         </complexParameter>
     </cell>
@@ -289,6 +328,30 @@ _snippets.end_Checks {&#13;
         </target>
         <parameter value="true" name="ignoreNamespaces"/>
         <parameter value="true" name="structuralRename"/>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.retype" id="C6d3ec89d-65ed-4c4a-b995-f37e63f3190c" priority="higher">
+        <source>
+            <class>
+                <type name="NAP_RoadReductionHealthImpact_2"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NAP_RoadReductionHealthImpact_2"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+withTransformationContext{&#13;
+	def c = _.context.collector(it)&#13;
+	def actionPlanId = _source.p.actionPlanId_identifier.value()&#13;
+	&#13;
+	c.numberHAReduction[actionPlanId] &lt;&lt; _source.p.numberHAReduction.value()&#13;
+	c.numberHSDReduction[actionPlanId] &lt;&lt; _source.p.numberHSDReduction.value()&#13;
+	c.numberIHDReduction[actionPlanId] &lt;&lt; _source.p.numberIHDReduction.value()&#13;
+}
+</core:text>
+        </complexParameter>
     </cell>
     <cell relation="eu.esdihumboldt.cst.functions.groovy.retype" id="C3868ebe5-9641-4802-8b80-239daed3e456" priority="normal">
         <source>
@@ -366,12 +429,6 @@ _snippets.end_Checks {&#13;
 	customCheck('END_DV26', null, SHEET, 'plannedMeasureDetail_measuresInCost', 'is invalid: When \"noMeasure\" value is selected, no more values are expected in the field', isOnlyValueIfPresent('noMeasure'))&#13;
 	&#13;
 	uniqueCheck('TU109', SHEET, ['actionPlanId_identifier', 'roadIdIdentifier'])&#13;
-	&#13;
-	&#13;
-	//won't do: TC116 actionPlanId_Identifier Checks if the record based on criteria is valid LINK&#13;
-	//won't do: TO117 Table Completeness Checks if contains all the records based on set criteria.&#13;
-	//won't do: END_RT43 Mismatching of roadIdIdentifier between NAP_RoadReductionMeasure and reference information extracted from DF1_5 MajorRoadSource &#13;
-	//To Do: END_RT44 Mismatching of roadIdIdentifier for actionPlanId_identifier between the tables: NAP_MajorRoad and NAP_RoadReductionMeasure -&gt; für UBA-DE theoretisch nicht relevant, da keine RoadIDs?&#13;
 	&#13;
 	nandCheck('END_TO27', SHEET, ['existingMeasure', 'plannedMeasureDetail_plannedMeasure'], 'The fields existingMeasure and plannedMeasureDetail_plannedMeasure must not both contain the value noMeasure', isEqualTo('noMeasure'))&#13;
 	conditionalCheck('END_TO26', SHEET, 'plannedMeasureDetail_allMeasuresInCost', 'plannedMeasureDetail_measuresInCost', 'The field measuresInCost must not contain the value noMeasure when allMeasuresInCost is No for that action plan', isEqualTo('No'), isNotEqualTo('noMeasure'))&#13;
