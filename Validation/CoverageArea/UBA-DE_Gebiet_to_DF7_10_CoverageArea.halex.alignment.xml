@@ -8,7 +8,7 @@
         </target>
         <complexParameter name="script">
             <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
-//assign values to target sheet NoiseActionPlanCoverageArea&#13;
+// assign values to target sheet NoiseActionPlanCoverageArea&#13;
 withTransformationContext {	&#13;
 	def c = _.context.collector(it)&#13;
 	&#13;
@@ -42,11 +42,11 @@ def wert = _source.p.Wert.value()&#13;
 &#13;
 withTransformationContext {&#13;
 	def c = _.context.collector(it)&#13;
-	if(bezeichnung){&#13;
-		if (bezeichnung.contains('Kennung des Lärmaktionsplans')){&#13;
+	if(bezeichnung) {&#13;
+		if (bezeichnung.contains('Kennung des Lärmaktionsplans')) {&#13;
 			c.Allgemeines.kennungPlan &lt;&lt; wert&#13;
 		}&#13;
-		else if (bezeichnung.contains('Amtlicher Gemeindeschlüssel (AGS)') || bezeichnung.contains('Regionalschlüssel (RS)')){&#13;
+		else if (bezeichnung.contains('Amtlicher Gemeindeschlüssel (AGS)') || bezeichnung.contains('Regionalschlüssel (RS)')) {&#13;
 			c.Allgemeines.ags_rs &lt;&lt; wert&#13;
 		}&#13;
 	}&#13;
@@ -77,7 +77,7 @@ withTransformationContext {&#13;
 		_log.error("No actionPlanIdentifier provided for Geometry in LAP_Gebiet")&#13;
 	}&#13;
 	&#13;
-	if (_source.p.filename.value() &amp;&amp; c.Allgemeines.KennungPlan == _source.p.actionPlan.value()){&#13;
+	if (_source.p.filename.value() &amp;&amp; c.Allgemeines.KennungPlan == _source.p.actionPlan.value()) {&#13;
 		c.LAP_Gebiet.vorhanden &lt;&lt; true&#13;
 		c.Geometrie &lt;&lt; _source.p.the_geom.value()&#13;
 	}&#13;
@@ -106,7 +106,7 @@ withTransformationContext {&#13;
 withTransformationContext {&#13;
 	def c = _.context.collector(it)&#13;
 	&#13;
-	if (!c.LAP_Gebiet.vorhanden.value() &amp;&amp;  _source.p.AGS.value() == c.Allgemeines.ags_rs.value()){&#13;
+	if (!c.LAP_Gebiet.vorhanden.value() &amp;&amp;  _source.p.AGS.value() == c.Allgemeines.ags_rs.value()) {&#13;
 		c.Geometrie &lt;&lt; _source.p.the_geom.value()&#13;
 	}&#13;
 }&#13;
@@ -135,7 +135,7 @@ withTransformationContext {&#13;
 withTransformationContext {&#13;
 	def c = _.context.collector(it)&#13;
 	&#13;
-	if (!c.LAP_Gebiet.vorhanden.value() &amp;&amp;  _source.p.ARS.value() == c.Allgemeines.ags_rs.value()){&#13;
+	if (!c.LAP_Gebiet.vorhanden.value() &amp;&amp;  _source.p.ARS.value() == c.Allgemeines.ags_rs.value()) {&#13;
 		c.Geometrie &lt;&lt; _source.p.the_geom.value()&#13;
 	}&#13;
 }
@@ -163,7 +163,7 @@ withTransformationContext {&#13;
 withTransformationContext {&#13;
 	def c = _.context.collector(it)&#13;
 	&#13;
-	if (!c.LAP_Gebiet.vorhanden.value() &amp;&amp;  _source.p.ARS.value() == c.Allgemeines.ags_rs.value()){&#13;
+	if (!c.LAP_Gebiet.vorhanden.value() &amp;&amp;  _source.p.ARS.value() == c.Allgemeines.ags_rs.value()) {&#13;
 		c.Geometrie &lt;&lt; _source.p.the_geom.value()&#13;
 	}&#13;
 }
