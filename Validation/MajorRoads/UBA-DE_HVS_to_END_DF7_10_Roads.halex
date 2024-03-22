@@ -8,7 +8,7 @@
         <setting name="charset">UTF-8</setting>
         <setting name="projectFiles.separate">false</setting>
         <setting name="contentType">eu.esdihumboldt.hale.io.project.hale25.xml</setting>
-        <setting name="target">file:/C:/Users/AnnaTamm/gitRepos/uba-end-transformations/Validation/MajorRoads/UBA-DE_HVS_to_END_DF7_10_Roads.halex</setting>
+        <setting name="target">UBA-DE_HVS_to_END_DF7_10_Roads.halex</setting>
     </save-config>
     <resource action-id="eu.esdihumboldt.hale.io.schema.read.source" provider-id="eu.esdihumboldt.hale.common.schema.persist.hsd.json.read">
         <setting name="charset">UTF-8</setting>
@@ -117,7 +117,7 @@
         <setting name="name">RB-RS_zu_NUTSCode</setting>
         <setting name="valueColumn">1</setting>
         <setting name="skip">true</setting>
-        <setting name="source">file:/C:/Users/AnnaTamm/gitRepos/uba-end-transformations/Lookup/RB-RS_zu_NUTSCode.csv</setting>
+        <setting name="source">../../Lookup/RB-RS_zu_NUTSCode.csv</setting>
         <setting name="contentType">eu.esdihumboldt.hale.io.csv</setting>
         <setting name="separator">,</setting>
         <setting name="escape">\</setting>
@@ -131,7 +131,7 @@
         <setting name="name">VWG-RS_zu_LAUCodes</setting>
         <setting name="valueColumn">1</setting>
         <setting name="skip">true</setting>
-        <setting name="source">file:/C:/Users/AnnaTamm/gitRepos/uba-end-transformations/Lookup/VWG-RS_zu_LAUCodes.csv</setting>
+        <setting name="source">../../Lookup/VWG-RS_zu_LAUCodes.csv</setting>
         <setting name="contentType">eu.esdihumboldt.hale.io.csv</setting>
         <setting name="separator">,</setting>
         <setting name="escape">\</setting>
