@@ -57,7 +57,8 @@ def SHEET = 'LAP_Ruhige_Gebiete_Lage'&#13;
 _snippets.end_Checks {	&#13;
 	existsCheck('quietArea - v', SHEET, 'quietArea')&#13;
 	existsCheck('Geometrie - v', SHEET, 'the_geom')&#13;
-}
+}&#13;
+
 </core:text>
         </complexParameter>
     </cell>
@@ -99,6 +100,8 @@ _snippets.end_Checks {	&#13;
         </complexParameter>
         <complexParameter name="script">
             <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+import eu.esdihumboldt.hale.common.instance.geometry.CRSDefinitionUtil as CRSDefinitionUtil;&#13;
+&#13;
 withTransformationContext {&#13;
 	def c = _.context.collector(it)&#13;
 &#13;
@@ -119,7 +122,25 @@ _snippets.end_Checks {&#13;
 &#13;
 if (!_source.links.LAP_Ruhige_Gebiete_Lage.first()) {&#13;
 	_log.error("Keine Geometrie zu Ruhigem Gebiet ${_source.p.Kennung.value()} vorhanden")&#13;
-}
+}&#13;
+&#13;
+&#13;
+// Validate geometry in 'LAP_Ruhige_Gebiete_Lage'&#13;
+def ruhigeGebiete = _source.links.LAP_Ruhige_Gebiete_Lage.list()&#13;
+ruhigeGebiete.each { ruhigesGebiet -&gt;	&#13;
+	def geom = ruhigesGebiet.p.the_geom.value()&#13;
+	&#13;
+	def epsgCode = CRSDefinitionUtil.getEPSG(geom.getCRSDefinition())&#13;
+	if (!(epsgCode in [25832, 25833])) {&#13;
+		_log.error("Geometries in LAP_Ruhige_Gebiete_Lage are provided in EPSG ${epsgCode}, only EPSG 25832 or 25833 are accepted.")	&#13;
+	}&#13;
+	&#13;
+	def isValid = geom.geometry.isValid()&#13;
+	if (! isValid) {&#13;
+		_log.error("The geometry of quiet area ${ruhigesGebiet.p.quietArea.value()} is not a valid geometry.")&#13;
+	}&#13;
+}&#13;
+
 </core:text>
         </complexParameter>
     </cell>
