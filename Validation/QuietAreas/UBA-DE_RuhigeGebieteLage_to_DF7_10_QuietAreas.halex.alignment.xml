@@ -206,33 +206,6 @@ ruhigeGebiete.each { ruhigesGebiet -&gt;	&#13;
         </target>
         <parameter value="2024" name="value"/>
     </cell>
-    <cell relation="eu.esdihumboldt.hale.align.classification" id="C02534fae-3e92-4341-83e9-5d6de0cb3e2d" priority="normal">
-        <source>
-            <property>
-                <type name="Ruhige_Gebiete"/>
-                <child name="Land_Ballungsraum"/>
-            </property>
-        </source>
-        <target>
-            <property>
-                <type name="QuietArea" ns="http://www.esdi-humboldt.eu/hale/gpkg"/>
-                <child name="protectionFrom"/>
-            </property>
-        </target>
-        <complexParameter name="lookupTable">
-            <lookup-table xmlns:ns2="http://www.esdi-humboldt.eu/hale/alignment" xmlns="">
-                <entry>
-                    <key value="auf dem Land"/>
-                    <value value="majorAllSources"/>
-                </entry>
-                <entry>
-                    <key value="in einem Ballungsraum"/>
-                    <value value="agglomerationAllSources"/>
-                </entry>
-            </lookup-table>
-        </complexParameter>
-        <parameter value="null" name="notClassifiedAction"/>
-    </cell>
     <cell relation="eu.esdihumboldt.hale.align.rename" id="Cb07af48a-aae9-49e7-9722-2315e7629346" priority="normal">
         <source>
             <property>
