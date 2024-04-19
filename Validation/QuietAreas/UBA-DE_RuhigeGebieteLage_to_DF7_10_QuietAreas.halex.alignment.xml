@@ -131,7 +131,7 @@ ruhigeGebiete.each { ruhigesGebiet -&gt;	&#13;
 	def geom = ruhigesGebiet.p.the_geom.value()&#13;
 	&#13;
 	def epsgCode = CRSDefinitionUtil.getEPSG(geom.getCRSDefinition())&#13;
-	if (!(epsgCode in [25832, 25833])) {&#13;
+	if (!(epsgCode in ["25832", "25833"])) {&#13;
 		_log.error("Geometries in LAP_Ruhige_Gebiete_Lage are provided in EPSG ${epsgCode}, only EPSG 25832 or 25833 are accepted.")	&#13;
 	}&#13;
 	&#13;
