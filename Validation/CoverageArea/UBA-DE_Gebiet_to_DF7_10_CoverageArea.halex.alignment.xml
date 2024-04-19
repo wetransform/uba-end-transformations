@@ -75,11 +75,11 @@ import eu.esdihumboldt.hale.common.instance.geometry.CRSDefinitionUtil as CRSDef
 withTransformationContext {&#13;
 	def c = _.context.collector(it)&#13;
 	&#13;
-	if (_source.p.filename.value() &amp;&amp; !c.Allgemeines.KennungPlan) {&#13;
+	if (_source.p.filename.value() &amp;&amp; !c.Allgemeines.kennungPlan.value()) {&#13;
 		_log.error("No actionPlanIdentifier provided for Geometry in LAP_Gebiet")&#13;
 	}&#13;
 	&#13;
-	if (_source.p.filename.value() &amp;&amp; c.Allgemeines.KennungPlan == _source.p.actionPlan.value()) {&#13;
+	if (_source.p.filename.value() &amp;&amp; c.Allgemeines.kennungPlan.value() == _source.p.actionPlan.value()) {&#13;
 		c.LAP_Gebiet.vorhanden &lt;&lt; true&#13;
 		c.Geometrie &lt;&lt; _source.p.the_geom.value()&#13;
 	}&#13;
