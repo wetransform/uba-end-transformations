@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <hale-project version="5.2.0.SNAPSHOT">
-    <name>DF7_10_CoverageArea_Aggregations</name>
-    <author>AnnaTamm</author>
+    <name>UBA END DF7_10 Coverage Area Aggregation</name>
+    <author>Anna Tamm (wetransform GmbH)</author>
     <created>2024-02-21T15:36:13.020+01:00</created>
     <modified>2024-03-18T08:42:00.489+01:00</modified>
     <save-config action-id="project.save" provider-id="eu.esdihumboldt.hale.io.project.hale25.xml.writer">

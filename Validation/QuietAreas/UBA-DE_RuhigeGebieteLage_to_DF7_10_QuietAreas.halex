@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <hale-project version="5.2.0.SNAPSHOT">
-    <name>UBA-DE Ruhige Gebiete Lage nach DF7_10 QuietAreas</name>
-    <author>AnnaTamm</author>
+    <name>UBA Ruhige Gebiete Lage nach DF7_10 QuietAreas</name>
+    <author>Anna Tamm (wetransform GmbH)</author>
     <created>2023-12-12T17:05:23.497+01:00</created>
     <modified>2024-03-18T08:49:23.834+01:00</modified>
     <save-config action-id="project.save" provider-id="eu.esdihumboldt.hale.io.project.hale25.xml.writer">

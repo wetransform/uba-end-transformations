@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <hale-project version="5.1.0.SNAPSHOT">
-    <name>UBA-DE HVS nach END DF7_10 Roads</name>
-    <author>AnnaTamm</author>
+    <name>UBA HVS nach END DF7_10 Roads</name>
+    <author>Anna Tamm (wetransform GmbH)</author>
     <created>2023-11-15T16:11:09.513+01:00</created>
     <modified>2023-12-06T17:32:03.124+01:00</modified>
     <save-config action-id="project.save" provider-id="eu.esdihumboldt.hale.io.project.hale25.xml.writer">
