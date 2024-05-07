@@ -303,16 +303,21 @@ withTransformationContext {&#13;
 			existingMeasure( 'noMeasure' )&#13;
 		}&#13;
 		&#13;
-		def geplannteMaßnahmen = c.Maßnahmen.geplante.values()&#13;
-		if (geplannteMaßnahmen) {&#13;
+		def geplanteMaßnahmen = c.Maßnahmen.geplante.values()&#13;
+		def geplanteMaßnahmenNutzen = c.Maßnahmen.nutzen.value()&#13;
+		if (geplanteMaßnahmen) {&#13;
 			// get codelist values for 'geplanteMaßnahmen' like classified in lookup-table 'MaßnahmenStraße'&#13;
-			def geplannteMaßnahmen_classified = _snippets.helperFunctions.classifyListValues(geplannteMaßnahmen, '32c747f4-d11e-4fc2-a75e-e08b0aab6071')&#13;
-			plannedMeasureDetail_plannedMeasure( geplannteMaßnahmen_classified.join("; ") )&#13;
+			def geplanteMaßnahmen_classified = _snippets.helperFunctions.classifyListValues(geplannteMaßnahmen, '32c747f4-d11e-4fc2-a75e-e08b0aab6071')&#13;
+			plannedMeasureDetail_plannedMeasure( geplanteMaßnahmen_classified.join("; ") )&#13;
 		}&#13;
 		else {&#13;
 			plannedMeasureDetail_plannedMeasure( 'noMeasure' )&#13;
+			&#13;
+			if ( !geplanteMaßnahmenNutzen ) {&#13;
+				geplanteMaßnahmenNutzen = 'Im Lärmaktionsplan sind keine Maßnahmen vorgesehen.'&#13;
+			}&#13;
 		}&#13;
-		plannedMeasureDetail_expectedBenefits( c.Maßnahmen.nutzen.value() )&#13;
+		plannedMeasureDetail_expectedBenefits( geplanteMaßnahmenNutzen )&#13;
 	}&#13;
 }
 </core:text>
