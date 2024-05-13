@@ -279,7 +279,7 @@ def CODELIST_RoadMeasureValue() {
     'otherTrafficManagementMeasure', 'parkingManagement', 'physicalTrafficCalming', 'planningAndOrdinance',
     'promotingCarSharing', 'promotingPublicTransport', 'promotingQuietMobility', 'publicTransportIncrease',
     'quietArea', 'quietEngines', 'quietPublicTransport', 'reductionTrafficFlows', 'roadSurface',
-    'roundaboutsJunctions', 'sensitiveAreaPlanning', 'smartMobility', 'soundscape', 'speedReduction',
+    'roundaboutJunctions', 'sensitiveAreaPlanning', 'smartMobility', 'soundscape', 'speedReduction',
     'speedReductionMeasure', 'timeRestriction', 'timeRestrictionHGV', 'timeRestrictionPassenger',
     'trafficCalmedZones', 'urbanPlanning', 'windowInsulation', 'newBypassBridgeRoad']
 }
