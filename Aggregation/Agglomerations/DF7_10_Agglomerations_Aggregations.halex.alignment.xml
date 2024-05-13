@@ -1,0 +1,755 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<alignment xmlns="http://www.esdi-humboldt.eu/hale/alignment">
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.create" id="C58902f07-3da0-4414-b959-2046237adbfc" priority="normal">
+        <target>
+            <class>
+                <type name="CodelistProperties"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+&#13;
+def codelistProperty(table, property, cl) {&#13;
+	_target {&#13;
+		tableName(table)&#13;
+		propertyName(property)&#13;
+		codelist(cl)&#13;
+	}&#13;
+}&#13;
+&#13;
+codelistProperty('NoiseActionPlanAgglomeration', 'legalContext_actionPlanDocument_citationLevel', 'http://inspire.ec.europa.eu/codelist/LegislationLevelValue')&#13;
+codelistProperty('NoiseActionPlanAgglomeration', 'legalContext_actionPlanDocument_citationType', 'https://dd.eionet.europa.eu/vocabulary/inspire/CitationTypeValue')&#13;
+codelistProperty('NoiseActionPlanAgglomeration', 'publicConsultation_consultationMeans', 'https://dd.eionet.europa.eu/vocabulary/noise/ConsultationMeansValue')&#13;
+codelistProperty('NoiseActionPlanAgglomeration', 'publicConsultation_stakeholdersType', 'https://dd.eionet.europa.eu/vocabulary/noise/StakeholdersTypeValue')&#13;
+codelistProperty('NoiseActionPlanAgglomeration', 'resultsEvaluationMechanismDescription', 'https://dd.eionet.europa.eu/vocabulary/noise/EvaluationMechanismValue')&#13;
+codelistProperty('NAP_AggMappingResultDetail', 'noiseSource', 'https://dd.eionet.europa.eu/vocabulary/noise/NoiseSourceValue')&#13;
+codelistProperty('NAP_AggMappingResultDetail', 'situationForImprovementPrioritisationCriteria', 'https://dd.eionet.europa.eu/vocabulary/noise/PrioritisationCriteriaValue')&#13;
+codelistProperty('NAP_AggReductionMeasure', 'noiseSource', 'https://dd.eionet.europa.eu/vocabulary/noise/NoiseSourceValue')&#13;
+codelistProperty('NAP_AggReductionMeasure', 'existingMeasureAir', 'http://dd.eionet.europa.eu/vocabulary/noise/AirportMeasureValue/')&#13;
+codelistProperty('NAP_AggReductionMeasure', 'existingMeasureRailway', 'http://dd.eionet.europa.eu/vocabulary/noise/RailMeasureValue/')&#13;
+codelistProperty('NAP_AggReductionMeasure', 'existingMeasureRoad', 'http://dd.eionet.europa.eu/vocabulary/noise/RoadMeasureValue/')&#13;
+codelistProperty('NAP_AggReductionMeasure', 'existingMeasureIndustry', 'https://dd.eionet.europa.eu/vocabulary/noise/IndustryMeasureValue')&#13;
+codelistProperty('NAP_AggReductionMeasure', 'plannedMeasureDetail_plannedMeasureAir', 'http://dd.eionet.europa.eu/vocabulary/noise/AirportMeasureValue/')&#13;
+codelistProperty('NAP_AggReductionMeasure', 'plannedMeasureDetail_plannedMeasureRailway', 'http://dd.eionet.europa.eu/vocabulary/noise/RailMeasureValue/')&#13;
+codelistProperty('NAP_AggReductionMeasure', 'plannedMeasureDetail_plannedMeasureRoad', 'http://dd.eionet.europa.eu/vocabulary/noise/RoadMeasureValue/')&#13;
+codelistProperty('NAP_AggReductionMeasure', 'plannedMeasureDetail_plannedMeasureIndustry', 'https://dd.eionet.europa.eu/vocabulary/noise/IndustryMeasureValue')&#13;
+codelistProperty('NAP_AggReductionMeasure', 'plannedMeasureDetail_measuresInCostRoad', 'http://dd.eionet.europa.eu/vocabulary/noise/RoadMeasureValue/')&#13;
+codelistProperty('NAP_AggReductionMeasure', 'plannedMeasureDetail_measuresInCostRail', 'http://dd.eionet.europa.eu/vocabulary/noise/RailMeasureValue/')&#13;
+codelistProperty('NAP_AggReductionMeasure', 'plannedMeasureDetail_measuresInCostAir', 'http://dd.eionet.europa.eu/vocabulary/noise/AirportMeasureValue/')&#13;
+codelistProperty('NAP_AggReductionMeasure', 'plannedMeasureDetail_measuresInCostIndustry', 'https://dd.eionet.europa.eu/vocabulary/noise/IndustryMeasureValue')&#13;
+codelistProperty('NAP_AggReductionHealthImpact_1', 'noiseSource', 'https://dd.eionet.europa.eu/vocabulary/noise/NoiseSourceValue')&#13;
+codelistProperty('NAP_AggReductionHealthImpact_2', 'noiseSource', 'https://dd.eionet.europa.eu/vocabulary/noise/NoiseSourceValue')&#13;
+codelistProperty('NAP_AggReductionHealthImpact_3', 'noiseSource', 'https://dd.eionet.europa.eu/vocabulary/noise/NoiseSourceValue')&#13;
+
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.create" id="C562fec55-cdaa-4e6a-b77c-dc04f07493a3" priority="lowest">
+        <target>
+            <class>
+                <type name="DatasetDefaultProperties"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+&#13;
+// Check if any tables were present that are not in the positive list&#13;
+def expectedTypes = [&#13;
+	'NAP_Agglomeration':'TB53',&#13;
+	'NoiseActionPlanAgglomeration':'TB1',&#13;
+	'NAP_AggCompetentAuthority':'TB59',&#13;
+	'NAP_AggMappingResultDetail':'TB65',&#13;
+	'NAP_AggReductionMeasure':'TB80',&#13;
+	'NAP_AggLimitValues':'TB135'&#13;
+]&#13;
+&#13;
+&#13;
+def presentTypes&#13;
+&#13;
+withTransformationContext {&#13;
+	def c = _.context.collector(it)&#13;
+	if (c['typesFound'].values()) {&#13;
+		_log.info("typesFound is ${c['typesFound'].values()}")&#13;
+		presentTypes = c['typesFound'].values()[0];&#13;
+		_log.info("presentTypes is ${presentTypes}")&#13;
+	}&#13;
+}&#13;
+&#13;
+expectedTypes.each { expectedType, errorCode -&gt;&#13;
+	_log.info("expectedType = ${expectedType}")&#13;
+	if (!(presentTypes?.contains(expectedType))) {&#13;
+		def message = "Mandatory table ${expectedType} has no records"&#13;
+		_log.error("${errorCode}: ${message}")&#13;
+	}&#13;
+}	&#13;
+&#13;
+_target {&#13;
+	attribute( 'href' )&#13;
+	defaultValue( 'http://dd.eionet.europa.eu/vocabulary/inspire/IdentifierScheme/EUENDCode' )&#13;
+	propertyName( 'actionPlanId_identifierScheme' )&#13;
+	tableName( 'NoiseActionPlanMajorRoad' )&#13;
+}&#13;
+
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.retype" id="C6549ad0f-6d2a-4014-a6ce-f361e1d3eed4" priority="normal">
+        <source>
+            <class>
+                <type name="NAP_AggCompetentAuthority"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NAP_AggCompetentAuthority"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+def SHEET = 'NAP_AggCompetentAuthority'&#13;
+&#13;
+_snippets.end_Checks {&#13;
+	registerType(SHEET)&#13;
+	&#13;
+	uniqueCheck('TU115', SHEET, ['actionPlanId_identifier', 'competentAuthorityIdIdentifier'])&#13;
+	freetextCheck('LEN', 'FC116', SHEET, 'actionPlanId_identifier')&#13;
+	freetextCheck('LEN', 'FC64', SHEET, 'competentAuthorityIdIdentifier')&#13;
+}
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.hale.align.retype" id="C40e3122f-f988-4a07-b8c7-887e97caf671" priority="normal">
+        <source>
+            <class>
+                <type name="NAP_AggCompetentAuthority"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NAP_AggCompetentAuthority"/>
+            </class>
+        </target>
+        <parameter value="true" name="ignoreNamespaces"/>
+        <parameter value="true" name="structuralRename"/>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.retype" id="C2014156d-6c7a-41e2-83ff-c0bda7989805" priority="normal">
+        <source>
+            <class>
+                <type name="NAP_AggLimitValues"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NAP_AggLimitValues"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+def SHEET = 'NAP_AggLimitValues'&#13;
+&#13;
+_snippets.end_Checks {&#13;
+	registerType(SHEET)&#13;
+	&#13;
+	uniqueCheck('TU119', SHEET, 'actionPlanId_identifier')&#13;
+	freetextCheck('LEN', 'FC120', SHEET, 'actionPlanId_identifier')&#13;
+	&#13;
+	conditionalCheck('END_CT1', SHEET, 'limitValues_otherCriteriaLimitDetail', 'limitValues_otherCriteriaDescription')&#13;
+	conditionalCheck('END_CT2', SHEET, 'limitValues_otherCriteriaDescription', 'limitValues_otherCriteriaLimitDetail')&#13;
+	&#13;
+	conditionalCheck('END_CT4', SHEET, 'limitValues_noiseLimitReportIdIdentifier', 'limitValues_otherCriteriaLimitDetail', "If limitValues_noiseLimitReportIdIdentifier is not reported, limitValues_otherCriteriaLimitDetail has to be provided", isEmpty(), exists())&#13;
+	conditionalCheck('END_CT3', SHEET, 'limitValues_otherCriteriaLimitDetail', 'limitValues_noiseLimitReportIdIdentifier', "If limitValues_otherCriteriaLimitDetail is not reported, limitValues_noiseLimitReportIdIdentifier has to be provided", isEmpty(), exists())&#13;
+}&#13;
+
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.hale.align.retype" id="Ca0413845-25bf-4549-af7a-4afa4e80454a" priority="normal">
+        <source>
+            <class>
+                <type name="NAP_AggLimitValues"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NAP_AggLimitValues"/>
+            </class>
+        </target>
+        <parameter value="true" name="ignoreNamespaces"/>
+        <parameter value="true" name="structuralRename"/>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.retype" id="C53d80ebe-e6a1-4fdd-9e10-09f7932a7cd5" priority="normal">
+        <source>
+            <class>
+                <type name="NAP_AggMappingResultDetail"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NAP_AggMappingResultDetail"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+import java.time.*&#13;
+import java.time.format.*&#13;
+&#13;
+def SHEET = 'NAP_AggMappingResultDetail'&#13;
+&#13;
+_snippets.end_Checks {&#13;
+	registerType(SHEET)&#13;
+	&#13;
+	codelistCheck('TC170', 'FC70', SHEET, 'noiseSource', CODELIST_NoiseSourceValue_Agglomerations())&#13;
+	&#13;
+	integerCheck('FT72', 'FC73', SHEET, 'exposedLden55')&#13;
+	customCheck('END_DV29', null, SHEET, 'exposedLden55', 'must be greater than or equal to 0', isGreaterThanOrEqual0())&#13;
+	integerCheck('FT74', 'FC75', SHEET, 'exposedLnight50')&#13;
+	customCheck('END_DV30', null, SHEET, 'exposedLnight50', 'must be greater than or equal to 0', isGreaterThanOrEqual0())&#13;
+	codelistCheck('TC171', null, SHEET, 'situationForImprovementPrioritisationCriteria', CODELIST_PrioritisationCriteriaValue(), true)&#13;
+	freetextCheck('LEN', 'FC102', SHEET, 'situationForImprovementExplanation')&#13;
+	uniqueCheck('TU123', SHEET, ['actionPlanId_identifier', 'agglomerationIdIdentifier', 'noiseSource'])&#13;
+	freetextCheck('LEN', 'FC124', SHEET, 'actionPlanId_identifier')&#13;
+	&#13;
+	withTransformationContext {&#13;
+		def c = _.context.collector(it)&#13;
+		generalCheck('END_RT3', null, SHEET, 'agglomerationIdIdentifier', 'is not equal to the one provided in table NAP_Agglomeration', &#13;
+						isEqualTo(c.agglomerationIdIdentifier[_source.p.actionPlanId_identifier.value()].value()), 'actionPlanId_identifier')&#13;
+	}&#13;
+}&#13;
+
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.hale.align.retype" id="C035cfa16-9b6b-44e8-86a3-e23bff604bb2" priority="normal">
+        <source>
+            <class>
+                <type name="NAP_AggMappingResultDetail"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NAP_AggMappingResultDetail"/>
+            </class>
+        </target>
+        <parameter value="true" name="ignoreNamespaces"/>
+        <parameter value="true" name="structuralRename"/>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.retype" id="C348bdb3e-063f-48bf-881a-8cef0d39ed97" priority="normal">
+        <source>
+            <class>
+                <type name="NAP_AggReductionHealthImpact_1"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NAP_AggReductionHealthImpact_1"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+def SHEET = 'NAP_AggReductionHealthImpact_1'&#13;
+&#13;
+&#13;
+withTransformationContext {&#13;
+	def c = _.context.collector(it)&#13;
+	&#13;
+	&#13;
+	def actionPlanId = _source.p.actionPlanId_identifier.value()&#13;
+	&#13;
+	if (actionPlanId) {&#13;
+		if (_source.p.nrOfPeople.value() || _source.p.nrOfPeople.value() == 0) {&#13;
+			c.nrOfPeople[actionPlanId][_source.p.noiseSource.value()] &lt;&lt; _source.p.nrOfPeople.value()&#13;
+		}&#13;
+		c.noiseSourcesWithHealthImpact1[actionPlanId] &lt;&lt; _source.p.noiseSource.value()&#13;
+	}&#13;
+&#13;
+&#13;
+	_snippets.end_Checks {&#13;
+		registerType(SHEET)&#13;
+		&#13;
+		freetextCheck('LEN', 'FC131', SHEET, 'actionPlanId_identifier')&#13;
+		codelistCheck('TC103', 'FC102', SHEET, 'noiseSource', CODELIST_NoiseSourceValue_Agglomerations())&#13;
+		integerCheck('FT105', 'FC139', SHEET, 'nrOfPeople')&#13;
+		customCheck('END_DV42', null, SHEET, 'nrOfPeople', 'must be greater than or equal to 0', isGreaterThanOrEqual0())&#13;
+		freetextCheck('LEN', 'FC140', SHEET, 'explanationMethod')&#13;
+		&#13;
+		generalCheck('END_RT4', null, SHEET, 'agglomerationIdidentifier', 'is not equal to the one provided in table NAP_Agglomeration', &#13;
+					isEqualTo(c.agglomerationIdIdentifier[_source.p.actionPlanId_identifier.value()].value()), 'actionPlanId_identifier')&#13;
+	}&#13;
+}
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.hale.align.retype" id="C257eee1b-a51a-4a0f-80d1-14f6a2842e5b" priority="normal">
+        <source>
+            <class>
+                <type name="NAP_AggReductionHealthImpact_1"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NAP_AggReductionHealthImpact_1"/>
+            </class>
+        </target>
+        <parameter value="true" name="ignoreNamespaces"/>
+        <parameter value="true" name="structuralRename"/>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.retype" id="C041e3113-d357-445e-8e47-cdaa6e33124b" priority="normal">
+        <source>
+            <class>
+                <type name="NAP_AggReductionHealthImpact_2"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NAP_AggReductionHealthImpact_2"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+def SHEET = 'NAP_AggReductionHealthImpact_2'&#13;
+&#13;
+_snippets.end_Checks {&#13;
+	registerType(SHEET)&#13;
+	&#13;
+	codelistCheck('TC113', 'FC112', SHEET, 'noiseSource', CODELIST_NoiseSourceValue_Agglomerations())&#13;
+	integerCheck('FT114', null, SHEET, 'numberHAReduction')&#13;
+	integerCheck('FT115', null, SHEET, 'numberHSDReduction')&#13;
+	integerCheck('FT116', null, SHEET, 'numberIHDReduction')&#13;
+	integerCheck('FT118', null, SHEET, 'numberExperiencingOtherHealthEffectReduction')&#13;
+	uniqueCheck('TU133', SHEET, ['actionPlanId_identifier', 'agglomerationIdidentifier', 'noiseSource'])&#13;
+	&#13;
+	freetextCheck('LEN', 'FC134', SHEET, 'actionPlanId_identifier')&#13;
+	&#13;
+	withTransformationContext {&#13;
+		def c = _.context.collector(it)&#13;
+		generalCheck('END_RT5', null, SHEET, 'agglomerationIdidentifier', 'is not equal to the one provided in table NAP_Agglomeration', &#13;
+					isEqualTo(c.agglomerationIdIdentifier[_source.p.actionPlanId_identifier.value()].value()), 'actionPlanId_identifier')&#13;
+	}&#13;
+	&#13;
+	conditionalCheck('END_CT5', SHEET, 'otherHealthEffectReduction', 'numberExperiencingOtherHealthEffectReduction')&#13;
+	conditionalCheck('END_CT6', SHEET, 'numberExperiencingOtherHealthEffectReduction', 'otherHealthEffectReduction')&#13;
+	customCheck('END_DV33', null, SHEET, 'numberHAReduction', 'must be greater than or equal to 0', isGreaterThanOrEqual0())&#13;
+	customCheck('END_DV34', null, SHEET, 'numberHSDReduction', 'must be greater than or equal to 0', isGreaterThanOrEqual0())&#13;
+	customCheck('END_DV35', null, SHEET, 'numberIHDReduction', 'must be greater than or equal to 0', isGreaterThanOrEqual0())&#13;
+	customCheck('END_DV36', null, SHEET, 'numberExperiencingOtherHealthEffectReduction', 'must be greater than or equal to 0', isGreaterThanOrEqual0())&#13;
+	&#13;
+}&#13;
+&#13;
+&#13;
+// Collect numberHAReduction, numberHSDReduction and numberIHDReduction values for "END_RC3" check in table "NoiseActionPlanAgglomeration"&#13;
+withTransformationContext {&#13;
+	def c = _.context.collector(it)&#13;
+	&#13;
+	['numberHAReduction', 'numberHSDReduction', 'numberIHDReduction'].each {&#13;
+		if (_source.p[it].value()) {&#13;
+			c[it][_source.p.actionPlanId_identifier.value()][_source.p.noiseSource.value()] &lt;&lt; _source.p[it].value()&#13;
+		}&#13;
+	}&#13;
+}&#13;
+&#13;
+
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.retype" id="C9e1f15a5-8e04-4c0b-835e-d166498e9ee3" priority="normal">
+        <source>
+            <class>
+                <type name="NAP_AggReductionHealthImpact_3"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NAP_AggReductionHealthImpact_3"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+def SHEET = 'NAP_AggReductionHealthImpact_3'&#13;
+&#13;
+withTransformationContext {&#13;
+	def c = _.context.collector(it)&#13;
+	&#13;
+	c.noiseSourcesWithHealthImpact3[_source.p.actionPlanId_identifier.value()] &lt;&lt; _source.p.noiseSource.value()&#13;
+}&#13;
+&#13;
+_snippets.end_Checks {&#13;
+	registerType(SHEET)&#13;
+	&#13;
+	codelistCheck('TC124', 'FC123', SHEET, 'noiseSource', CODELIST_NoiseSourceValue_Agglomerations())&#13;
+	uniqueCheck('TU136', SHEET, ['cactionPlanId_identifier', 'agglomerationIdIdentifier', 'noiseSource'])&#13;
+	freetextCheck('LEN', 'FC137', SHEET, 'actionPlanId_identifier')&#13;
+	&#13;
+	withTransformationContext {&#13;
+		def c = _.context.collector(it)&#13;
+		generalCheck('END_RT6', null, SHEET, 'agglomerationIdIdentifier', 'is not equal to the one provided in table NAP_Agglomeration', &#13;
+					isEqualTo(c.agglomerationIdIdentifier[_source.p.actionPlanId_identifier.value()].value()), 'actionPlanId_identifier')&#13;
+	}&#13;
+}&#13;
+
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.hale.align.retype" id="C90713d35-c495-484f-bd16-62bb6e23beb6" priority="normal">
+        <source>
+            <class>
+                <type name="NAP_AggReductionHealthImpact_3"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NAP_AggReductionHealthImpact_3"/>
+            </class>
+        </target>
+        <parameter value="true" name="ignoreNamespaces"/>
+        <parameter value="true" name="structuralRename"/>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.merge" id="Cf61fc8dc-995a-4fc9-9fa7-6fdf7040fe6c" priority="normal">
+        <source>
+            <class>
+                <type name="NAP_AggReductionMeasure"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NAP_AggReductionMeasure"/>
+            </class>
+        </target>
+        <parameter value="false" name="auto_detect"/>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+&#13;
+SHEET = 'NAP_AggReductionMeasure'&#13;
+&#13;
+_snippets.end_Checks {&#13;
+	nandCheck('END_TO15', SHEET,&#13;
+		['existingMeasureAir', 'existingMeasureRailway', 'existingMeasureRoad', 'existingMeasureIndustry', 'plannedMeasureDetail_plannedMeasureAir',&#13;
+		 'plannedMeasureDetail_plannedMeasureRailway', 'plannedMeasureDetail_plannedMeasureRoad', 'plannedMeasureDetail_plannedMeasureIndustry'],&#13;
+		'At least one reduction measure different from \"noMeasure\" in existing measure or planned measure attributes are expected to be provided',&#13;
+		hasValue('noMeasure'), true)&#13;
+		&#13;
+	if (!_source.p.plannedMeasureDetail_allMeasuresInCost.values().contains('Yes')){&#13;
+		nandCheck('END_TO23', SHEET,&#13;
+			['plannedMeasureDetail_measuresInCostAir', 'plannedMeasureDetail_measuresInCostIndustry', 'plannedMeasureDetail_measuresInCostRail', 'plannedMeasureDetail_measuresInCostRoad'],&#13;
+			'At least one reduction measure different from \"noMeasure\" in planned measure in cost attributes are expected to be provided all \"allMeasuresInCost\" are \"No\"',&#13;
+			hasValue('noMeasure'), true)&#13;
+	}&#13;
+}&#13;
+
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.retype" id="Cf61ee551-bc88-42cd-9e2e-4f229cc0462c" priority="normal">
+        <source>
+            <class>
+                <type name="NAP_AggReductionMeasure"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NAP_AggReductionMeasure"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+import java.time.*&#13;
+import java.time.format.*&#13;
+&#13;
+def SHEET = 'NAP_AggReductionMeasure'&#13;
+&#13;
+&#13;
+def isEmptyOrNoMeasure = { s -&gt;&#13;
+	s ? s.contains('noMeasure') : true&#13;
+}&#13;
+&#13;
+withTransformationContext {&#13;
+	def c = _.context.collector(it)&#13;
+	&#13;
+	def noiseSource = _source.p.noiseSource.value()&#13;
+	def plannedMeasureAir = _source.p.plannedMeasureDetail_plannedMeasureAir.value()&#13;
+	def plannedMeasureIndustry = _source.p.plannedMeasureDetail_plannedMeasureIndustry.value()&#13;
+	def plannedMeasureRailway = _source.p.plannedMeasureDetail_plannedMeasureRailway.value()&#13;
+	def plannedMeasureRoad = _source.p.plannedMeasureDetail_plannedMeasureRoad.value()&#13;
+&#13;
+	c.noiseSourcesInAggReductionMeasure[_source.p.competentAuthorityIdIdentifier.value()] &lt;&lt; noiseSource&#13;
+	&#13;
+	if (!isEmptyOrNoMeasure(plannedMeasureAir) || !isEmptyOrNoMeasure(plannedMeasureIndustry)&#13;
+		|| !isEmptyOrNoMeasure(plannedMeasureRailway) || !isEmptyOrNoMeasure(plannedMeasureRoad)) {&#13;
+		// At least one planned measure is not "noMeasure" =&gt; Health impact has to be provided for this noise source&#13;
+		c.noiseSourcesWithPlannedMeasures[_source.p.competentAuthorityIdIdentifier.value()] &lt;&lt; noiseSource&#13;
+	}&#13;
+}&#13;
+&#13;
+_snippets.end_Checks {&#13;
+	registerType(SHEET)&#13;
+	&#13;
+	costCheck('FT93', null, SHEET, 'plannedMeasureDetail_cost')&#13;
+	customCheck('END_DV61', null, SHEET, 'plannedMeasureDetail_cost', 'must be greater than or equal to 0', isGreaterThanOrEqual0())&#13;
+	codelistCheck('FT95', null, SHEET, 'plannedMeasureDetail_allMeasuresInCost', CODELIST_Boolean())&#13;
+	&#13;
+	codelistCheck('TC172', 'FC85', SHEET, 'noiseSource', CODELIST_NoiseSourceValue_Agglomerations())&#13;
+	codelistCheck('TC173', null, SHEET, 'existingMeasureAir', CODELIST_AirportMeasureValue(), true, 'noiseSource')&#13;
+	codelistCheck('TC174', null, SHEET, 'existingMeasureRailway', CODELIST_RailMeasureValue(), true)&#13;
+	codelistCheck('TC177', null, SHEET, 'existingMeasureIndustry', CODELIST_IndustryMeasureValue(), true)&#13;
+	codelistCheck('TC144', null, SHEET, 'existingMeasureRoad', CODELIST_RoadMeasureValue(), true)&#13;
+	codelistCheck('TC178', null, SHEET, 'plannedMeasureDetail_plannedMeasureAir', CODELIST_AirportMeasureValue(), true)&#13;
+	codelistCheck('TC179', null, SHEET, 'plannedMeasureDetail_plannedMeasureRailway', CODELIST_RailMeasureValue(), true)&#13;
+	codelistCheck('TC180', null, SHEET, 'plannedMeasureDetail_plannedMeasureRoad', CODELIST_RoadMeasureValue(), true)&#13;
+	codelistCheck('TC181', null, SHEET, 'plannedMeasureDetail_plannedMeasureIndustry', CODELIST_IndustryMeasureValue(), true)&#13;
+	codelistCheck('TC145', null, SHEET, 'plannedMeasureDetail_measuresInCostRoad', CODELIST_RoadMeasureValue(), true)&#13;
+	codelistCheck('TC183', null, SHEET, 'plannedMeasureDetail_measuresInCostRail', CODELIST_RailMeasureValue(), true)&#13;
+	codelistCheck('TC184', null, SHEET, 'plannedMeasureDetail_measuresInCostAir', CODELIST_AirportMeasureValue(), true)&#13;
+	codelistCheck('TC185', null, SHEET, 'plannedMeasureDetail_measuresInCostIndustry', CODELIST_IndustryMeasureValue(), true)&#13;
+	&#13;
+	freetextCheck('LEN', 'FC104', SHEET, 'plannedMeasureDetail_expectedBenefits')&#13;
+	uniqueCheck('TU127', SHEET, ['actionPlanId_identifier', 'agglomerationIdIdentifier', 'noiseSource'])&#13;
+	freetextCheck('LEN', 'FC128', SHEET, 'actionPlanId_identifier')&#13;
+	&#13;
+	withTransformationContext {&#13;
+		def c = _.context.collector(it)&#13;
+		generalCheck('END_RT7', null, SHEET, 'agglomerationIdIdentifier', 'is not equal to the one provided in table NAP_Agglomeration', &#13;
+						isEqualTo(c.agglomerationIdIdentifier[_source.p.actionPlanId_identifier.value()].value()), 'actionPlanId_identifier')&#13;
+	}&#13;
+	&#13;
+	conditionalCheck('END_CT45', SHEET, 'noiseSource', ['existingMeasureAir', 'plannedMeasureDetail_plannedMeasureAir'], ['agglomerationAir', 'agglomerationMajorAirport'])&#13;
+	conditionalCheck('END_CT46', SHEET, 'noiseSource', ['existingMeasureRailway', 'plannedMeasureDetail_plannedMeasureRailway'], ['agglomerationRailway', 'agglomerationMajorRailway'])&#13;
+	conditionalCheck('END_CT47', SHEET, 'noiseSource', ['existingMeasureRoad', 'plannedMeasureDetail_plannedMeasureRoad'], ['agglomerationRoad', 'agglomerationMajorRoad'])&#13;
+	conditionalCheck('END_CT48', SHEET, 'noiseSource', ['existingMeasureIndustry', 'plannedMeasureDetail_plannedMeasureIndustry'], ['agglomerationIndustry'])&#13;
+	&#13;
+	nandCheck('END_CT49', SHEET, 'noiseSource',&#13;
+		['existingMeasureAir', 'plannedMeasureDetail_plannedMeasureAir', 'plannedMeasureDetail_measuresInCostAir', &#13;
+		'existingMeasureRailway', 'plannedMeasureDetail_plannedMeasureRailway', 'plannedMeasureDetail_measuresInCostRail', &#13;
+		'existingMeasureRoad', 'plannedMeasureDetail_plannedMeasureRoad', 'plannedMeasureDetail_measuresInCostRoad'],&#13;
+		['agglomerationIndustry']&#13;
+	)&#13;
+	nandCheck('END_CT50', SHEET, 'noiseSource',&#13;
+		['existingMeasureRailway', 'plannedMeasureDetail_plannedMeasureRailway', 'plannedMeasureDetail_measuresInCostRail', &#13;
+		'existingMeasureRoad', 'plannedMeasureDetail_plannedMeasureRoad', 'plannedMeasureDetail_measuresInCostRoad', &#13;
+		'existingMeasureIndustry', 'plannedMeasureDetail_plannedMeasureIndustry', 'plannedMeasureDetail_measuresInCostIndustry'],&#13;
+		['agglomerationAir', 'agglomerationMajorAirport']&#13;
+	)&#13;
+	nandCheck('END_CT51', SHEET, 'noiseSource',&#13;
+		['existingMeasureAir', 'plannedMeasureDetail_plannedMeasureAir', 'plannedMeasureDetail_measuresInCostAir',&#13;
+		'existingMeasureRoad', 'plannedMeasureDetail_plannedMeasureRoad', 'plannedMeasureDetail_measuresInCostRoad',&#13;
+		'existingMeasureIndustry', 'plannedMeasureDetail_plannedMeasureIndustry', 'plannedMeasureDetail_measuresInCostIndustry'],&#13;
+		['agglomerationRailway', 'agglomerationMajorRailway']&#13;
+	)&#13;
+	nandCheck('END_CT52', SHEET, 'noiseSource',&#13;
+		['existingMeasureAir', 'plannedMeasureDetail_plannedMeasureAir', 'plannedMeasureDetail_measuresInCostAir',&#13;
+		'existingMeasureRailway', 'plannedMeasureDetail_plannedMeasureRailway', 'plannedMeasureDetail_measuresInCostRail',&#13;
+		'existingMeasureIndustry', 'plannedMeasureDetail_plannedMeasureIndustry', 'plannedMeasureDetail_measuresInCostIndustry'],&#13;
+		['agglomerationRoad', 'agglomerationMajorRoad']&#13;
+	)&#13;
+	&#13;
+	conditionalCheck('END_CT61', SHEET, 'plannedMeasureDetail_cost', 'plannedMeasureDetail_costCurrency')&#13;
+	conditionalCheck('END_CT61', SHEET, 'plannedMeasureDetail_cost', 'plannedMeasureDetail_allMeasuresInCost')&#13;
+	&#13;
+	&#13;
+	&#13;
+	customCheck('END_DV6', null, SHEET, 'existingMeasureAir', 'is invalid: When \"noMeasure\" value is selected, no more values are expected in the field', isOnlyValueIfPresent('noMeasure'))&#13;
+	customCheck('END_DV7', null, SHEET, 'existingMeasureRailway', 'is invalid: When \"noMeasure\" value is selected, no more values are expected in the field', isOnlyValueIfPresent('noMeasure'))&#13;
+	customCheck('END_DV8', null, SHEET, 'existingMeasureRoad', 'is invalid: When \"noMeasure\" value is selected, no more values are expected in the field', isOnlyValueIfPresent('noMeasure'))&#13;
+	customCheck('END_DV9', null, SHEET, 'existingMeasureIndustry', 'is invalid: When \"noMeasure\" value is selected, no more values are expected in the field', isOnlyValueIfPresent('noMeasure'))&#13;
+	customCheck('END_DV10', null, SHEET, 'plannedMeasureDetail_plannedMeasureAir', 'is invalid: When \"noMeasure\" value is selected, no more values are expected in the field', isOnlyValueIfPresent('noMeasure'))&#13;
+	customCheck('END_DV11', null, SHEET, 'plannedMeasureDetail_plannedMeasureRailway', 'is invalid: When \"noMeasure\" value is selected, no more values are expected in the field', isOnlyValueIfPresent('noMeasure'))&#13;
+	customCheck('END_DV12', null, SHEET, 'plannedMeasureDetail_plannedMeasureRoad', 'is invalid: When \"noMeasure\" value is selected, no more values are expected in the field', isOnlyValueIfPresent('noMeasure'))&#13;
+	customCheck('END_DV13', null, SHEET, 'plannedMeasureDetail_plannedMeasureIndustry', 'is invalid: When \"noMeasure\" value is selected, no more values are expected in the field', isOnlyValueIfPresent('noMeasure'))&#13;
+&#13;
+&#13;
+}&#13;
+
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.hale.align.retype" id="C063d43a5-a732-4f04-a938-8406e5dd3989" priority="normal">
+        <source>
+            <class>
+                <type name="NAP_AggReductionMeasure"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NAP_AggReductionMeasure"/>
+            </class>
+        </target>
+        <parameter value="true" name="ignoreNamespaces"/>
+        <parameter value="true" name="structuralRename"/>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.retype" id="C822cbccc-504b-4c30-9219-544302469032" priority="highest">
+        <source>
+            <class>
+                <type name="NAP_Agglomeration"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NAP_Agglomeration"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+&#13;
+def SHEET = 'NAP_Agglomeration'&#13;
+&#13;
+withTransformationContext {&#13;
+	def c = _.context.collector(it)&#13;
+		&#13;
+	c.agglomerationIdIdentifier[_source.p.actionPlanId_identifier.value()] &lt;&lt; _source.p.agglomerationIdIdentifier.value()&#13;
+}&#13;
+&#13;
+_snippets.end_Checks {&#13;
+	registerType(SHEET)&#13;
+	&#13;
+	uniqueCheck('TU111', SHEET, ['actionPlanId_identifier', 'agglomerationIdIdentifier'])&#13;
+	freetextCheck('LEN', 'FC58', SHEET, 'agglomerationIdIdentifier')&#13;
+&#13;
+	freetextCheck('LEN', 'FC112', SHEET, 'actionPlanId_identifier')&#13;
+}&#13;
+
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.hale.align.retype" id="Ca2b90c08-fc8b-41fd-9d76-155ea5504505" priority="normal">
+        <source>
+            <class>
+                <type name="NAP_Agglomeration"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NAP_Agglomeration"/>
+            </class>
+        </target>
+        <parameter value="true" name="ignoreNamespaces"/>
+        <parameter value="true" name="structuralRename"/>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.retype" id="C04698bdb-02fa-4276-bf97-37dad1cbdb9b" priority="normal">
+        <source>
+            <class>
+                <type name="NoiseActionPlanAgglomeration"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NoiseActionPlanAgglomeration"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+import java.time.*&#13;
+import java.time.format.*&#13;
+&#13;
+def SHEET = 'NoiseActionPlanAgglomeration'&#13;
+&#13;
+_snippets.end_Checks {&#13;
+	registerType(SHEET)&#13;
+	&#13;
+	existsCheck('FC3', SHEET, 'actionPlanId_identifier')&#13;
+	dateCheck('FT4', 'FC5', SHEET, 'legalContext_actionPlanStartDate', 'yyyy-MM-dd')&#13;
+	dateCheck('FT6', null, SHEET, 'legalContext_actionPlanEndDate', 'yyyy-MM-dd')&#13;
+	dateCheck('FT7', null, SHEET, 'legalContext_actionPlanDocument_citationDate', 'yyyy-MM-dd')&#13;
+	urlCheck('FT8', null, SHEET, 'legalContext_actionPlanDocument_citationLink')&#13;
+	dateCheck('FT19', 'FC18', SHEET, 'publicConsultation_consultationStartDate', 'yyyy-MM-dd')&#13;
+	dateCheck('FT21', 'FC20', SHEET, 'publicConsultation_consultationEndDate', 'yyyy-MM-dd')&#13;
+	integerCheck('FT26', null, SHEET, 'publicConsultation_numberOfParticipants')&#13;
+	codelistCheck('FT30', 'FC29', SHEET, 'publicConsultation_commentsReceived', CODELIST_Boolean())&#13;
+	codelistCheck('FT32', 'FC31', SHEET, 'publicConsultation_commentsIncludedInNAP', CODELIST_Boolean())&#13;
+	codelistCheck('FT35', 'FC34', SHEET, 'publicConsultation_NAPReviewed', CODELIST_Boolean())&#13;
+	codelistCheck('FT38', null, SHEET, 'longTermStrategy', CODELIST_Boolean())&#13;
+	costCheck('FT40', null, SHEET, 'estimatedOverallCost')&#13;
+	codelistCheck('FT44', 'FC43', SHEET, 'quietAreas', CODELIST_Boolean())&#13;
+	codelistCheck('FT47', 'FC46', SHEET, 'implementationMechanism', CODELIST_Boolean())&#13;
+	codelistCheck('FT51', 'FC50', SHEET, 'resultsEvaluationMechanism', CODELIST_Boolean())&#13;
+	codelistCheck('TC167', null, SHEET, 'publicConsultation_consultationMeans', CODELIST_ConsultationMeansValue(), true)&#13;
+	codelistCheck('TC169', null, SHEET, 'resultsEvaluationMechanismDescription', CODELIST_EvaluationMechanismValue())&#13;
+	freetextCheck('LEN', 'FC98', SHEET, 'publicConsultation_reviewExplanation')&#13;
+	&#13;
+	uniqueCheck('TU110', SHEET, 'actionPlanId_identifier')&#13;
+	&#13;
+	codelistCheck('TC142', null, SHEET, 'legalContext_actionPlanDocument_citationLevel', CODELIST_CitationLevelValue())&#13;
+	codelistCheck('TC141', null, SHEET, 'legalContext_actionPlanDocument_citationType', CODELIST_CitationTypeValue())&#13;
+	codelistCheck('TC143', null, SHEET, 'publicConsultation_stakeholdersType', CODELIST_StakeholderValue(), true)&#13;
+	&#13;
+	conditionalCheck('END_CT53', SHEET, 'estimatedOverallCost', 'costCurrency')&#13;
+	conditionalCheck('END_CT54', SHEET, 'costCurrency', 'estimatedOverallCost')&#13;
+	&#13;
+	customCheck('END_DV27', null, SHEET, 'publicConsultation_numberOfParticipants', 'must be greater than or equal to 0', isGreaterThanOrEqual0())&#13;
+	customCheck('END_DV28', null, SHEET, 'estimatedOverallCost', 'must be greater than or equal to 0', isGreaterThanOrEqual0())&#13;
+	&#13;
+}&#13;
+&#13;
+withTransformationContext {&#13;
+	def c = _.context.collector(it)&#13;
+&#13;
+	def planId = _source.p.actionPlanId_identifier.value()&#13;
+	&#13;
+	c.noiseSourcesWithPlannedMeasures[planId].values().toSet().each { ns -&gt;&#13;
+		/*if (!c.noiseSourcesWithHealthImpact1[caId].values().contains(ns)&#13;
+			&amp;&amp; !c.noiseSourcesWithHealthImpact2[caId].values().contains(ns)) {&#13;
+&#13;
+			_log.error("NL_RC1: Noise sources that have any planned measure other than \"noMeasure\" in table NAP_AggReductionMeasure " +&#13;
+					"need to be reported in either NAP_AggReductionHealthImpact_1 or NAP_AggReductionHealthImpact_2 [Competent authority ID: $caId][Missing noise source: $ns]")&#13;
+		}&#13;
+		&#13;
+		if (!c.noiseSourcesWithHealthImpact3[caId].values().contains(ns)) {&#13;
+			_log.error("NL_RC2: Noise sources that have any planned measure other than \"noMeasure\" in table NAP_AggReductionMeasure " +&#13;
+					"need to be reported in NAP_AggReductionHealthImpact_3 [Competent authority ID: $caId][Missing noise source: $ns]")&#13;
+		}&#13;
+		*/&#13;
+		&#13;
+		//c.nrOfPeople[actionPlanId][_source.p.noiseSource.value()] &lt;&lt; _source.p.nrOfPeople.value()&#13;
+		&#13;
+		//c.noiseSourcesWithHealthImpact1[actionPlanId] &lt;&lt; _source.p.noiseSource.value()&#13;
+		&#13;
+		def nrOfPeople = c.nrOfPeople[planId][ns].value()&#13;
+		if (nrOfPeople == null &amp;&amp; !c.numberHAReduction[planId][ns].values()&#13;
+			&amp;&amp; !c.numberHSDReduction[planId][ns].values()&#13;
+			&amp;&amp; !c.numberIHDReduction[planId][ns].values()) {&#13;
+	&#13;
+			_log.error("END_RC3: When not providing numberExperiencingReduction by actionPlanId_identifier " +&#13;
+					"in table NAP_AggReductionHealthImpact_1, at least one of the following attributes must " +&#13;
+					"be provided in table NAP_AggReductionHealthImpact_2: numberHAReduction, numberHSDReduction, numberIHDReduction " +&#13;
+					"[Competent authority ID: $caId][noise source: $ns]")&#13;
+		}&#13;
+	}&#13;
+	/*&#13;
+	c.noiseSourcesWithHealthImpact1[caId].values().toSet().each { ns1 -&gt;&#13;
+		if (!c.noiseSourcesInAggReductionMeasure[caId].values().contains(ns1)) {&#13;
+			_log.error("NL_RC3: Only noise sources that are reported in table NAP_AggReductionMeasure " +&#13;
+					"may be reported in table NAP_AggReductionHealthImpact_1 [Competent authority ID: $caId][Invalid noise source: $ns1]")&#13;
+		}&#13;
+	}&#13;
+	&#13;
+	c.noiseSourcesWithHealthImpact2[caId].values().toSet().each { ns2 -&gt;&#13;
+		if (!c.noiseSourcesInAggReductionMeasure[caId].values().contains(ns2)) {&#13;
+			_log.error("NL_RC4: Only noise sources that are reported in table NAP_AggReductionMeasure " +&#13;
+					"may be reported in table NAP_AggReductionHealthImpact_2 [Competent authority ID: $caId][Invalid noise source: $ns2]")&#13;
+		}&#13;
+	}&#13;
+	c.noiseSourcesWithHealthImpact3[caId].values().toSet().each { ns3 -&gt;&#13;
+		if (!c.noiseSourcesInAggReductionMeasure[caId].values().contains(ns3)) {&#13;
+			_log.error("NL_RC5: Only noise sources that are reported in table NAP_AggReductionMeasure " +&#13;
+					"may be reported in table NAP_AggReductionHealthImpact_3 [Competent authority ID: $caId][Invalid noise source: $ns3]")&#13;
+		}&#13;
+	}&#13;
+	*/&#13;
+}&#13;
+&#13;
+
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.hale.align.retype" id="C3a8d832d-3e01-487e-8ab3-74ec8c801cc1" priority="normal">
+        <source>
+            <class>
+                <type name="NoiseActionPlanAgglomeration"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NoiseActionPlanAgglomeration"/>
+            </class>
+        </target>
+        <parameter value="true" name="ignoreNamespaces"/>
+        <parameter value="true" name="structuralRename"/>
+    </cell>
+</alignment>
