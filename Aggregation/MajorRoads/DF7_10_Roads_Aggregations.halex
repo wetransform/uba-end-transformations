@@ -30,6 +30,16 @@
         <setting name="contentType">eu.esdihumboldt.hale.io.groovy</setting>
         <setting name="autoReload">true</setting>
     </resource>
+    <export-config name="default">
+        <configuration action-id="eu.esdihumboldt.hale.io.instance.write.transformed" provider-id="eu.esdihumboldt.hale.io.xls.writer.instance">
+            <setting name="charset">UTF-8</setting>
+            <setting name="meta.description"></setting>
+            <setting name="useSchema">true</setting>
+            <setting name="selectedExportType">NoiseActionPlanMajorRoad,NAP_MajorRoad,NAP_MajorRoadCompetentAuthority,NAP_MajorRoadLimitValues,NAP_RoadMappingResultDetail,NAP_RoadReductionMeasure,NAP_RoadReductionHealthImpact_1,NAP_RoadReductionHealthImpact_2,NAP_RoadReductionHealthImpact_3,ESTATUnitReference,DatasetDefaultProperties,CodelistProperties</setting>
+            <setting name="contentType">eu.esdihumboldt.hale.io.xls.xlsx</setting>
+            <setting name="solveNestedProperties">true</setting>
+        </configuration>
+    </export-config>
     <file name="alignment.xml" location="DF7_10_Roads_Aggregations.halex.alignment.xml"/>
     <file name="styles.sld" location="DF7_10_Roads_Aggregations.halex.styles.sld"/>
     <property name="defaultGeometry:{http://www.xplanung.de/xplangml/5/4}XP_PPOType/1">{http://www.opengis.net/gml/3.2}boundedBy</property>
