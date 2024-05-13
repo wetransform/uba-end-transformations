@@ -1,11 +1,10 @@
 import eu.esdihumboldt.hale.common.lookup.*;
-import eu.esdihumboldt.hale.ui.HaleUI;
 import eu.esdihumboldt.hale.common.core.io.*;
 import java.text.SimpleDateFormat;
 
 def getLookupTableValue(value, tableId) {
 	// retrieve Lookup table
-	LookupService ls = HaleUI.getServiceProvider().getService(LookupService.class)
+	LookupService ls = _serviceProvider.getService(LookupService.class)
 	LookupTableInfo lithTable = ls.getTable(tableId)
 	def table = lithTable.getTable()
 
@@ -16,7 +15,7 @@ def getLookupTableValue(value, tableId) {
 
 def getLookupTableKeys(tableId) {
 	// retrieve Lookup table
-	LookupService ls = HaleUI.getServiceProvider().getService(LookupService.class)
+	LookupService ls = _serviceProvider.getService(LookupService.class)
 	LookupTableInfo lithTable = ls.getTable(tableId)
 	def table = lithTable.getTable()
 
