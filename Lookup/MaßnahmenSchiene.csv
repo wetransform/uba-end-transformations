@@ -1,0 +1,33 @@
+MaßnahmenDE,MaßnahmenEN_Text,MaßnahmenEN_Label
+Maßnahmen am Gleis,Rail track measures,railTrack
+Umrüstung von Rädern oder Radkomponenten,Retrofitting wheels or wheel components,retrofittingWheels
+Geräuscharme Bremsen,Low-noise brakes,lowNoiseBrakes
+Geräuscharme Motoren,Quiet engines,quietEngines
+Erneuerung des Fuhrparks,Renewal railway fleet,renewalFleet
+Zeitliche Beschränkung für den Güterverkehr,Time restriction for freight vehicles,timeRestrictionFreight
+Zeitliche Beschränkung für den Personenverkehr,Time restriction for passenger vehicles,timeRestrictionPassenger
+Verringerung der Fahrgeschwindigkeit und Signalsteuerung,Reduction of rail speeds and traffic signalling,speedReduction
+Ausweisung von verkehrsberuhigten Zonen für Schienenverkehr,Designation of traffic-calmed zones from rail,trafficCalmedZones
+Veränderung/Reduzierung der Gleisanlagen,Change/reduction in rail tracks,reductionRailTracks
+Trassenpreise,Track access charges,trackAccessCharges
+Fahrverbote und Umleitung von Güterverkehren,Bans and re-routing of freight vehicles,bansReroutingFreight
+Fahrverbote und Umleitung von Personenverkehren,Bans and re-routing of passenger vehicles,bansReroutingPassenger
+Lärmschutzwände und Instandhaltung,Noise barriers and maintenance,noiseBarrier
+Grüne Lärmschutzwände und Instandhaltung,Green noise barriers and maintenance,greenNoiseBarrier
+Schallschutzfenster,Window insulation,windowInsulation
+Sonstige Maßnahmen zur Schalldämmung,Other insulation,otherInsulation
+Flächennutzungsplanung/Bauleitplanung,Planning measures and ordinances between receivers and road sources,planningAndOrdinance
+Lärmreduzierung für sensible Gebiete,Reduced noise for sensitive areas,sensitiveAreaPlanning
+Abstandsflächen/Pufferzonen,Buffer zones,bufferZones
+Verfügbarkeit von ruhigen Gebieten,Availability of quiet areas,quietArea
+Verfügbarkeit von Grünflächen,Availability of green areas,greenArea
+Maßnahmen zur Verbesserung des akustischen Raumes,Soundscape measures,soundscape
+Neubau von Strecken,New route,newRoute
+Neue Eisenbahnumfahrung/neues Brückenbauwerk,New rail by-pass / new viaduct,newBypassViaduct
+Neubau von Tunneln,New tunnel,newTunnel
+Stilllegung einer Schienenstrecke,Closure of railway route,closureRailwayRoute
+Stilllegung eines Bahnhofs,Closure of station,closureStation
+Vermittlung von Informationen,Information dissemination,informationDissemination
+Beschwerdemanagement,Complaint management,complaintManagement
+Bildungs- und Aufklärungsaktivitäten,Education and awareness raising activities,educationAwarenessActivities
+Förderung anderer Verkehrsträger,Promoting other modes of transport,promotingOtherModes

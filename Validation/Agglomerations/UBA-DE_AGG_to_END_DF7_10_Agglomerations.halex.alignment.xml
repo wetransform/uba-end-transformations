@@ -1,0 +1,1068 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<alignment xmlns="http://www.esdi-humboldt.eu/hale/alignment">
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.create" id="C01037f96-987c-4421-9c87-97849f58295b" priority="normal">
+        <target>
+            <class>
+                <type name="NAP_AggCompetentAuthority"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+withTransformationContext {&#13;
+	def c = _.context.collector(it)&#13;
+	&#13;
+	_target {&#13;
+		actionPlanId_identifier( c.Allgemeines.kennungPlan.value() )&#13;
+		competentAuthorityIdIdentifier(  c.Allgemeines.kennungBehoerde.value() )&#13;
+	}&#13;
+}
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.create" id="Cfb189a6f-b6c5-4712-a2c9-cadc8993aaa9" priority="normal">
+        <target>
+            <class>
+                <type name="NAP_AggLimitValues"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+withTransformationContext {&#13;
+	def c = _.context.collector(it)&#13;
+	&#13;
+	_target {&#13;
+		actionPlanId_identifier( c.Allgemeines.kennungPlan.value() )&#13;
+		limitValues_otherCriteriaDescription( c.Allgemeines.infoGrenzwert.value() )&#13;
+		limitValues_noiseLimitReportIdIdentifier( 'LR_DE_00_1' )&#13;
+	}&#13;
+}&#13;
+
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.create" id="C6ef6066c-8e68-4233-b855-c7559e2cd8d2" priority="normal">
+        <target>
+            <class>
+                <type name="NAP_AggMappingResultDetail"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+def createTarget (collectorName, noiseSource) {&#13;
+	withTransformationContext {&#13;
+	def c = _.context.collector(it)&#13;
+		_target {&#13;
+			actionPlanId_identifier( c.Allgemeines.kennungPlan.value() )&#13;
+			_b.noiseSource( noiseSource )&#13;
+		&#13;
+			exposedLden55( c.Lärmkartierung."${collectorName}_personen_Lden55".value() )&#13;
+			exposedLnight50( c.Lärmkartierung."${collectorName}_personen_Lnight55".value() )&#13;
+			situationForImprovementExplanation( c.Lärmkartierung."${collectorName}_beschreibungProbleme".value() )&#13;
+			&#13;
+			// get codelist values for 'kriterienPrio' like classified in lookup-table 'KriterienPrioritaeten'&#13;
+			def kriterienPrio = c.Lärmkartierung.krietrienPrio.values()&#13;
+			def kriterienPrio_classified = _snippets.helperFunctions.classifyListValues(kriterienPrio, '61009dc1-28a6-4aa4-85f0-eb77ec600e36')&#13;
+			situationForImprovementPrioritisationCriteria( kriterienPrio_classified.join("; ") )&#13;
+		}&#13;
+	}&#13;
+}&#13;
+&#13;
+withTransformationContext {&#13;
+	def c = _.context.collector(it)&#13;
+	&#13;
+	def straßenHaupt = c.Allgemeines.hauptverkehrsstraßen.value()&#13;
+	def strassenSonst = c.Allgemeines.sonstigeStraßen.value()&#13;
+	def schieneHaupt = c.Allgemeines.haupteisenbahnstrecken.value()&#13;
+	def schienenSonst = c.Allgemeines.sonstigeSchienenwege.value()&#13;
+	def flugHaupt = c.Allgemeines.Großflughäfen.value()&#13;
+	def flugSonst = c.Allgemeines.sonstigeFlugplätze.value()&#13;
+	def industrie = c.Allgemeines.industriegelände.value()&#13;
+	&#13;
+	// create target instance based on what's seletec in sheet 'Allgemeines'&#13;
+	if ((straßenHaupt == 'Ja' &amp;&amp; strassenSonst == 'Ja') || (straßenHaupt == 'Nein' &amp;&amp; strassenSonst == 'Ja')) {&#13;
+		createTarget('alleStraßen', 'agglomerationRoad')&#13;
+	} &#13;
+	else if (straßenHaupt == 'Ja' &amp;&amp; strassenSonst == 'Nein') {&#13;
+		createTarget('HVS', 'agglomerationMajorRoad')&#13;
+	}&#13;
+	&#13;
+	if ((schieneHaupt == 'Ja' &amp;&amp; schienenSonst == 'Ja') || (schieneHaupt == 'Nein' &amp;&amp; schienenSonst == 'Ja')) {&#13;
+		createTarget('alleSchienen', 'agglomerationRailway')&#13;
+	}&#13;
+	else if (schieneHaupt == 'Ja' &amp;&amp; schienenSonst == 'Nein') {&#13;
+		createTarget('HES', 'agglomerationMajorRailway')&#13;
+	}&#13;
+	&#13;
+	if ((flugHaupt == 'Ja' &amp;&amp; flugSonst == 'Ja') || (flugHaupt == 'Nein' &amp;&amp; flugSonst == 'Ja')) {&#13;
+		createTarget('alleFlugplätze', 'agglomerationAir')&#13;
+	}&#13;
+	else if (flugHaupt == 'Ja' &amp;&amp; flugSonst == 'Nein') {&#13;
+		createTarget('GFH', 'agglomerationMajorAirport')&#13;
+	}&#13;
+	&#13;
+	if (industrie == 'Ja'){&#13;
+		createTarget('Industrie', 'agglomerationIndustry')&#13;
+	}&#13;
+}&#13;
+&#13;
+
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.retype" id="C6501f7f9-67fc-4c8d-a9a4-b09e4ac5b5f3" priority="highest">
+        <source>
+            <class>
+                <type name="Lärmkartierung"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NAP_AggMappingResultDetail"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+// This groovy script collects the information from sheet 'Lärmkartierung'&#13;
+// No target is created.&#13;
+&#13;
+def collectSheetLaermkartierung(valueName, valueColumn) {&#13;
+	withTransformationContext {	&#13;
+		def bezeichnung = _source.p.Bezeichnung.value()&#13;
+		def c = _.context.collector(it)&#13;
+		if (bezeichnung) {&#13;
+			if (bezeichnung.contains('Anzahl der Personen, die in dem vom Lärmaktionsplan erfassten Gebiet einer Lärmbelastung ab 55 dB(A) LDEN ausgesetzt sind')) {&#13;
+				c.Lärmkartierung."${valueName}_personen_Lden55" &lt;&lt; valueColumn&#13;
+			}&#13;
+			else if (bezeichnung.contains('Anzahl der Personen, die in dem vom Lärmaktionsplan erfassten Gebiet einer Lärmbelastung ab 50 dB(A) LNight ausgesetzt sind')) {&#13;
+				c.Lärmkartierung."${valueName}_personen_Lnight55" &lt;&lt; valueColumn&#13;
+			}&#13;
+			else if (bezeichnung.contains('Beschreibung der festgestellten Lärmprobleme und der verbesserungsbedürftigen Situationen')) {&#13;
+				c.Lärmkartierung."${valueName}_beschreibungProbleme" &lt;&lt; valueColumn&#13;
+			}&#13;
+		}&#13;
+	}&#13;
+}&#13;
+&#13;
+withTransformationContext {	&#13;
+	def c = _.context.collector(it)&#13;
+	&#13;
+	def bezeichnung = _source.p.Bezeichnung.value()&#13;
+	collectSheetLaermkartierung('HVS', _source.p.nurHauptverkehrsstraßen_KriterienPrioritäten.value())&#13;
+	collectSheetLaermkartierung('alleStraßen', _source.p.alleStraßen.value())&#13;
+	collectSheetLaermkartierung('HES', _source.p.nurHaupteisenbahnstrecken.value())&#13;
+	collectSheetLaermkartierung('alleSchienen', _source.p.alleSchienenwege.value())&#13;
+	collectSheetLaermkartierung('GFH', _source.p.nurGroßflüghäfen.value())&#13;
+	collectSheetLaermkartierung('alleFlugplätze', _source.p.alleFlugplätze.value())&#13;
+	collectSheetLaermkartierung('Industrie', _source.p.Industriegelände.value())&#13;
+		&#13;
+	def wert = _source.p.nurHauptverkehrsstraßen_KriterienPrioritäten.value()&#13;
+	if (wert == 'Ja') {&#13;
+		c.Lärmkartierung.krietrienPrio &lt;&lt; bezeichnung&#13;
+	}&#13;
+	&#13;
+	def prioritiesAll = _snippets.helperFunctions.CODELIST_PrioritisationCriteriaText_DE()&#13;
+	if ( bezeichnung in prioritiesAll ) {&#13;
+		c.Lärmkartierung."${bezeichnung}" &lt;&lt; wert&#13;
+	}&#13;
+}&#13;
+
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.create" id="Cff6dfc81-066e-4f7d-9d3c-91a10591df8b" priority="normal">
+        <target>
+            <class>
+                <type name="NAP_AggReductionHealthImpact_1"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+&#13;
+def createTarget (collectorName, noiseSource) {&#13;
+	withTransformationContext {&#13;
+		def c = _.context.collector(it)&#13;
+		&#13;
+		_target {&#13;
+			actionPlanId_identifier( c.Allgemeines.kennungPlan.value() )&#13;
+			explanationMethod( 'A person is considered to be exposed to noise above an LDEN value of 55 dB(A) or an LNight value of 50 dB(A). The required reduction shall be at least 1 dB.' )&#13;
+			&#13;
+			_b.noiseSource( noiseSource )&#13;
+			nrOfPeople( c.Wirkungen."${collectorName}_personenReduktion".value() )&#13;
+		}&#13;
+	}&#13;
+}&#13;
+&#13;
+withTransformationContext {&#13;
+	def c = _.context.collector(it)&#13;
+	&#13;
+	def straßenHaupt = c.Allgemeines.hauptverkehrsstraßen.value()&#13;
+	def strassenSonst = c.Allgemeines.sonstigeStraßen.value()&#13;
+	def schieneHaupt = c.Allgemeines.haupteisenbahnstrecken.value()&#13;
+	def schienenSonst = c.Allgemeines.sonstigeSchienenwege.value()&#13;
+	def flugHaupt = c.Allgemeines.Großflughäfen.value()&#13;
+	def flugSonst = c.Allgemeines.sonstigeFlugplätze.value()&#13;
+	def industrie = c.Allgemeines.industriegelände.value()&#13;
+	&#13;
+	// create target instance based on what's seletec in sheet 'Allgemeines'&#13;
+	if ((straßenHaupt == 'Ja' &amp;&amp; strassenSonst == 'Ja') || (straßenHaupt == 'Nein' &amp;&amp; strassenSonst == 'Ja')) {&#13;
+		createTarget('alleStraßen', 'agglomerationRoad')&#13;
+	}&#13;
+	else if (straßenHaupt == 'Ja' &amp;&amp; strassenSonst == 'Nein') {&#13;
+		createTarget('HVS', 'agglomerationMajorRoad')&#13;
+	}&#13;
+	&#13;
+	if ((schieneHaupt == 'Ja' &amp;&amp; schienenSonst == 'Ja') || (schieneHaupt == 'Nein' &amp;&amp; schienenSonst == 'Ja')) {&#13;
+		createTarget('alleSchienen', 'agglomerationRailway')&#13;
+	}&#13;
+	else if (schieneHaupt == 'Ja' &amp;&amp; schienenSonst == 'Nein') {&#13;
+		createTarget('HES', 'agglomerationMajorRailway')&#13;
+	}&#13;
+	&#13;
+	if ((flugHaupt == 'Ja' &amp;&amp; flugSonst == 'Ja') || (flugHaupt == 'Nein' &amp;&amp; flugSonst == 'Ja')) {&#13;
+		createTarget('alleFlugplätze', 'agglomerationAir')&#13;
+	}&#13;
+	else if (flugHaupt == 'Ja' &amp;&amp; flugSonst == 'Nein') {&#13;
+		createTarget('GFH', 'agglomerationMajorAirport')&#13;
+	}&#13;
+	if (industrie == 'Ja'){&#13;
+		createTarget('Industrie', 'agglomerationIndustry')&#13;
+	}&#13;
+}&#13;
+
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.retype" id="Cf107c489-b11f-461b-b4bb-74ac83415139" priority="highest">
+        <source>
+            <class>
+                <type name="Wirkungen"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NAP_AggReductionHealthImpact_1"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+// This groovy script collects the information from sheet 'Wirkung'&#13;
+// No target is created.&#13;
+&#13;
+def collectSheetWirkung(valueName, valueColumn) {&#13;
+	withTransformationContext {&#13;
+		&#13;
+		def c = _.context.collector(it)	&#13;
+		def bezeichnung = _source.p.Bezeichnung.value()&#13;
+		if (bezeichnung) {&#13;
+			if (bezeichnung.contains('Geschätzte Anzahl der Personen in dem von dem Aktionsplan erfassten Gebiet, für die sich der Lärm innerhalb der nächsten fünf Jahre reduziert')) {&#13;
+				c.Wirkungen."${valueName}_personenReduktion" &lt;&lt; valueColumn&#13;
+			}&#13;
+			else if (bezeichnung.contains('Geschätztes Kosten-Nutzen-Verhältnis der im Aktionsplan beschriebenen Maßnahmen')) {&#13;
+				c.Wirkungen."${valueName}_kostenNutzen" &lt;&lt; valueColumn&#13;
+			}&#13;
+		}&#13;
+	}&#13;
+}&#13;
+&#13;
+withTransformationContext {&#13;
+	&#13;
+	collectSheetWirkung('HVS', _source.p.nurHauptverkehrsstraßen_LärmaktionsplanInsgesamt.value())&#13;
+	collectSheetWirkung('alleStraßen',  _source.p.alleStraßen.value())&#13;
+	collectSheetWirkung('HES', _source.p.nurHaupteisenbahnstrecken.value())&#13;
+	collectSheetWirkung('alleSchienen', _source.p.alleSchienenwege.value())&#13;
+	collectSheetWirkung('GFH', _source.p.nurGroßflüghäfen.value())&#13;
+	collectSheetWirkung('alleFlugplätze', _source.p.alleFlugplätze.value())&#13;
+	collectSheetWirkung('Industrie', _source.p.Industriegelände.value())&#13;
+	&#13;
+	def c = _.context.collector(it)&#13;
+	def bezeichnung = _source.p.Bezeichnung.value()&#13;
+	&#13;
+	def wert = _source.p.nurHauptverkehrsstraßen_LärmaktionsplanInsgesamt.value()&#13;
+	&#13;
+	if (bezeichnung) {&#13;
+		if (bezeichnung.contains('Angabe, ob der Lärmaktionsplan eine langfristige Strategie zur Reduzierung der Lärmbelastung vorsieht')) {&#13;
+			c.Wirkungen.strategie &lt;&lt; wert&#13;
+		}&#13;
+		else if (bezeichnung.contains('Erläuterung der langfristigen Strategie zur Reduzierung der Lärmbelastung')) {&#13;
+			c.Wirkungen.strategieErlaeuterung &lt;&lt; wert&#13;
+		}&#13;
+		else if (bezeichnung.contains('Geschätzte Gesamtkosten des Aktionsplans (ohne Maßnahmenumsetzung) [€]')) {&#13;
+			c.Wirkungen.kostenGesamt &lt;&lt; wert&#13;
+		}&#13;
+		else if (bezeichnung.contains('Angabe, ob im Lärmaktionsplan ruhige Gebiete beschrieben werden')) {&#13;
+			c.Wirkungen.ruhigeGebiete &lt;&lt; wert&#13;
+		}&#13;
+		else if (bezeichnung.contains('Angabe, ob Regelungen für die Überprüfung der Umsetzung des Lärmaktionsplans vorgesehen sind')) {&#13;
+			c.Wirkungen.pruefungUmsetzung &lt;&lt; wert&#13;
+		}&#13;
+		else if (bezeichnung.contains('Erläuterung der geplanten Regelungen für die Überprüfung der Umsetzung des Lärmaktionsplans')) {&#13;
+			c.Wirkungen.pruefungUmsetzungErlaueterung &lt;&lt; wert&#13;
+		}&#13;
+		else if (bezeichnung.contains('Angabe, ob Regelungen für die Überprüfung der Wirksamkeit des Lärmaktionsplans vorgesehen sind')) {&#13;
+			c.Wirkungen.pruefungWirksamkeit &lt;&lt; wert&#13;
+		}&#13;
+		else if (bezeichnung.contains('Geplante Regelungen für die Überprüfung der Wirksamkeit des Lärmaktionsplans')) {&#13;
+			c.Wirkungen.pruefungWirksamkeitErlaeuterung &lt;&lt; wert&#13;
+		}&#13;
+	}&#13;
+}&#13;
+&#13;
+
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.create" id="Cef9c0714-2325-4216-9ba4-7c5f827ed9cd" priority="normal">
+        <target>
+            <class>
+                <type name="NAP_AggReductionHealthImpact_3"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+&#13;
+def createTarget (collectorName, noiseSource) {&#13;
+	withTransformationContext {&#13;
+		def c = _.context.collector(it)&#13;
+		&#13;
+		def kostenNutzen = c.Wirkungen."${collectorName}_kostenNutzen".value()&#13;
+		if (kostenNutzen) {&#13;
+			_target {&#13;
+				actionPlanId_identifier( c.Allgemeines.kennungPlan.value() )&#13;
+				_b.noiseSource( noiseSource )&#13;
+				&#13;
+				estimatedCostBenefit( kostenNutzen )&#13;
+			}&#13;
+		}&#13;
+	}&#13;
+}&#13;
+&#13;
+&#13;
+&#13;
+withTransformationContext {&#13;
+	def c = _.context.collector(it)&#13;
+	&#13;
+	def straßenHaupt = c.Allgemeines.hauptverkehrsstraßen.value()&#13;
+	def strassenSonst = c.Allgemeines.sonstigeStraßen.value()&#13;
+	def schieneHaupt = c.Allgemeines.haupteisenbahnstrecken.value()&#13;
+	def schienenSonst = c.Allgemeines.sonstigeSchienenwege.value()&#13;
+	def flugHaupt = c.Allgemeines.Großflughäfen.value()&#13;
+	def flugSonst = c.Allgemeines.sonstigeFlugplätze.value()&#13;
+	def industrie = c.Allgemeines.industriegelände.value()&#13;
+	&#13;
+	// create target instance based on what's seletec in sheet 'Allgemeines'&#13;
+	if ((straßenHaupt == 'Ja' &amp;&amp; strassenSonst == 'Ja') || (straßenHaupt == 'Nein' &amp;&amp; strassenSonst == 'Ja')) {&#13;
+		createTarget('alleStraßen', 'agglomerationRoad')&#13;
+	}&#13;
+	else if (straßenHaupt == 'Ja' &amp;&amp; strassenSonst == 'Nein') {&#13;
+		createTarget('HVS', 'agglomerationMajorRoad')&#13;
+	}&#13;
+	&#13;
+	if ((schieneHaupt == 'Ja' &amp;&amp; schienenSonst == 'Ja') || (schieneHaupt == 'Nein' &amp;&amp; schienenSonst == 'Ja')) {&#13;
+		createTarget('alleSchienen', 'agglomerationRailway')&#13;
+	}&#13;
+	else if (schieneHaupt == 'Ja' &amp;&amp; schienenSonst == 'Nein') {&#13;
+		createTarget('HES', 'agglomerationMajorRailway')&#13;
+	}&#13;
+	&#13;
+	if ((flugHaupt == 'Ja' &amp;&amp; flugSonst == 'Ja') || (flugHaupt == 'Nein' &amp;&amp; flugSonst == 'Ja')) {&#13;
+		createTarget('alleFlugplätze', 'agglomerationAir')&#13;
+	}&#13;
+	else if (flugHaupt == 'Ja' &amp;&amp; flugSonst == 'Nein') {&#13;
+		createTarget('GFH', 'agglomerationMajorAirport')&#13;
+	}&#13;
+	&#13;
+	if (industrie == 'Ja'){&#13;
+		createTarget('Industrie', 'agglomerationIndustry')&#13;
+	}&#13;
+}
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.create" id="Ceafe63e8-f6f2-4894-bc17-7375be87134e" priority="normal">
+        <target>
+            <class>
+                <type name="NAP_AggReductionMeasure"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+def createTarget(collectorName, noiseSource, lookupTableId) {&#13;
+	withTransformationContext {&#13;
+		def c = _.context.collector(it)&#13;
+		_target {&#13;
+			actionPlanId_identifier( c.Allgemeines.kennungPlan.value() )&#13;
+			&#13;
+			_b.noiseSource( noiseSource )&#13;
+			&#13;
+			def vorhandeneMaßnahmen = c."${collectorName}".vorhandene.values()&#13;
+			def existingMeasureValue&#13;
+			if ( vorhandeneMaßnahmen ) {&#13;
+				// get codelist values for 'vorhandeneMaßnahmen' like classified in lookup-table 'MaßnahmenStraße'/'MaßnahmenSchiene'/'MaßnahmenLuft'/'MaßnahmenIndustrie'&#13;
+				def vorhandeneMaßnahmen_classified = _snippets.helperFunctions.classifyListValues(vorhandeneMaßnahmen, lookupTableId)&#13;
+				existingMeasureValue = vorhandeneMaßnahmen_classified.join("; ")&#13;
+			}&#13;
+			else {&#13;
+				existingMeasureValue = 'noMeasure'&#13;
+			}&#13;
+			&#13;
+			def geplannteMaßnahmen = c."${collectorName}".geplante.values()&#13;
+			def plannedMeasureValue&#13;
+			def geplannteMaßnahmenNutzen = c."${collectorName}".nutzen.value()&#13;
+			if (geplannteMaßnahmen) {&#13;
+				// get codelist values for 'geplanteMaßnahmen' like classified in lookup-table 'MaßnahmenStraße'/'MaßnahmenSchiene'/'MaßnahmenLuft'/'MaßnahmenIndustrie'&#13;
+				def geplannteMaßnahmen_classified = _snippets.helperFunctions.classifyListValues(geplannteMaßnahmen, lookupTableId)&#13;
+				plannedMeasureValue = geplannteMaßnahmen_classified.join("; ")&#13;
+			}&#13;
+			else {&#13;
+				plannedMeasureValue = 'noMeasure'&#13;
+				&#13;
+				if (!geplannteMaßnahmenNutzen) {&#13;
+					geplannteMaßnahmenNutzen = 'Im Lärmaktionsplan sind keine Maßnahmen vorgesehen.'&#13;
+				}&#13;
+			}&#13;
+			plannedMeasureDetail_expectedBenefits( geplannteMaßnahmenNutzen )&#13;
+			&#13;
+			switch (noiseSource) {&#13;
+				case 'agglomerationMajorAirport':&#13;
+				case 'agglomerationAir':&#13;
+					existingMeasureAir( existingMeasureValue )&#13;
+					plannedMeasureDetail_plannedMeasureAir( plannedMeasureValue )&#13;
+					break&#13;
+				case 'agglomerationIndustry':&#13;
+					existingMeasureIndustry( existingMeasureValue )&#13;
+					plannedMeasureDetail_plannedMeasureIndustry( plannedMeasureValue )&#13;
+					break&#13;
+				case 'agglomerationMajorRailway':&#13;
+				case 'agglomerationRailway':&#13;
+					existingMeasureRailway( existingMeasureValue )&#13;
+					plannedMeasureDetail_plannedMeasureRailway( plannedMeasureValue )&#13;
+					break&#13;
+				case 'agglomerationMajorRoad':&#13;
+				case 'agglomerationRoad':&#13;
+					existingMeasureRoad( existingMeasureValue )&#13;
+					plannedMeasureDetail_plannedMeasureRoad( plannedMeasureValue )&#13;
+					break&#13;
+			}&#13;
+		}&#13;
+	}&#13;
+}&#13;
+&#13;
+&#13;
+withTransformationContext {&#13;
+	def c = _.context.collector(it)&#13;
+	&#13;
+	def straßenHaupt = c.Allgemeines.hauptverkehrsstraßen.value()&#13;
+	def strassenSonst = c.Allgemeines.sonstigeStraßen.value()&#13;
+	def schieneHaupt = c.Allgemeines.haupteisenbahnstrecken.value()&#13;
+	def schienenSonst = c.Allgemeines.sonstigeSchienenwege.value()&#13;
+	def flugHaupt = c.Allgemeines.Großflughäfen.value()&#13;
+	def flugSonst = c.Allgemeines.sonstigeFlugplätze.value()&#13;
+	def industrie = c.Allgemeines.industriegelände.value()&#13;
+	&#13;
+	// create target instance based on what's seletec in sheet 'Allgemeines'&#13;
+	if ((straßenHaupt == 'Ja' &amp;&amp; strassenSonst == 'Ja') || (straßenHaupt == 'Nein' &amp;&amp; strassenSonst == 'Ja')) {&#13;
+		createTarget('Maßnahmen_Straße', 'agglomerationRoad', '169d7306-42fb-443e-9774-a837999d737c')&#13;
+	}&#13;
+	else if (straßenHaupt == 'Ja' &amp;&amp; strassenSonst == 'Nein') {&#13;
+		createTarget('Maßnahmen_Straße', 'agglomerationMajorRoad', '169d7306-42fb-443e-9774-a837999d737c')&#13;
+	}&#13;
+	&#13;
+	if ((schieneHaupt == 'Ja' &amp;&amp; schienenSonst == 'Ja') || (schieneHaupt == 'Nein' &amp;&amp; schienenSonst == 'Ja')) {&#13;
+		createTarget('Maßnahmen_Schiene', 'agglomerationRailway', '0562fba1-c4cf-446f-973c-81804ed0f6b8')&#13;
+	}&#13;
+	else if (schieneHaupt == 'Ja' &amp;&amp; schienenSonst == 'Nein') {&#13;
+		createTarget('Maßnahmen_Schiene', 'agglomerationMajorRailway', '0562fba1-c4cf-446f-973c-81804ed0f6b8')&#13;
+	}&#13;
+	&#13;
+	if ((flugHaupt == 'Ja' &amp;&amp; flugSonst == 'Ja') || (flugHaupt == 'Nein' &amp;&amp; flugSonst == 'Ja')) {&#13;
+		createTarget('Maßnahmen_Luft', 'agglomerationAir', '97965188-3bda-423a-a616-4bd085f47ea4')&#13;
+	}&#13;
+	else if (flugHaupt == 'Ja' &amp;&amp; flugSonst == 'Nein') {&#13;
+		createTarget('Maßnahmen_Luft', 'agglomerationMajorAirport', '97965188-3bda-423a-a616-4bd085f47ea4')&#13;
+	}&#13;
+	&#13;
+	if (industrie == 'Ja'){&#13;
+		createTarget('Maßnahmen_Industrie', 'agglomerationIndustry', 'dd94d0ef-291d-47ee-b63b-d11c87e0f405')&#13;
+	}&#13;
+}&#13;
+
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.retype" id="C4e159a71-c3c2-43de-a237-9cb9b554f37e" priority="highest">
+        <source>
+            <class>
+                <type name="Maßnahmen_Industrie"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NAP_AggReductionMeasure"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+// This groovy script collects the information from sheet 'Maßahmen_Industrie'&#13;
+// No target is created.&#13;
+&#13;
+def bezeichnung = _source.p.Bezeichnung.value()&#13;
+&#13;
+withTransformationContext {&#13;
+	def c = _.context.collector(it)&#13;
+	if (_source.p.geplanteMaßnahme.value() == 'Ja') {&#13;
+		c.Maßnahmen_Industrie.geplante &lt;&lt; bezeichnung&#13;
+	}&#13;
+	if (_source.p.vorhandeneMaßnahme.value() =='Ja') {&#13;
+		c.Maßnahmen_Industrie.vorhandene &lt;&lt; bezeichnung&#13;
+	}&#13;
+	if (bezeichnung == 'Erläuterung des erwarteten Nutzens durch die Umsetzung der geplanten Maßnahmen') {&#13;
+		c.Maßnahmen_Industrie.nutzen &lt;&lt; _source.p.'ErläuterungNutzen'.value()&#13;
+	}&#13;
+	&#13;
+	def measuresAll = _snippets.helperFunctions.CODELIST_IndustryMeasureText_DE()&#13;
+	if ( bezeichnung in measuresAll ) {&#13;
+		c.Maßnahmen_Industrie."${bezeichnung}_vorhanden" &lt;&lt; _source.p.vorhandeneMaßnahme.value()&#13;
+		c.Maßnahmen_Industrie."${bezeichnung}_geplant" &lt;&lt; _source.p.geplanteMaßnahme.value()&#13;
+	}&#13;
+}&#13;
+
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.retype" id="Ce8ee0315-8b4f-43ab-89d7-ef18567a48a3" priority="highest">
+        <source>
+            <class>
+                <type name="Maßnahmen_Luft"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NAP_AggReductionMeasure"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+// This groovy script collects the information from sheet 'Maßahmen_Luft'&#13;
+// No target is created.&#13;
+&#13;
+def bezeichnung = _source.p.Bezeichnung.value()&#13;
+&#13;
+withTransformationContext {&#13;
+	def c = _.context.collector(it)&#13;
+	if (_source.p.geplanteMaßnahme.value() == 'Ja') {&#13;
+		c.Maßnahmen_Luft.geplante &lt;&lt; bezeichnung&#13;
+	}&#13;
+	if (_source.p.vorhandeneMaßnahme.value() =='Ja') {&#13;
+		c.Maßnahmen_Luft.vorhandene &lt;&lt; bezeichnung&#13;
+	}&#13;
+	if (bezeichnung == 'Erläuterung des erwarteten Nutzens durch die Umsetzung der geplanten Maßnahmen') {&#13;
+		c.Maßnahmen_Luft.nutzen &lt;&lt; _source.p.'ErläuterungNutzen'.value()&#13;
+	}&#13;
+	&#13;
+	def measuresAll = _snippets.helperFunctions.CODELIST_AirportMeasureText_DE()&#13;
+	if ( bezeichnung in measuresAll ) {&#13;
+		c.Maßnahmen_Luft."${bezeichnung}_vorhanden" &lt;&lt; _source.p.vorhandeneMaßnahme.value()&#13;
+		c.Maßnahmen_Luft."${bezeichnung}_geplant" &lt;&lt; _source.p.geplanteMaßnahme.value()&#13;
+	}&#13;
+}
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.retype" id="C595ae665-f1b4-4009-b594-dc7c9fd6e312" priority="highest">
+        <source>
+            <class>
+                <type name="Maßnahmen_Schiene"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NAP_AggReductionMeasure"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+// This groovy script collects the information from sheet 'Maßahmen_Schiene'&#13;
+// No target is created.&#13;
+&#13;
+def bezeichnung = _source.p.Bezeichnung.value()&#13;
+&#13;
+withTransformationContext {&#13;
+	def c = _.context.collector(it)&#13;
+	if (_source.p.geplanteMaßnahme.value() == 'Ja') {&#13;
+		c.Maßnahmen_Schiene.geplante &lt;&lt; bezeichnung&#13;
+	}&#13;
+	if (_source.p.vorhandeneMaßnahme.value() =='Ja') {&#13;
+		c.Maßnahmen_Schiene.vorhandene &lt;&lt; bezeichnung&#13;
+	}&#13;
+	if (bezeichnung == 'Erläuterung des erwarteten Nutzens durch die Umsetzung der geplanten Maßnahmen') {&#13;
+		c.Maßnahmen_Schiene.nutzen &lt;&lt; _source.p.'ErläuterungNutzen'.value()&#13;
+	}&#13;
+	&#13;
+	def measuresAll = _snippets.helperFunctions.CODELIST_RailMeasureText_DE()&#13;
+	if ( bezeichnung in measuresAll ) {&#13;
+		c.Maßnahmen_Schiene."${bezeichnung}_vorhanden" &lt;&lt; _source.p.vorhandeneMaßnahme.value()&#13;
+		c.Maßnahmen_Schiene."${bezeichnung}_geplant" &lt;&lt; _source.p.geplanteMaßnahme.value()&#13;
+	}&#13;
+}&#13;
+
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.retype" id="Cbe17d2b7-443e-4513-b9db-2ed112d37088" priority="highest">
+        <source>
+            <class>
+                <type name="Maßnahmen_Straße"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NAP_AggReductionMeasure"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+// This groovy script collects the information from sheet 'Maßahmen_Straße'&#13;
+// No target is created.&#13;
+&#13;
+def bezeichnung = _source.p.Bezeichnung.value()&#13;
+&#13;
+withTransformationContext {&#13;
+	def c = _.context.collector(it)&#13;
+	if (_source.p.geplanteMaßnahme.value() == 'Ja') {&#13;
+		c.Maßnahmen_Straße.geplante &lt;&lt; bezeichnung&#13;
+	}&#13;
+	if (_source.p.vorhandeneMaßnahme.value() =='Ja') {&#13;
+		c.Maßnahmen_Straße.vorhandene &lt;&lt; bezeichnung&#13;
+	}&#13;
+	if (bezeichnung == 'Erläuterung des erwarteten Nutzens durch die Umsetzung der geplanten Maßnahmen') {&#13;
+		c.Maßnahmen_Straße.nutzen &lt;&lt; _source.p.'ErläuterungNutzen'.value()&#13;
+	}&#13;
+	&#13;
+	def measuresAll = _snippets.helperFunctions.CODELIST_RoadMeasureText_DE()&#13;
+	if ( bezeichnung in measuresAll ) {&#13;
+		c.Maßnahmen_Straße."${bezeichnung}_vorhanden" &lt;&lt; _source.p.vorhandeneMaßnahme.value()&#13;
+		c.Maßnahmen_Straße."${bezeichnung}_geplant" &lt;&lt; _source.p.geplanteMaßnahme.value()&#13;
+	}&#13;
+}&#13;
+
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.create" id="Cb5ec94bf-9df8-4deb-917a-6989006a152f" priority="normal">
+        <target>
+            <class>
+                <type name="NAP_Agglomeration"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+withTransformationContext {&#13;
+	def c = _.context.collector(it)&#13;
+		&#13;
+	_target {&#13;
+		actionPlanId_identifier( c.Allgemeines.kennungPlan.value() )&#13;
+		agglomerationIdIdentifier( c.Allgemeines.kennungBallungsraum.value() )&#13;
+	}&#13;
+}&#13;
+
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.create" id="C278fcd85-958a-4fc7-b06f-84f5f24d5336" priority="normal">
+        <target>
+            <class>
+                <type name="NoiseActionPlanAgglomeration"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+// validate all datta/sheets on source side&#13;
+def straßenHaupt, strassenSonst, schieneHaupt, schienenSonst, flugHaupt, flugSonst, industrie&#13;
+withTransformationContext {	&#13;
+	def c = _.context.collector(it)&#13;
+	straßenHaupt = c.Allgemeines.hauptverkehrsstraßen.value()&#13;
+	strassenSonst = c.Allgemeines.sonstigeStraßen.value()&#13;
+	schieneHaupt = c.Allgemeines.haupteisenbahnstrecken.value()&#13;
+	schienenSonst = c.Allgemeines.sonstigeSchienenwege.value()&#13;
+	flugHaupt = c.Allgemeines.Großflughäfen.value()&#13;
+	flugSonst = c.Allgemeines.sonstigeFlugplätze.value()&#13;
+	industrie = c.Allgemeines.industriegelände.value()&#13;
+}&#13;
+&#13;
+_snippets.end_Checks{&#13;
+&#13;
+	// Validate sheet 'Allgemeines'&#13;
+	&#13;
+	existsCheck('Z03 - v', 'Allgemeines', 'name')&#13;
+	existsCheck('Z04 - v', 'Allgemeines', 'kennungBallungsraum')&#13;
+	integerCheck('Z05 - v', 'Z05 - k', 'Allgemeines', 'ags')&#13;
+	existsCheck('Z06 - v', 'Allgemeines', 'kennungPlan')&#13;
+	&#13;
+	existsCheck('Z10 - v', 'Allgemeines', 'nameBehoerde')&#13;
+	existsCheck('Z11 - v', 'Allgemeines', 'strasse')&#13;
+	existsCheck('Z12 - v', 'Allgemeines', 'hausnr')&#13;
+	existsCheck('Z13 - v', 'Allgemeines', 'ort')&#13;
+	existsCheck('Z14 - v', 'Allgemeines', 'plz')&#13;
+	existsCheck('Z15 - v', 'Allgemeines', 'kennungBehoerde')&#13;
+		&#13;
+	dateCheck('Z17 - k', 'Z17 - v', 'Allgemeines', 'startDatum', 'dd.MM.yyyy')&#13;
+	dateCheck('Z18 - k', null, 'Allgemeines', 'endDatum', 'dd.MM.yyyy')&#13;
+	&#13;
+	urlCheck('Z20 - k', null, 'Allgemeines', 'linkZumPlan')&#13;
+	&#13;
+	codelistCheck('Z25 - k', 'Z25 - v', 'Allgemeines', 'hauptverkehrsstraßen', CODELIST_Boolean_DE() )&#13;
+	codelistCheck('Z26 - k', 'Z26 - v', 'Allgemeines', 'sonstigeStraßen', CODELIST_Boolean_DE() )&#13;
+	codelistCheck('Z27 - k', 'Z27 - v', 'Allgemeines', 'haupteisenbahnstrecken', CODELIST_Boolean_DE() )&#13;
+	codelistCheck('Z28 - k', 'Z28 - v', 'Allgemeines', 'sonstigeSchienenwege', CODELIST_Boolean_DE() )&#13;
+	codelistCheck('Z29 - k', 'Z29 - v', 'Allgemeines', 'Großflughäfen', CODELIST_Boolean_DE() )&#13;
+	codelistCheck('Z30 - k', 'Z30 - v', 'Allgemeines', 'sonstigeFlugplätze', CODELIST_Boolean_DE() )&#13;
+	codelistCheck('Z31 - k', 'Z31 - v', 'Allgemeines', 'industriegelände', CODELIST_Boolean_DE() )&#13;
+	&#13;
+	&#13;
+	&#13;
+	// Validate sheet 'Öffentlichkeitsbeteiligung'&#13;
+	&#13;
+	urlCheck('Z04 - k', null, 'Öffentlichkeitsbeteiligung', 'link')&#13;
+	dateCheck('Z06 - k', 'Z06 - v', 'Öffentlichkeitsbeteiligung', 'startDatum', 'dd.MM.yyyy')&#13;
+	dateCheck('Z07 - k', 'Z07 - v', 'Öffentlichkeitsbeteiligung', 'endDatum', 'dd.MM.yyyy')&#13;
+	&#13;
+	def mittel = _snippets.helperFunctions.CODELIST_ConsultationMeansText_DE()&#13;
+	mittel.each { m -&gt; &#13;
+		codelistCheck(m, null, 'Öffentlichkeitsbeteiligung', m, CODELIST_Boolean_DE() )&#13;
+	}&#13;
+	def interessentraeger = _snippets.helperFunctions.CODELIST_stakeholdersTypeText_DE()&#13;
+	interessentraeger.each { i -&gt; &#13;
+		codelistCheck(i, null, 'Öffentlichkeitsbeteiligung', i, CODELIST_Boolean_DE() )&#13;
+	}&#13;
+	&#13;
+	codelistCheck('Z28 - k', 'Z28 - v', 'Öffentlichkeitsbeteiligung', 'kommentareEingegangen', CODELIST_Boolean_DE() )&#13;
+	codelistCheck('Z29 - k', 'Z29 - v', 'Öffentlichkeitsbeteiligung', 'kommentareAufgenommen', CODELIST_Boolean_DE() )&#13;
+	codelistCheck('Z31 - k', 'Z31 - v', 'Öffentlichkeitsbeteiligung', 'lapUeberarbeitet', CODELIST_Boolean_DE() )&#13;
+	conditionalCheck('Z32 - v', 'Öffentlichkeitsbeteiligung', 'lapUeberarbeitet', 'lapUeberarbeitetKommentar', ['Ja'])&#13;
+	&#13;
+	&#13;
+	&#13;
+	// Validate sheet 'Lärmkartierung'&#13;
+	&#13;
+	def prioritiesAll = _snippets.helperFunctions.CODELIST_PrioritisationCriteriaText_DE()&#13;
+	prioritiesAll.each { p -&gt; &#13;
+		codelistCheck("${p}", null, 'Lärmkartierung', p, CODELIST_Boolean_DE() )&#13;
+	}&#13;
+&#13;
+&#13;
+	// Validate sheet 'Wirkungen'&#13;
+	&#13;
+	codelistCheck('Z08 - k', 'Z08 - v', 'Wirkungen', 'strategie', CODELIST_Boolean_DE() )&#13;
+	conditionalCheck('Z09 - v', 'Wirkungen', 'strategie', 'strategieErlaeuterung', ['Ja'])&#13;
+	numberCheck('Z11 - k', null, 'Wirkungen', 'kostenGesamt')&#13;
+	codelistCheck('Z13 - k', 'Z13 - v', 'Wirkungen', 'ruhigeGebiete', CODELIST_Boolean_DE() )&#13;
+	codelistCheck('Z15 - k', 'Z15 - v', 'Wirkungen', 'pruefungUmsetzung', CODELIST_Boolean_DE() )&#13;
+	conditionalCheck('Z16 - v', 'Wirkungen', 'pruefungUmsetzung', 'pruefungUmsetzungErlaueterung', ['Ja'])&#13;
+	codelistCheck('Z18 - k', 'Z18 - v', 'Wirkungen', 'pruefungWirksamkeit', CODELIST_Boolean_DE() )&#13;
+	conditionalCheck('Z19 - v', 'Wirkungen', 'pruefungWirksamkeit', 'pruefungWirksamkeitErlaeuterung', ['Ja'])&#13;
+	codelistCheck('Z19 - k', null, 'Wirkungen', 'pruefungWirksamkeitErlaeuterung', CODELIST_EvaluationMechanismValue_DE() )&#13;
+	&#13;
+	&#13;
+	&#13;
+	// Validations which are based on what's selected in sheet 'Allgemeines'&#13;
+		&#13;
+	if ((straßenHaupt == 'Ja' &amp;&amp; strassenSonst == 'Ja') || (straßenHaupt == 'Nein' &amp;&amp; strassenSonst == 'Ja')) {&#13;
+		validateSheetMaßnahmen('Maßnahmen_Straße', _snippets.helperFunctions.CODELIST_RoadMeasureText_DE())&#13;
+		numberCheck('Z03 - k', 'Z03 - v', 'Wirkungen', 'alleStraßen_personenReduktion')&#13;
+		validateSheetLaermkartierung('alleStraßen')&#13;
+	}&#13;
+	else if (straßenHaupt == 'Ja' &amp;&amp; strassenSonst == 'Nein') {&#13;
+		validateSheetMaßnahmen('Maßnahmen_Straße', _snippets.helperFunctions.CODELIST_RoadMeasureText_DE())&#13;
+		numberCheck('Z03 - k', 'Z03 - v', 'Wirkungen', 'HVS_personenReduktion')&#13;
+		validateSheetLaermkartierung('HVS')&#13;
+	}&#13;
+	&#13;
+	if ((schieneHaupt == 'Ja' &amp;&amp; schienenSonst == 'Ja') || (schieneHaupt == 'Nein' &amp;&amp; schienenSonst == 'Ja')) {&#13;
+		validateSheetMaßnahmen('Maßnahmen_Schiene', _snippets.helperFunctions.CODELIST_RailMeasureText_DE())&#13;
+		numberCheck('Z03 - k', 'Z03 - v', 'Wirkungen', 'alleSchienen_personenReduktion')&#13;
+		validateSheetLaermkartierung('alleSchienen')&#13;
+	}&#13;
+	else if (schieneHaupt == 'Ja' &amp;&amp; schienenSonst == 'Nein') {&#13;
+		validateSheetMaßnahmen('Maßnahmen_Schiene', _snippets.helperFunctions.CODELIST_RailMeasureText_DE())&#13;
+		numberCheck('Z03 - k', 'Z03 - v', 'Wirkungen', 'HES_personenReduktion')&#13;
+		validateSheetLaermkartierung('HES')&#13;
+	}&#13;
+	&#13;
+	if ((flugHaupt == 'Ja' &amp;&amp; flugSonst == 'Ja') || (flugHaupt == 'Nein' &amp;&amp; flugSonst == 'Ja')) {&#13;
+		validateSheetMaßnahmen('Maßnahmen_Luft', _snippets.helperFunctions.CODELIST_AirportMeasureText_DE())&#13;
+		numberCheck('Z03 - k', 'Z03 - v', 'Wirkungen', 'alleFlugplätze_personenReduktion')&#13;
+		validateSheetLaermkartierung('alleFlugplätze')&#13;
+	}&#13;
+	else if (flugHaupt == 'Ja' &amp;&amp; flugSonst == 'Nein') {&#13;
+		validateSheetMaßnahmen('Maßnahmen_Luft', _snippets.helperFunctions.CODELIST_AirportMeasureText_DE())&#13;
+		numberCheck('Z03 - k', 'Z03 - v', 'Wirkungen', 'GFH_personenReduktion')&#13;
+		validateSheetLaermkartierung('GFH')&#13;
+	}&#13;
+	&#13;
+	if (industrie == 'Ja'){&#13;
+		validateSheetMaßnahmen('Maßnahmen_Industrie', _snippets.helperFunctions.CODELIST_IndustryMeasureText_DE())&#13;
+		numberCheck('Z03 - k', 'Z03 - v', 'Wirkungen', 'Industrie_personenReduktion')&#13;
+		validateSheetLaermkartierung('Industrie')&#13;
+	}&#13;
+&#13;
+}&#13;
+&#13;
+def validateSheetMaßnahmen(collectorName, measuresAll) {&#13;
+	_snippets.end_Checks{&#13;
+		measuresAll.each { m -&gt; &#13;
+			codelistCheck("${m} - geplant", null, collectorName, "${m}_geplant", CODELIST_Boolean_DE() )&#13;
+			codelistCheck("${m} - vorhanden", null, collectorName, "${m}_vorhanden", CODELIST_Boolean_DE() )&#13;
+		}&#13;
+		existsCheck('Z03 - v', collectorName, 'nutzen')	&#13;
+	}&#13;
+}&#13;
+&#13;
+def validateSheetLaermkartierung(collectorName) {&#13;
+	_snippets.end_Checks{&#13;
+		numberCheck('Z03 - k', 'Z03 - v', 'Lärmkartierung', "${collectorName}_personen_Lnight55")&#13;
+		numberCheck('Z04 - k', 'Z04 - v', 'Lärmkartierung', "${collectorName}_personen_Lnight55")&#13;
+		existsCheck('Z05 - v', 'Lärmkartierung', "${collectorName}_beschreibungProbleme")&#13;
+	}&#13;
+}&#13;
+&#13;
+&#13;
+// assign values to target sheet NoiseActionPlanAgglomerations&#13;
+withTransformationContext {	&#13;
+	def c = _.context.collector(it)&#13;
+	_target {&#13;
+		actionPlanId_identifier( c.Allgemeines.kennungPlan.value() )&#13;
+		&#13;
+		legalContext_actionPlanStartDate( _snippets.helperFunctions.formatDate(c.Allgemeines.startDatum.value()) )&#13;
+		legalContext_actionPlanEndDate( _snippets.helperFunctions.formatDate(c.Allgemeines.endDatum.value()) )&#13;
+		legalContext_actionPlanDocument_citationLink( c.Allgemeines.linkZumPlan.value() )&#13;
+		legalContext_actionPlanDocument_citationLevel( 'sub-national' )&#13;
+		legalContext_actionPlanDocument_citationType( 'documentCitation' )&#13;
+		&#13;
+		publicConsultation_consultationDocumentationSummary( c.Öffentlichkeitsbeteiligung.beschreibung.value() )&#13;
+		publicConsultation_consultationDocumentationOnline( c.Öffentlichkeitsbeteiligung.link.value() )&#13;
+		publicConsultation_consultationStartDate( _snippets.helperFunctions.formatDate(c.Öffentlichkeitsbeteiligung.startDatum.value()) )&#13;
+		publicConsultation_consultationEndDate( _snippets.helperFunctions.formatDate(c.Öffentlichkeitsbeteiligung.endDatum.value()) )&#13;
+		publicConsultation_otherConsultationMeans( c.Öffentlichkeitsbeteiligung.mittelAndere.value() )&#13;
+		&#13;
+		// get codelist values for 'mittel' like classified in lookup-table 'BeteiligungMittel'&#13;
+		def mittel = c.Öffentlichkeitsbeteiligung.mittel.values()&#13;
+		def mittel_classified = _snippets.helperFunctions.classifyListValues( mittel, '4b51b55a-8af5-443e-a156-deeab4def27d' )&#13;
+		publicConsultation_consultationMeans( mittel_classified.join("; ") )&#13;
+		&#13;
+		// get codelist values for 'interessentraeger' like classified in lookup-table 'BeteiligungInteressentraeger'&#13;
+		def interessentraeger = c.Öffentlichkeitsbeteiligung.interessentraeger.values()&#13;
+		def interessentraeger_classified = _snippets.helperFunctions.classifyListValues(interessentraeger, '215eddb3-1854-4c90-a597-ce204bacf9d1')&#13;
+		publicConsultation_stakeholdersType( interessentraeger_classified.join("; ") )&#13;
+		&#13;
+		publicConsultation_otherStakeholdersType( c.Öffentlichkeitsbeteiligung.interessentraegerAndere.value() )&#13;
+		publicConsultation_numberOfParticipants( c.Öffentlichkeitsbeteiligung.anzahlTeilnehmer.value() )&#13;
+		publicConsultation_commentsReceived( _snippets.helperFunctions.classifyJaNein(c.Öffentlichkeitsbeteiligung.kommentareEingegangen.value()) )&#13;
+		publicConsultation_commentsIncludedInNAP( _snippets.helperFunctions.classifyJaNein(c.Öffentlichkeitsbeteiligung.kommentareAufgenommen.value()) )&#13;
+		publicConsultation_NAPReviewed( _snippets.helperFunctions.classifyJaNein(c.Öffentlichkeitsbeteiligung.lapUeberarbeitet.value()) )&#13;
+		&#13;
+		if (c.Öffentlichkeitsbeteiligung.lapUeberarbeitet.value()  == 'Nein' &amp;&amp; !c.Öffentlichkeitsbeteiligung.lapUeberarbeitetKommentar.value()) {&#13;
+			publicConsultation_reviewExplanation( 'Eine Überarbeitung des Lärmaktionsplans nach der Öffentlichkeitsbeteiligung war nicht erforderlich.' )&#13;
+		}&#13;
+		else {&#13;
+			publicConsultation_reviewExplanation( c.Öffentlichkeitsbeteiligung.lapUeberarbeitetKommentar.value() )&#13;
+		}&#13;
+		&#13;
+		longTermStrategy( _snippets.helperFunctions.classifyJaNein(c.Wirkungen.strategie.value()) )&#13;
+		longTermStrategyExplanation( c.Wirkungen.strategieErlaeuterung.value() )&#13;
+		&#13;
+		estimatedOverallCost( c.Wirkungen.kostenGesamt.value() )&#13;
+		if ( c.Wirkungen.kostenGesamt.value() ) {&#13;
+			costCurrency( 'Euro' )&#13;
+		}&#13;
+		&#13;
+		quietAreas( _snippets.helperFunctions.classifyJaNein(c.Wirkungen.ruhigeGebiete.value()) )&#13;
+		&#13;
+		implementationMechanism( _snippets.helperFunctions.classifyJaNein(c.Wirkungen.pruefungUmsetzung.value()) )&#13;
+		implementationMechanismDescription( c.Wirkungen.pruefungUmsetzungErlaueterung.value() )&#13;
+		&#13;
+		resultsEvaluationMechanism( _snippets.helperFunctions.classifyJaNein(c.Wirkungen.pruefungWirksamkeit.value()) )&#13;
+		&#13;
+		// get codelist values for 'pruefungWirksamkeitErlaeuterung' like classified in lookup-table 'PruefungWirksamkeit'&#13;
+		def pruefWirksamkeitKom = c.Wirkungen.pruefungWirksamkeitErlaeuterung.value()&#13;
+		if (pruefWirksamkeitKom) {&#13;
+			def pruefWirksamkeitKom_classified = _snippets.helperFunctions.classifyListValues([pruefWirksamkeitKom], '4a188238-727a-4286-96b8-493ab4594c6e')&#13;
+			resultsEvaluationMechanismDescription( pruefWirksamkeitKom_classified.join("; ") )&#13;
+		}&#13;
+		&#13;
+	}&#13;
+}&#13;
+
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.retype" id="C2c136fb5-993d-4ba4-85b7-85f25903ec65" priority="highest">
+        <source>
+            <class>
+                <type name="Allgemeines"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NoiseActionPlanAgglomeration"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+// This groovy script collects the information from sheet 'Allgemeines'&#13;
+// No target is created.&#13;
+&#13;
+def bezeichnung = _source.p.Bezeichnung.value()&#13;
+def wert = _source.p.Wert.value()&#13;
+&#13;
+withTransformationContext {&#13;
+	def c = _.context.collector(it)&#13;
+	if(bezeichnung) {&#13;
+		if (bezeichnung.contains('Vollständiger Name der Behörde')) {&#13;
+			c.Allgemeines.nameBehoerde &lt;&lt; wert&#13;
+		}&#13;
+		else if (bezeichnung.contains('Sonstige Straßen')) {&#13;
+			c.Allgemeines.sonstigeStraßen &lt;&lt; wert&#13;
+		}&#13;
+		&#13;
+		&#13;
+		else if (bezeichnung.contains('Name')) {&#13;
+			c.Allgemeines.name &lt;&lt; wert&#13;
+		}&#13;
+		else if (bezeichnung.contains('Kennung Ballungsraum')) {&#13;
+			c.Allgemeines.kennungBallungsraum &lt;&lt; wert&#13;
+		}&#13;
+		else if (bezeichnung.contains('Amtlicher Gemeindeschlüssel (AGS)')) {&#13;
+			c.Allgemeines.ags &lt;&lt; wert&#13;
+		}&#13;
+		else if (bezeichnung.contains('Kennung des Lärmaktionsplans')) {&#13;
+			c.Allgemeines.kennungPlan &lt;&lt; wert&#13;
+		}&#13;
+		else if (bezeichnung.contains('Straße')) {&#13;
+			c.Allgemeines.strasse &lt;&lt; wert&#13;
+		}&#13;
+		else if (bezeichnung.contains('Hausnummer')) {&#13;
+			c.Allgemeines.hausnr &lt;&lt; wert&#13;
+		}&#13;
+		else if (bezeichnung.contains('Ort')) {&#13;
+			c.Allgemeines.ort &lt;&lt; wert&#13;
+		}&#13;
+		else if (bezeichnung.contains('PLZ')) {&#13;
+			c.Allgemeines.plz &lt;&lt; wert&#13;
+		}&#13;
+		else if (bezeichnung.contains('Kennung der zuständigen Behörde')) {&#13;
+			c.Allgemeines.kennungBehoerde &lt;&lt; wert&#13;
+		}		&#13;
+		else if (bezeichnung.contains('Annahme des Lärmaktionsplans (Datum)')) {&#13;
+			c.Allgemeines.startDatum &lt;&lt; wert&#13;
+		}&#13;
+		else if (bezeichnung.contains('Voraussichtlicher Abschluss der Umsetzung des Lärmaktionsplans (Datum)')) {&#13;
+			c.Allgemeines.endDatum &lt;&lt; wert&#13;
+		}&#13;
+		else if (bezeichnung.contains('Link zur Webseite des Lärmaktionsplans')) {&#13;
+			c.Allgemeines.linkZumPlan &lt;&lt; wert&#13;
+		}&#13;
+		else if (bezeichnung.contains('Informationen über Lärmgrenzwerte, die als Kriterien für die Evaluierung und Umsetzung von Maßnahmen zur Bekämpfung und Minderung von Lärm in dem von dem Aktionsplan erfassten Gebiet verwendet werden.')) {&#13;
+			c.Allgemeines.infoGrenzwerte &lt;&lt; wert&#13;
+		}&#13;
+		else if (bezeichnung.contains('Hauptverkehrsstraßen')) {&#13;
+			c.Allgemeines.hauptverkehrsstraßen &lt;&lt; wert&#13;
+			_log.info("hauptverkehrsstraßen collected: ${c.Allgemeines.hauptverkehrsstraßen.value()} ")&#13;
+		}&#13;
+		else if (bezeichnung.contains('Haupteisenbahnstrecken')) {&#13;
+			c.Allgemeines.haupteisenbahnstrecken &lt;&lt; wert&#13;
+		}&#13;
+		else if (bezeichnung.contains('Sonstige Schienenwege')) {&#13;
+			c.Allgemeines.sonstigeSchienenwege &lt;&lt; wert&#13;
+		}&#13;
+		else if (bezeichnung.contains('Großflughäfen')) {&#13;
+			c.Allgemeines.Großflughäfen &lt;&lt; wert&#13;
+		}&#13;
+		else if (bezeichnung.contains('Sonstige Flugplätze')) {&#13;
+			c.Allgemeines.sonstigeFlugplätze &lt;&lt; wert&#13;
+		}&#13;
+		else if (bezeichnung.contains('Industriegelände einschließlich Häfen')) {&#13;
+			c.Allgemeines.industriegelände &lt;&lt; wert&#13;
+		}&#13;
+	}&#13;
+}&#13;
+
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.retype" id="C4319e5be-8b68-4409-879f-fa7c3118071a" priority="highest">
+        <source>
+            <class>
+                <type name="Öffentlichkeitsbeteiligung"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NoiseActionPlanAgglomeration"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+// This groovy script collects the information from table 'Öffentlichkeitsbeteiligung'&#13;
+// No target is created.&#13;
+&#13;
+def bezeichnung = _source.p.Bezeichnung.value()&#13;
+def wert = _source.p.Wert.value()&#13;
+def mittel = _snippets.helperFunctions.CODELIST_ConsultationMeansText_DE()&#13;
+def interessentraeger = _snippets.helperFunctions.CODELIST_stakeholdersTypeText_DE()&#13;
+&#13;
+withTransformationContext {&#13;
+	def c = _.context.collector(it)&#13;
+	if(bezeichnung) {&#13;
+		if (bezeichnung.contains('Inhaltliche Zusammenfassung der Öffentlichkeitsbeteiligung')) {&#13;
+			c.Öffentlichkeitsbeteiligung.beschreibung &lt;&lt; wert&#13;
+		}	&#13;
+		else if (bezeichnung.contains('Link zur Webseite mit Dokumenten der Öffentlichkeitsbeteiligung')) {&#13;
+			c.Öffentlichkeitsbeteiligung.link &lt;&lt; wert&#13;
+		}&#13;
+		else if (bezeichnung.contains('Anfangsdatum der Öffentlichkeitsbeteiligung')) {&#13;
+			c.Öffentlichkeitsbeteiligung.startDatum &lt;&lt; wert&#13;
+		}&#13;
+		else if (bezeichnung.contains('Enddatum der Öffentlichkeitsbeteiligung')) {&#13;
+			c.Öffentlichkeitsbeteiligung.endDatum &lt;&lt; wert&#13;
+		}&#13;
+		else if (mittel.contains(bezeichnung) &amp;&amp; wert == 'Ja') {&#13;
+			c.Öffentlichkeitsbeteiligung.mittel &lt;&lt; bezeichnung&#13;
+		}&#13;
+		else if (bezeichnung.contains('Andere Mittel/Instrumente')) {&#13;
+			c.Öffentlichkeitsbeteiligung.mittelAndere &lt;&lt; wert&#13;
+		}&#13;
+		else if (interessentraeger.contains(bezeichnung) &amp;&amp; wert == 'Ja') {&#13;
+			c.Öffentlichkeitsbeteiligung.interessentraeger &lt;&lt; bezeichnung&#13;
+		}&#13;
+		else if (bezeichnung.contains('Andere Interessenträger')) {&#13;
+			c.Öffentlichkeitsbeteiligung.mittelAndere &lt;&lt; wert&#13;
+		}&#13;
+		else if (bezeichnung.contains('Anzahl der Personen, die an der Öffentlichkeits-beteiligung teilgenommen haben')) {&#13;
+			c.Öffentlichkeitsbeteiligung.anzahlTeilnehmer &lt;&lt; wert&#13;
+		}&#13;
+		else if (bezeichnung.contains('Angabe, ob im Laufe der Öffentlichkeits-beteiligung Stellungnahmen eingegangen sind')) {&#13;
+			c.Öffentlichkeitsbeteiligung.kommentareEingegangen &lt;&lt; wert&#13;
+		}&#13;
+		else if (bezeichnung.contains('Angabe, ob die während der Öffentlichkeits-beteiligung eingegangenen Stellungnahmen in den LAP aufgenommen wurden')) {&#13;
+			c.Öffentlichkeitsbeteiligung.kommentareAufgenommen &lt;&lt; wert&#13;
+		}&#13;
+		else if (bezeichnung.contains('Angabe, ob der LAP nach der Öffentlichkeits-beteiligung überarbeitet wurde')) {&#13;
+			c.Öffentlichkeitsbeteiligung.lapUeberarbeitet &lt;&lt; wert&#13;
+		}&#13;
+		else if (bezeichnung.contains('Wenn ja, Erläuterung, wie der Lärmaktionsplan nach der Öffentlichkeits-beteiligung überarbeitet wurde')) {&#13;
+			c.Öffentlichkeitsbeteiligung.lapUeberarbeitetKommentar &lt;&lt; wert&#13;
+		}&#13;
+		&#13;
+		&#13;
+		if ( bezeichnung in mittel || bezeichnung in interessentraeger) {&#13;
+			c.Öffentlichkeitsbeteiligung."${bezeichnung}" &lt;&lt; wert&#13;
+		}&#13;
+		&#13;
+	}&#13;
+}&#13;
+&#13;
+
+</core:text>
+        </complexParameter>
+    </cell>
+</alignment>
