@@ -37,6 +37,18 @@ def CODELIST_RoadMeasureText_DE() {
 	'Förderung der lärmarmen Mobilität', 'Förderung des öffentlichen Verkehrs', 'Förderung von Carsharing', 'Bildungs- und Aufklärungsaktivitäten']
 }
 
+def CODELIST_IndustryMeasureText_DE() {
+	['Geräuscharmer Betrieb', 'Zeitliche Beschränkung für den Betrieb', 'Lärmschutzwände und Instandhaltung', 'Grüne Lärmschutzwände und Instandhaltung', 'Einhausungen', 'Schallschutzfenster', 'Sonstige Maßnahmen zur Schalldämmung', 'Flächennutzungsplanung/Bauleitplanung', 'Lärmreduzierung für sensible Gebiete', 'Abstandsflächen/Pufferzonen', 'Verfügbarkeit von ruhigen Gebieten', 'Verfügbarkeit von Grünflächen', 'Maßnahmen zur Verbesserung des akustischen Raumes', 'Standortwechsel von Industrieanlagen', 'Schließung von Industrieanlagen', 'Vermittlung von Informationen', 'Beschwerdemanagement', 'Bildungs- und Aufklärungsaktivitäten']
+}
+
+def CODELIST_AirportMeasureText_DE() {
+	['Lärmarme Flugzeuge', 'Zeitliche Betriebsbeschränkungen', 'Lärmpausen und Lärmkontingente', 'Flugrouten', 'Start- und Landeverfahren', 'Flughafenbetrieb', 'Lärmschutzwände und Instandhaltung', 'Grüne Lärmschutzwände und Instandhaltung', 'Schallschutzfenster', 'Sonstige Maßnahmen zur Schalldämmung', 'Flächennutzungsplanung/Bauleitplanung', 'Lärmreduzierung für sensible Gebiete', 'Abstandsflächen/Pufferzonen', 'Verfügbarkeit von ruhigen Gebieten', 'Verfügbarkeit von Grünflächen', 'Maßnahmen zur Verbesserung des akustischen Raumes', 'Neue Flugroute', 'Neue Start- und Landebahn', 'Aufhebung Flugroute', 'Sperrung Start- und Landebahn', 'Schließung Flughafen', 'Vermittlung von Informationen', 'Beschwerdemanagement', 'Bildungs- und Aufklärungsaktivitäten', 'Förderung anderer Verkehrsträger']
+}
+
+def CODELIST_RailMeasureText_DE() {
+	['Maßnahmen am Gleis', 'Umrüstung von Rädern oder Radkomponenten', 'Geräuscharme Bremsen', 'Geräuscharme Motoren', 'Erneuerung des Fuhrparks', 'Zeitliche Beschränkung für den Güterverkehr', 'Zeitliche Beschränkung für den Personenverkehr', 'Verringerung der Fahrgeschwindigkeit und Signalsteuerung', 'Ausweisung von verkehrsberuhigten Zonen für Schienenverkehr', 'Veränderung/Reduzierung der Gleisanlagen', 'Trassenpreise', 'Fahrverbote und Umleitung von Güterverkehren', 'Fahrverbote und Umleitung von Personenverkehren', 'Lärmschutzwände und Instandhaltung', 'Grüne Lärmschutzwände und Instandhaltung', 'Schallschutzfenster', 'Sonstige Maßnahmen zur Schalldämmung', 'Flächennutzungsplanung/Bauleitplanung', 'Lärmreduzierung für sensible Gebiete', 'Abstandsflächen/Pufferzonen', 'Verfügbarkeit von ruhigen Gebieten', 'Verfügbarkeit von Grünflächen', 'Maßnahmen zur Verbesserung des akustischen Raumes', 'Neubau von Strecken', 'Neue Eisenbahnumfahrung/neues Brückenbauwerk', 'Neubau von Tunneln', 'Stilllegung einer Schienenstrecke', 'Stilllegung eines Bahnhofs', 'Vermittlung von Informationen', 'Beschwerdemanagement', 'Bildungs- und Aufklärungsaktivitäten', 'Förderung anderer Verkehrsträger']
+}
+
 def CODELIST_PrioritisationCriteriaText_DE() {
 	['Kosten-Nutzen-Analysen', 'Höhe der Lärmbelastung', 'Zahl der lärmbelasteten Menschen']
 }
