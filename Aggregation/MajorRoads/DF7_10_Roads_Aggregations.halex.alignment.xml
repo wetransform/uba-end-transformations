@@ -308,8 +308,8 @@ withTransformationContext {&#13;
 	&#13;
 	if (!nrOfPeople &amp;&amp; !c.numberHAReduction[actionPlanId].value() &amp;&amp; !c.numberHSDReduction[actionPlanId].value() &amp;&amp; !c.numberIHDReduction[actionPlanId].value()) {&#13;
 		_log.error("END_RC30: When not providing nrOfPeople by actionPlanId_identifier " +&#13;
-				"in table NAP_RailReductionHealthImpact_1, at least one of the following attributes must " +&#13;
-				"be provided in table NAP_RailReductionHealthImpact_2: numberHAReduction, numberHSDReduction, numberIHDReduction")&#13;
+				"in table NAP_RoadReductionHealthImpact_1, at least one of the following attributes must " +&#13;
+				"be provided in table NAP_RoadReductionHealthImpact_2: numberHAReduction, numberHSDReduction, numberIHDReduction")&#13;
 	}&#13;
 }
 </core:text>
