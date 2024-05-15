@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<hale-project version="5.2.0.SNAPSHOT">
+    <name>UBA HES nach END DF7_10 Railway</name>
+    <author>Anna Tamm (wetransform GmbH)</author>
+    <created>2023-11-15T16:11:09.513+01:00</created>
+    <modified>2024-05-15T14:52:36.061+02:00</modified>
+    <save-config action-id="project.save" provider-id="eu.esdihumboldt.hale.io.project.hale25.xml.writer">
+        <setting name="charset">UTF-8</setting>
+        <setting name="projectFiles.separate">false</setting>
+        <setting name="contentType">eu.esdihumboldt.hale.io.project.hale25.xml</setting>
+        <setting name="target">UBA-DE_HES_to_END_DF7_10_Railway.halex</setting>
+    </save-config>
+    <resource action-id="eu.esdihumboldt.hale.io.schema.read.source" provider-id="eu.esdihumboldt.hale.common.schema.persist.hsd.json.read">
+        <setting name="charset">UTF-8</setting>
+        <setting name="resourceId">a7443df2-9c56-453b-bd45-b4390ac8d54e</setting>
+        <setting name="source">../../Schemas/DF7_10_UBA-DE_HVS_HES_GFH.hsd.json</setting>
+        <setting name="contentType">eu.esdihumboldt.hale.common.schema.hsd.json</setting>
+    </resource>
+    <resource action-id="eu.esdihumboldt.hale.io.schema.read.target" provider-id="eu.esdihumboldt.hale.common.schema.persist.hsd.json.read">
+        <setting name="charset">UTF-8</setting>
+        <setting name="resourceId">9549f4ac-e3f5-4bf7-8541-8ec8c914c667</setting>
+        <setting name="source">../../Schemas/DF7_10_Railway.hsd.json</setting>
+        <setting name="contentType">eu.esdihumboldt.hale.common.schema.hsd.json</setting>
+    </resource>
+    <resource action-id="eu.esdihumboldt.hale.lookup.import" provider-id="eu.esdihumboldt.hale.io.csv.reader.lookup">
+        <setting name="charset">UTF-8</setting>
+        <setting name="ignoreEmptyStrings">false</setting>
+        <setting name="resourceId">b2ca8a99-05aa-4253-89cc-1a8f65be1ace</setting>
+        <setting name="quote">"</setting>
+        <setting name="keyColumn">0</setting>
+        <setting name="name">KriterienPrioritaeten</setting>
+        <setting name="valueColumn">1</setting>
+        <setting name="skip">true</setting>
+        <setting name="source">../../Lookup/KriterienPrioritaeten.csv</setting>
+        <setting name="contentType">eu.esdihumboldt.hale.io.csv</setting>
+        <setting name="separator">,</setting>
+        <setting name="escape">\</setting>
+    </resource>
+    <resource action-id="eu.esdihumboldt.hale.lookup.import" provider-id="eu.esdihumboldt.hale.io.csv.reader.lookup">
+        <setting name="charset">UTF-8</setting>
+        <setting name="ignoreEmptyStrings">false</setting>
+        <setting name="resourceId">32c747f4-d11e-4fc2-a75e-e08b0aab6071</setting>
+        <setting name="quote">"</setting>
+        <setting name="keyColumn">0</setting>
+        <setting name="name">MaßnahmenSchiene</setting>
+        <setting name="valueColumn">2</setting>
+        <setting name="skip">true</setting>
+        <setting name="source">../../Lookup/MaßnahmenSchiene.csv</setting>
+        <setting name="contentType">eu.esdihumboldt.hale.io.csv</setting>
+        <setting name="separator">,</setting>
+        <setting name="escape">\</setting>
+    </resource>
+    <resource action-id="eu.esdihumboldt.hale.lookup.import" provider-id="eu.esdihumboldt.hale.io.csv.reader.lookup">
+        <setting name="charset">UTF-8</setting>
+        <setting name="ignoreEmptyStrings">false</setting>
+        <setting name="resourceId">93474127-9a08-4b69-8e92-eb86286e7efd</setting>
+        <setting name="quote">"</setting>
+        <setting name="keyColumn">0</setting>
+        <setting name="name">BeteiligungInteressentraeger</setting>
+        <setting name="valueColumn">1</setting>
+        <setting name="skip">true</setting>
+        <setting name="source">../../Lookup/BeteiligungInteressentraeger.csv</setting>
+        <setting name="contentType">eu.esdihumboldt.hale.io.csv</setting>
+        <setting name="separator">,</setting>
+        <setting name="escape">\</setting>
+    </resource>
+    <resource action-id="eu.esdihumboldt.hale.lookup.import" provider-id="eu.esdihumboldt.hale.io.csv.reader.lookup">
+        <setting name="charset">UTF-8</setting>
+        <setting name="ignoreEmptyStrings">false</setting>
+        <setting name="resourceId">67142f52-4a80-4e31-8978-0ea3fbc40bf8</setting>
+        <setting name="quote">"</setting>
+        <setting name="keyColumn">0</setting>
+        <setting name="name">BeteiligungMittel</setting>
+        <setting name="valueColumn">1</setting>
+        <setting name="skip">true</setting>
+        <setting name="source">../../Lookup/BeteiligungMittel.csv</setting>
+        <setting name="contentType">eu.esdihumboldt.hale.io.csv</setting>
+        <setting name="separator">,</setting>
+        <setting name="escape">\</setting>
+    </resource>
+    <resource action-id="eu.esdihumboldt.hale.lookup.import" provider-id="eu.esdihumboldt.hale.io.csv.reader.lookup">
+        <setting name="charset">ISO-8859-1</setting>
+        <setting name="ignoreEmptyStrings">false</setting>
+        <setting name="resourceId">b1756c75-cbd2-4d0f-bf99-620f0867535a</setting>
+        <setting name="quote">"</setting>
+        <setting name="keyColumn">0</setting>
+        <setting name="name">PruefungWirksamkeit</setting>
+        <setting name="valueColumn">1</setting>
+        <setting name="skip">true</setting>
+        <setting name="source">../../Lookup/PruefungWirksamkeit.csv</setting>
+        <setting name="contentType">eu.esdihumboldt.hale.io.csv</setting>
+        <setting name="separator">,</setting>
+        <setting name="escape">\</setting>
+    </resource>
+    <resource action-id="eu.esdihumboldt.hale.io.groovy.snippets.load" provider-id="eu.esdihumboldt.hale.io.groovy.snippets">
+        <setting name="identifier">end_Checks</setting>
+        <setting name="charset">UTF-8</setting>
+        <setting name="resourceId">81ed0e3c-95ba-431a-952e-37a445f81b6e</setting>
+        <setting name="source">../../Snippets/end.Checks.groovy</setting>
+        <setting name="contentType">eu.esdihumboldt.hale.io.groovy</setting>
+        <setting name="autoReload">true</setting>
+    </resource>
+    <resource action-id="eu.esdihumboldt.hale.io.groovy.snippets.load" provider-id="eu.esdihumboldt.hale.io.groovy.snippets">
+        <setting name="identifier">helperFunctions</setting>
+        <setting name="charset">UTF-8</setting>
+        <setting name="resourceId">00f04884-bca3-4ac1-a36b-03429058cd4c</setting>
+        <setting name="source">../../Snippets/helperFunctions.groovy</setting>
+        <setting name="contentType">eu.esdihumboldt.hale.io.groovy</setting>
+        <setting name="autoReload">true</setting>
+    </resource>
+    <resource action-id="eu.esdihumboldt.hale.lookup.import" provider-id="eu.esdihumboldt.hale.io.csv.reader.lookup">
+        <setting name="charset">ISO-8859-9</setting>
+        <setting name="ignoreEmptyStrings">true</setting>
+        <setting name="resourceId">ce7f4ce5-ceb6-47ef-bb9d-b79c930792c4</setting>
+        <setting name="quote">"</setting>
+        <setting name="keyColumn">0</setting>
+        <setting name="name">RB-RS_zu_NUTSCode</setting>
+        <setting name="valueColumn">1</setting>
+        <setting name="skip">true</setting>
+        <setting name="source">../../Lookup/RB-RS_zu_NUTSCode.csv</setting>
+        <setting name="contentType">eu.esdihumboldt.hale.io.csv</setting>
+        <setting name="separator">,</setting>
+        <setting name="escape">\</setting>
+    </resource>
+    <resource action-id="eu.esdihumboldt.hale.lookup.import" provider-id="eu.esdihumboldt.hale.io.csv.reader.lookup">
+        <setting name="charset">ISO-8859-1</setting>
+        <setting name="ignoreEmptyStrings">true</setting>
+        <setting name="resourceId">b5e5b305-6d74-4790-89a7-3a222924e400</setting>
+        <setting name="quote">"</setting>
+        <setting name="keyColumn">0</setting>
+        <setting name="name">VWG-RS_zu_LAUCodes</setting>
+        <setting name="valueColumn">1</setting>
+        <setting name="skip">true</setting>
+        <setting name="source">../../Lookup/VWG-RS_zu_LAUCodes.csv</setting>
+        <setting name="contentType">eu.esdihumboldt.hale.io.csv</setting>
+        <setting name="separator">,</setting>
+        <setting name="escape">\</setting>
+    </resource>
+    <export-config name="default">
+        <configuration action-id="eu.esdihumboldt.hale.io.instance.write.transformed" provider-id="eu.esdihumboldt.hale.io.xls.writer.instance">
+            <setting name="charset">UTF-8</setting>
+            <setting name="meta.description"></setting>
+            <setting name="useSchema">true</setting>
+            <setting name="selectedExportType">NoiseActionPlanMajorRail,NAP_MajorRail,NAP_MajorRailCompetentAuthority,NAP_MajorRailLimitValues,NAP_RailMappingResultDetail,NAP_RailReductionMeasure,NAP_RailReductionHealthImpact_1,NAP_RailReductionHealthImpact_2,NAP_RailReductionHealthImpact_3,ESTATUnitReference,DatasetDefaultProperties,CodelistProperties</setting>
+            <setting name="contentType">eu.esdihumboldt.hale.io.xls.xlsx</setting>
+            <setting name="solveNestedProperties">true</setting>
+        </configuration>
+    </export-config>
+    <file name="alignment.xml" location="UBA-DE_HES_to_END_DF7_10_Railway.halex.alignment.xml"/>
+    <file name="styles.sld" location="UBA-DE_HES_to_END_DF7_10_Railway.halex.styles.sld"/>
+    <complex-property name="variables">
+        <core:properties xmlns:core="http://www.esdi-humboldt.eu/hale/core">
+            <core:property name="ALIGNMENT_MODE">
+                <core:value value="validation"/>
+            </core:property>
+            <core:property name="MAX_FREETEXT_LENGTH">
+                <core:value value="10000"/>
+            </core:property>
+        </core:properties>
+    </complex-property>
+</hale-project>
