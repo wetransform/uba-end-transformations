@@ -307,7 +307,7 @@ withTransformationContext {&#13;
 		def geplanteMaßnahmenNutzen = c.Maßnahmen.nutzen.value()&#13;
 		if (geplanteMaßnahmen) {&#13;
 			// get codelist values for 'geplanteMaßnahmen' like classified in lookup-table 'MaßnahmenStraße'&#13;
-			def geplanteMaßnahmen_classified = _snippets.helperFunctions.classifyListValues(geplannteMaßnahmen, '32c747f4-d11e-4fc2-a75e-e08b0aab6071')&#13;
+			def geplanteMaßnahmen_classified = _snippets.helperFunctions.classifyListValues(geplanteMaßnahmen, '32c747f4-d11e-4fc2-a75e-e08b0aab6071')&#13;
 			plannedMeasureDetail_plannedMeasure( geplanteMaßnahmen_classified.join("; ") )&#13;
 		}&#13;
 		else {&#13;
