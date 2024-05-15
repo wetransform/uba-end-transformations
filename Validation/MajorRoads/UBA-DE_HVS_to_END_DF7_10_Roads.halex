@@ -13,7 +13,7 @@
     <resource action-id="eu.esdihumboldt.hale.io.schema.read.source" provider-id="eu.esdihumboldt.hale.common.schema.persist.hsd.json.read">
         <setting name="charset">UTF-8</setting>
         <setting name="resourceId">a7443df2-9c56-453b-bd45-b4390ac8d54e</setting>
-        <setting name="source">../../Schemas/DF7_10_UBA-DE_HVS.hsd.json</setting>
+        <setting name="source">../../Schemas/DF7_10_UBA-DE_HVS_HES_GFH.hsd.json</setting>
         <setting name="contentType">eu.esdihumboldt.hale.common.schema.hsd.json</setting>
     </resource>
     <resource action-id="eu.esdihumboldt.hale.io.schema.read.target" provider-id="eu.esdihumboldt.hale.common.schema.persist.hsd.json.read">
