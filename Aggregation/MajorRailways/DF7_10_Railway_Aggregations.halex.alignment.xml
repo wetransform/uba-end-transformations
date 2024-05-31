@@ -1,0 +1,523 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<alignment xmlns="http://www.esdi-humboldt.eu/hale/alignment">
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.create" id="C2b27c2d9-f064-4580-8a9d-5e9aa41d6929" priority="normal">
+        <target>
+            <class>
+                <type name="CodelistProperties"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+def codelistProperty(table, property, cl) {&#13;
+	_target {&#13;
+		tableName(table)&#13;
+		propertyName(property)&#13;
+		codelist(cl)&#13;
+	}&#13;
+}&#13;
+&#13;
+codelistProperty('NoiseActionPlanMajorRail', 'legalContext_actionPlanDocument_citationLevel', 'http://inspire.ec.europa.eu/codelist/LegislationLevelValue')&#13;
+codelistProperty('NoiseActionPlanMajorRail', 'legalContext_actionPlanDocument_citationType', 'https://dd.eionet.europa.eu/vocabulary/inspire/CitationTypeValue')&#13;
+codelistProperty('NoiseActionPlanMajorRail', 'publicConsultation_consultationMeans', 'https://dd.eionet.europa.eu/vocabulary/noise/ConsultationMeansValue')&#13;
+codelistProperty('NoiseActionPlanMajorRail', 'publicConsultation_stakeholdersType', 'https://dd.eionet.europa.eu/vocabulary/noise/StakeholdersTypeValue')&#13;
+codelistProperty('NoiseActionPlanMajorRail', 'resultsEvaluationMechanismDescription', 'https://dd.eionet.europa.eu/vocabulary/noise/EvaluationMechanismValue')&#13;
+codelistProperty('NAP_RailMappingResultDetail', 'situationForImprovementPrioritisationCriteria', 'https://dd.eionet.europa.eu/vocabulary/noise/PrioritisationCriteriaValue')&#13;
+codelistProperty('NAP_RailReductionMeasure', 'existingMeasure', 'http://dd.eionet.europa.eu/vocabulary/noise/RailMeasureValue/')&#13;
+codelistProperty('NAP_RaildReductionMeasure', 'plannedMeasureDetail_plannedMeasure', 'http://dd.eionet.europa.eu/vocabulary/noise/RailMeasureValue/')&#13;
+codelistProperty('NAP_RailReductionMeasure', 'plannedMeasureDetail_measuresInCost', 'http://dd.eionet.europa.eu/vocabulary/noise/RailMeasureValue/')&#13;
+
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.create" id="Cbb02d688-e52c-43fb-903f-1b0a727ecd16" priority="lower">
+        <target>
+            <class>
+                <type name="DatasetDefaultProperties"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+// Check if any tables were present that are mandatory&#13;
+def expectedTypes = [&#13;
+	'NAP_MajorRail':'TB53',&#13;
+	'NAP_MajorRailCompetentAuthority':'TB59',&#13;
+	'NAP_MajorRailLimitValues':'TB135',&#13;
+	'NAP_RailMappingResultDetail':'TB65',&#13;
+	'NAP_RailReductionMeasure':'TB80',&#13;
+	'NoiseActionPlanMajorRail':'TB1'&#13;
+]&#13;
+def presentTypes&#13;
+&#13;
+withTransformationContext {&#13;
+	def c = _.context.collector(it)&#13;
+	if (c['typesFound'].values()) {&#13;
+		_log.info("typesFound is ${c['typesFound'].values()}")&#13;
+		presentTypes = c['typesFound'].values()[0];&#13;
+		_log.info("presentTypes is ${presentTypes}")&#13;
+	}&#13;
+}&#13;
+&#13;
+expectedTypes.each { expectedType, errorCode -&gt;&#13;
+	_log.info("expectedType = ${expectedType}")&#13;
+	if (!(presentTypes?.contains(expectedType))) {&#13;
+		def message = "Mandatory table ${expectedType} has no records"&#13;
+		_log.error("${errorCode}: ${message}")&#13;
+	}&#13;
+}	&#13;
+&#13;
+_target {&#13;
+	attribute( 'href' )&#13;
+	defaultValue( 'http://dd.eionet.europa.eu/vocabulary/inspire/IdentifierScheme/EUENDCode' )&#13;
+	propertyName( 'actionPlanId_identifierScheme' )&#13;
+	tableName( 'NoiseActionPlanMajorRail' )&#13;
+}
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.create" id="C3383b9ef-38fa-451a-9731-b5a851325890" priority="normal">
+        <target>
+            <class>
+                <type name="ESTATUnitReference"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+_target {&#13;
+	ESTATLAUReferenceLink( 'https://ec.europa.eu/eurostat/web/gisco/geodata/reference-data/administrative-units-statistical-units/lau' )&#13;
+	ESTATLAUReferenceTitle( 'Local Administrative Units (LAU) 2022; Source: Eurostat' )&#13;
+	&#13;
+	ESTATNUTSReferenceLink( 'https://ec.europa.eu/eurostat/web/gisco/geodata/reference-data/administrative-units-statistical-units/nuts' )&#13;
+	ESTATNUTSReferenceTitle( 'NUTS 2021, Version date: 2020-01-20, Scale: 1:1M, Source: Eurostat' )&#13;
+}
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.retype" id="C750be061-3ef0-4afd-bed2-2724bd1e2814" priority="normal">
+        <source>
+            <class>
+                <type name="NAP_MajorRail"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NAP_MajorRail"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+&#13;
+def SHEET = 'NAP_MajorRail'&#13;
+&#13;
+_snippets.end_Checks {&#13;
+	registerType(SHEET)&#13;
+	&#13;
+	uniqueCheck('TU96', SHEET, ['actionPlanId_identifier', 'railIdIdentifier', 'allInLAUCode', 'allInNUTSCode', 'allInCountry'])&#13;
+	freetextCheck('LEN', 'FC98', SHEET, 'actionPlanId_identifier')&#13;
+	&#13;
+	codelistCheck('END_RT23', null, SHEET, 'allInLAUCode', CODELIST_LauIdValue(), true)&#13;
+	codelistCheck('END_RT24', null, SHEET, 'allInNUTSCode', CODELIST_NutsIdValue(), true)&#13;
+	&#13;
+	xorCheck('END_RC13', SHEET, ['allInCountry','allInLAUCode','allInNUTSCode','railIdIdentifier'], 'Only one reference level is expected to be provided for each actionPlan: railIdIdentifier, allInLAUCode, allInNUTSCode or allInCountry', exists())&#13;
+}&#13;
+&#13;
+
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.hale.align.retype" id="C7c6d69cd-f1e5-4a3c-bd65-d8feb7ad7111" priority="normal">
+        <source>
+            <class>
+                <type name="NAP_MajorRail"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NAP_MajorRail"/>
+            </class>
+        </target>
+        <parameter value="true" name="ignoreNamespaces"/>
+        <parameter value="true" name="structuralRename"/>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.retype" id="Cc0f95c47-b424-4380-9935-e67a2d994ee8" priority="normal">
+        <source>
+            <class>
+                <type name="NAP_MajorRailCompetentAuthority"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NAP_MajorRailCompetentAuthority"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+&#13;
+def SHEET = 'NAP_MajorRailCompetentAuthority'&#13;
+&#13;
+_snippets.end_Checks {&#13;
+	registerType(SHEET)&#13;
+	&#13;
+	uniqueCheck('TU97', SHEET, ['actionPlanId_identifier', 'competentAuthorityIdIdentifier'])&#13;
+	freetextCheck('LEN', 'FC101', SHEET, 'actionPlanId_identifier')&#13;
+	freetextCheck('LEN', 'FC64', SHEET, 'competentAuthorityIdIdentifier')&#13;
+}
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.hale.align.retype" id="C5f0dc3cb-4cb7-4f0d-9da5-a845dcfe3288" priority="normal">
+        <source>
+            <class>
+                <type name="NAP_MajorRailCompetentAuthority"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NAP_MajorRailCompetentAuthority"/>
+            </class>
+        </target>
+        <parameter value="true" name="ignoreNamespaces"/>
+        <parameter value="true" name="structuralRename"/>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.retype" id="Cb0805fa1-57c6-426e-9239-a1413f4f3bc4" priority="normal">
+        <source>
+            <class>
+                <type name="NAP_MajorRailLimitValues"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NAP_MajorRailLimitValues"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+def SHEET = 'NAP_MajorRailLimitValues'&#13;
+&#13;
+_snippets.end_Checks {&#13;
+	registerType(SHEET)&#13;
+	&#13;
+	uniqueCheck('TU104', SHEET, 'actionPlanId_identifier')&#13;
+	freetextCheck('LEN', 'FC105', SHEET, 'actionPlanId_identifier')&#13;
+	&#13;
+	conditionalCheck('END_CT41', SHEET, 'limitValues_otherCriteriaLimitDetail', 'limitValues_otherCriteriaDescription')&#13;
+	conditionalCheck('END_CT43', SHEET, 'limitValues_otherCriteriaDescription', 'limitValues_otherCriteriaLimitDetail')&#13;
+	&#13;
+	conditionalCheck('END_CT37', SHEET, 'limitValues_noiseLimitReportIdIdentifier', 'limitValues_otherCriteriaLimitDetail', "If limitValues_noiseLimitReportIdIdentifier is not reported, limitValues_otherCriteriaLimitDetail has to be provided", isEmpty(), exists())&#13;
+	conditionalCheck('END_CT39', SHEET, 'limitValues_otherCriteriaLimitDetail', 'limitValues_noiseLimitReportIdIdentifier', "If limitValues_otherCriteriaLimitDetail is not reported, limitValues_noiseLimitReportIdIdentifier has to be provided", isEmpty(), exists())&#13;
+}
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.hale.align.retype" id="C914482a1-8d68-4ff2-8fb3-6fb95f90ed7b" priority="normal">
+        <source>
+            <class>
+                <type name="NAP_MajorRailLimitValues"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NAP_MajorRailLimitValues"/>
+            </class>
+        </target>
+        <parameter value="true" name="ignoreNamespaces"/>
+        <parameter value="true" name="structuralRename"/>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.retype" id="Cdf78842e-bcd6-4cc2-96d1-0c1ed4c42c5e" priority="normal">
+        <source>
+            <class>
+                <type name="NAP_RailMappingResultDetail"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NAP_RailMappingResultDetail"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+def SHEET = 'NAP_RailMappingResultDetail'&#13;
+&#13;
+_snippets.end_Checks {&#13;
+	registerType(SHEET)&#13;
+	&#13;
+	integerCheck('FT72', 'FC73', SHEET, 'exposedLden55')&#13;
+	customCheck('END_DV49', null, SHEET, 'exposedLden55', 'must be greater than or equal to 0', isGreaterThanOrEqual0())&#13;
+	&#13;
+	integerCheck('FT74', 'FC75', SHEET, 'exposedLnight50')&#13;
+	customCheck('END_DV50', null, SHEET, 'exposedLnight50', 'must be greater than or equal to 0', isGreaterThanOrEqual0())&#13;
+	&#13;
+	codelistCheck('TC93', null, SHEET, 'situationForImprovementPrioritisationCriteria', CODELIST_PrioritisationCriteriaValue(), true)&#13;
+	freetextCheck('LEN', 'FC87', SHEET, 'situationForImprovementExplanation')&#13;
+	&#13;
+	uniqueCheck('TU111', SHEET, ['actionPlanId_identifier', 'railIdIdentifier'])&#13;
+	freetextCheck('LEN', 'FC108', SHEET, 'actionPlanId_identifier')&#13;
+}
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.hale.align.retype" id="C65568329-f119-436e-b0cf-707e149a3c46" priority="normal">
+        <source>
+            <class>
+                <type name="NAP_RailMappingResultDetail"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NAP_RailMappingResultDetail"/>
+            </class>
+        </target>
+        <parameter value="true" name="ignoreNamespaces"/>
+        <parameter value="true" name="structuralRename"/>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.retype" id="C21bb94ea-a9d3-4d8b-a9c2-ec0fa6b58651" priority="normal">
+        <source>
+            <class>
+                <type name="NAP_RailReductionHealthImpact_1"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NAP_RailReductionHealthImpact_1"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+def SHEET = 'NAP_RailReductionHealthImpact_1'&#13;
+&#13;
+_snippets.end_Checks {&#13;
+	registerType(SHEET)&#13;
+	&#13;
+	integerCheck('FT105', 'FC127', SHEET, 'nrOfPeople')&#13;
+	freetextCheck('LEN', 'FC116', SHEET, 'actionPlanId_identifier')&#13;
+	&#13;
+	freetextCheck('LEN', 'FC126', SHEET, 'explanationMethod')&#13;
+	&#13;
+	customCheck('END_DV52', null, SHEET, 'nrOfPeople', 'must be greater than or equal to 0', isGreaterThanOrEqual0())&#13;
+	&#13;
+}&#13;
+&#13;
+// END_RC29&#13;
+// When not providing numberExperiencingReduction by actionPlanId_identifier (in table NAP_RailReductionHealthImpact_1), &#13;
+// at least one of the following attributes must be provided: numberHAReduction, mumberHSDReduction, mumberHDReduction&#13;
+&#13;
+withTransformationContext {&#13;
+	def c = _.context.collector(it)&#13;
+	&#13;
+	def nrOfPeople = _source.p.nrOfPeople.value()&#13;
+	def actionPlanId = _source.p.actionPlanId_identifier.value()&#13;
+	&#13;
+	if (!nrOfPeople &amp;&amp; !c.numberHAReduction[actionPlanId].value() &amp;&amp; !c.numberHSDReduction[actionPlanId].value() &amp;&amp; !c.numberIHDReduction[actionPlanId].value()) {&#13;
+		_log.error("END_RC29: When not providing nrOfPeople by actionPlanId_identifier " +&#13;
+				"in table NAP_RailReductionHealthImpact_1, at least one of the following attributes must " +&#13;
+				"be provided in table NAP_RailReductionHealthImpact_2: numberHAReduction, numberHSDReduction, numberIHDReduction")&#13;
+	}&#13;
+}
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.hale.align.retype" id="Ccc706757-3b08-4e7d-a723-fbcb00011468" priority="normal">
+        <source>
+            <class>
+                <type name="NAP_RailReductionHealthImpact_1"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NAP_RailReductionHealthImpact_1"/>
+            </class>
+        </target>
+        <parameter value="true" name="ignoreNamespaces"/>
+        <parameter value="true" name="structuralRename"/>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.retype" id="C6d3ec89d-65ed-4c4a-b995-f37e63f3190c" priority="higher">
+        <source>
+            <class>
+                <type name="NAP_RailReductionHealthImpact_2"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NAP_RailReductionHealthImpact_2"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+withTransformationContext{&#13;
+	def c = _.context.collector(it)&#13;
+	def actionPlanId = _source.p.actionPlanId_identifier.value()&#13;
+	&#13;
+	c.numberHAReduction[actionPlanId] &lt;&lt; _source.p.numberHAReduction.value()&#13;
+	c.numberHSDReduction[actionPlanId] &lt;&lt; _source.p.numberHSDReduction.value()&#13;
+	c.numberIHDReduction[actionPlanId] &lt;&lt; _source.p.numberIHDReduction.value()&#13;
+}
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.retype" id="C3868ebe5-9641-4802-8b80-239daed3e456" priority="normal">
+        <source>
+            <class>
+                <type name="NAP_RailReductionHealthImpact_3"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NAP_RailReductionHealthImpact_3"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+def SHEET = 'NAP_RaildReductionHealthImpact_3'&#13;
+&#13;
+_snippets.end_Checks {&#13;
+	&#13;
+	uniqueCheck('TU125', SHEET, ['actionPlanId_identifier', 'railIdIdentifier'])&#13;
+	freetextCheck('LEN', 'FC123', SHEET, 'actionPlanId_identifier')&#13;
+}&#13;
+
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.hale.align.retype" id="Ca43ad8d6-15a6-42b5-8147-9e22dd13b377" priority="normal">
+        <source>
+            <class>
+                <type name="NAP_RailReductionHealthImpact_3"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NAP_RailReductionHealthImpact_3"/>
+            </class>
+        </target>
+        <parameter value="true" name="ignoreNamespaces"/>
+        <parameter value="true" name="structuralRename"/>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.retype" id="C12ec2ec6-7dfc-4c74-84cd-609ad1aed59d" priority="normal">
+        <source>
+            <class>
+                <type name="NAP_RailReductionMeasure"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NAP_RailReductionMeasure"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+def SHEET = 'NAP_RailReductionMeasure'&#13;
+&#13;
+_snippets.end_Checks {&#13;
+	registerType(SHEET) //FT80&#13;
+	&#13;
+	costCheck('FT93', null, SHEET, 'plannedMeasureDetail_cost')&#13;
+	customCheck('END_DV51', null, SHEET, 'plannedMeasureDetail_cost', 'must be greater than or equal to 0', isGreaterThanOrEqual0())&#13;
+	&#13;
+	codelistCheck('FT95', null, SHEET, 'plannedMeasureDetail_allMeasuresInCost', CODELIST_Boolean())&#13;
+	codelistCheck('TC94', 'FC98', SHEET, 'existingMeasure', CODELIST_RailMeasureValue(), true)&#13;
+	codelistCheck('TC95', 'FC103', SHEET, 'plannedMeasureDetail_plannedMeasure', CODELIST_RailMeasureValue(), true)&#13;
+	codelistCheck('TC96', null, SHEET, 'plannedMeasureDetail_measuresInCost', CODELIST_RailMeasureValue(), true)&#13;
+	freetextCheck('LEN', 'FC89', SHEET, 'plannedMeasureDetail_expectedBenefits')&#13;
+	freetextCheck('LEN', 'FC112', SHEET, 'actionPlanId_identifier')&#13;
+	&#13;
+	conditionalCheck('END_CT63', SHEET, 'plannedMeasureDetail_cost', 'plannedMeasureDetail_costCurrency')&#13;
+	conditionalCheck('END_CT63', SHEET, 'plannedMeasureDetail_cost', 'plannedMeasureDetail_allMeasuresInCost')&#13;
+	&#13;
+	conditionalCheck('END_CT70', SHEET, 'plannedMeasureDetail_allMeasuresInCost', 'plannedMeasureDetail_measuresInCost', ['No'])&#13;
+	customCheck('END_DV21', null, SHEET, 'existingMeasure', 'is invalid: When \"noMeasure\" value is selected, no more values are expected in the field', isOnlyValueIfPresent('noMeasure'))&#13;
+	customCheck('END_DV22', null, SHEET, 'plannedMeasureDetail_plannedMeasure', 'is invalid: When \"noMeasure\" value is selected, no more values are expected in the field', isOnlyValueIfPresent('noMeasure'))&#13;
+	customCheck('END_DV23', null, SHEET, 'plannedMeasureDetail_measuresInCost', 'is invalid: When \"noMeasure\" value is selected, no more values are expected in the field', isOnlyValueIfPresent('noMeasure'))&#13;
+	&#13;
+	uniqueCheck('TU109', SHEET, ['actionPlanId_identifier', 'railIdIdentifier'])&#13;
+	&#13;
+	nandCheck('END_TO13', SHEET, ['existingMeasure', 'plannedMeasureDetail_plannedMeasure'], 'The fields existingMeasure and plannedMeasureDetail_plannedMeasure must not both contain the value noMeasure', isEqualTo('noMeasure'), true)&#13;
+	conditionalCheck('END_TO25', SHEET, 'plannedMeasureDetail_allMeasuresInCost', 'plannedMeasureDetail_measuresInCost', 'The field measuresInCost must not contain the value noMeasure when allMeasuresInCost is No for that action plan', isEqualTo('No'), isNotEqualTo('noMeasure'))&#13;
+&#13;
+}
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.hale.align.retype" id="C2f75c740-34d9-4afa-8c83-2c047e7d156e" priority="normal">
+        <source>
+            <class>
+                <type name="NAP_RailReductionMeasure"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NAP_RailReductionMeasure"/>
+            </class>
+        </target>
+        <parameter value="true" name="ignoreNamespaces"/>
+        <parameter value="true" name="structuralRename"/>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.retype" id="C629976e7-4d55-46b7-aad0-819ec19cd1d6" priority="normal">
+        <source>
+            <class>
+                <type name="NoiseActionPlanMajorRail"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NoiseActionPlanMajorRail"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+def SHEET = 'NoiseActionPlanMajorRail'&#13;
+&#13;
+_snippets.end_Checks {&#13;
+	registerType(SHEET)&#13;
+&#13;
+	existsCheck('FC3', SHEET, 'actionPlanId_identifier')&#13;
+	dateCheck('FT4', 'FC5', SHEET, 'legalContext_actionPlanStartDate', 'yyyy-MM-dd')&#13;
+	dateCheck('FT6', null, SHEET, 'legalContext_actionPlanEndDate', 'yyyy-MM-dd')&#13;
+	dateCheck('FT7', null, SHEET, 'legalContext_actionPlanDocument_citationDate', 'yyyy-MM-dd')&#13;
+	urlCheck('FT8', null, SHEET, 'legalContext_actionPlanDocument_citationLink')&#13;
+	&#13;
+	dateCheck('FT19', 'FC18', SHEET, 'publicConsultation_consultationStartDate', 'yyyy-MM-dd')&#13;
+	dateCheck('FT21', 'FC20', SHEET, 'publicConsultation_consultationEndDate', 'yyyy-MM-dd')&#13;
+	integerCheck('FT26', null, SHEET, 'publicConsultation_numberOfParticipants')&#13;
+	codelistCheck('FT30', 'FC29', SHEET, 'publicConsultation_commentsReceived', CODELIST_Boolean())&#13;
+	codelistCheck('FT32', 'FC31', SHEET, 'publicConsultation_commentsIncludedInNAP', CODELIST_Boolean())&#13;
+	codelistCheck('FT35', 'FC34', SHEET, 'publicConsultation_NAPReviewed', CODELIST_Boolean())&#13;
+	&#13;
+	codelistCheck('FT38', null, SHEET, 'longTermStrategy', CODELIST_Boolean())&#13;
+	costCheck('FT40', null, SHEET, 'estimatedOverallCost')&#13;
+	codelistCheck('FT44', 'FC43', SHEET, 'quietAreas', CODELIST_Boolean())&#13;
+	codelistCheck('FT47', 'FC46', SHEET, 'implementationMechanism', CODELIST_Boolean())&#13;
+	codelistCheck('FT51', 'FC50', SHEET, 'resultsEvaluationMechanism', CODELIST_Boolean())&#13;
+	&#13;
+	codelistCheck('TC73', null, SHEET, 'legalContext_actionPlanDocument_citationLevel', CODELIST_CitationLevelValue())&#13;
+	codelistCheck('TC74', null, SHEET, 'legalContext_actionPlanDocument_citationType', CODELIST_CitationTypeValue())&#13;
+	codelistCheck('TC90', null, SHEET, 'resultsEvaluationMechanismDescription', CODELIST_EvaluationMechanismValue())&#13;
+	codelistCheck('TC91', null, SHEET, 'publicConsultation_consultationMeans', CODELIST_ConsultationMeansValue(), true)&#13;
+	codelistCheck('TC92', null, SHEET, 'publicConsultation_stakeholdersType', CODELIST_StakeholderValue(), true)&#13;
+	freetextCheck('LEN', 'FC82', SHEET, 'publicConsultation_reviewExplanation')&#13;
+	&#13;
+	customCheck('END_DV47', null, SHEET, 'publicConsultation_numberOfParticipants', 'must be greater than or equal to 0', isGreaterThanOrEqual0())&#13;
+	customCheck('END_DV48', null, SHEET, 'estimatedOverallCost', 'must be greater than or equal to 0', isGreaterThanOrEqual0())&#13;
+	&#13;
+	conditionalCheck('END_CT57', SHEET, 'estimatedOverallCost', 'costCurrency')&#13;
+	conditionalCheck('END_CT58', SHEET, 'costCurrency', 'estimatedOverallCost')&#13;
+	&#13;
+	uniqueCheck('TU95', SHEET, 'actionPlanId_identifier')&#13;
+	&#13;
+	}
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.hale.align.retype" id="C1dd6eefb-6a1c-4fea-8287-3b63621edced" priority="normal">
+        <source>
+            <class>
+                <type name="NoiseActionPlanMajorRail"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NoiseActionPlanMajorRail"/>
+            </class>
+        </target>
+        <parameter value="true" name="ignoreNamespaces"/>
+        <parameter value="true" name="structuralRename"/>
+    </cell>
+</alignment>

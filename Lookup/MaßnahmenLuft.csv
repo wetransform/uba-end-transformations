@@ -1,0 +1,26 @@
+MaßnahmenDE,MaßnahmenEN_Text,MaßnahmenEN_Label
+Lärmarme Flugzeuge,Quiet airplanes,quietAirplanes
+Zeitliche Betriebsbeschränkungen,Curfew hours,curfewHours
+Lärmpausen und Lärmkontingente,Respite and noise sharing,respiteAndNoiseSharing
+Flugrouten,Management of air traffic routes,managementAirTrafficRoutes
+Start- und Landeverfahren,Management of take-off and landing approaches,managementTakeoffLanding
+Flughafenbetrieb,Management of runway and ground operations,managementRunwayGroundOperations
+Lärmschutzwände und Instandhaltung,Noise barriers and maintenance,noiseBarrier
+Grüne Lärmschutzwände und Instandhaltung,Green noise barriers and maintenance,greenNoiseBarrier
+Schallschutzfenster,Window insulation,windowInsulation
+Sonstige Maßnahmen zur Schalldämmung,Other insulation,otherInsulation
+Flächennutzungsplanung/Bauleitplanung,Planning measures and ordinances between receivers and aircraft sources,planningAndOrdinance
+Lärmreduzierung für sensible Gebiete,Reduced noise for sensitive areas,sensitiveAreaPlanning
+Abstandsflächen/Pufferzonen,Buffer zones,bufferZones
+Verfügbarkeit von ruhigen Gebieten,Availability of quiet areas,quietArea
+Verfügbarkeit von Grünflächen,Availability of green areas,greenArea
+Maßnahmen zur Verbesserung des akustischen Raumes,Soundscape measures,soundscape
+Neue Flugroute,New air traffic route,newRoute
+Neue Start- und Landebahn,New runway,newRunway
+Aufhebung Flugroute,Closure of route,closureRoute
+Sperrung Start- und Landebahn,Closure of runway,closureRunway
+Schließung Flughafen,Closure of airport,closureAirport
+Vermittlung von Informationen,Information dissemination,informationDissemination
+Beschwerdemanagement,Complaint management,complaintManagement
+Bildungs- und Aufklärungsaktivitäten,Education and awareness raising activities,educationAwarenessActivities
+Förderung anderer Verkehrsträger,Promoting other modes of transport,promotingOtherModes
