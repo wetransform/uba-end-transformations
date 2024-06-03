@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<hale-project version="5.2.0.SNAPSHOT">
+    <name>UBA END DF7_10 Agglomerations Aggregation</name>
+    <author>Anna Tamm (wetransform GmbH)</author>
+    <created>2024-04-02T15:19:56.554+02:00</created>
+    <modified>2024-05-13T17:00:42.210+02:00</modified>
+    <save-config action-id="project.save" provider-id="eu.esdihumboldt.hale.io.project.hale25.xml.writer">
+        <setting name="charset">UTF-8</setting>
+        <setting name="projectFiles.separate">false</setting>
+        <setting name="contentType">eu.esdihumboldt.hale.io.project.hale25.xml</setting>
+        <setting name="target">file:/C:/Users/AnnaTamm/gitRepos/uba-end-transformations/Aggregation/Agglomerations/DF7_10_Agglomerations_Aggregations.halex</setting>
+    </save-config>
+    <resource action-id="eu.esdihumboldt.hale.io.schema.read.source" provider-id="eu.esdihumboldt.hale.common.schema.persist.hsd.json.read">
+        <setting name="charset">UTF-8</setting>
+        <setting name="resourceId">c1b5d44d-918b-4cbc-a031-b762473eccf4</setting>
+        <setting name="source">../../Schemas/DF7_10_Agglomerations.hsd.json</setting>
+        <setting name="contentType">eu.esdihumboldt.hale.common.schema.hsd.json</setting>
+    </resource>
+    <resource action-id="eu.esdihumboldt.hale.io.schema.read.target" provider-id="eu.esdihumboldt.hale.common.schema.persist.hsd.json.read">
+        <setting name="charset">UTF-8</setting>
+        <setting name="resourceId">ec1f29d9-801e-4b97-86bd-37bc3d56359f</setting>
+        <setting name="source">../../Schemas/DF7_10_Agglomerations.hsd.json</setting>
+        <setting name="contentType">eu.esdihumboldt.hale.common.schema.hsd.json</setting>
+    </resource>
+    <resource action-id="eu.esdihumboldt.hale.io.groovy.snippets.load" provider-id="eu.esdihumboldt.hale.io.groovy.snippets">
+        <setting name="identifier">end_Checks</setting>
+        <setting name="charset">UTF-8</setting>
+        <setting name="resourceId">952f10f9-7494-4b7b-8674-e185168ad5cf</setting>
+        <setting name="source">file:/C:/Users/AnnaTamm/gitRepos/uba-end-transformations/Snippets/end.Checks.groovy</setting>
+        <setting name="contentType">eu.esdihumboldt.hale.io.groovy</setting>
+        <setting name="autoReload">true</setting>
+    </resource>
+    <export-config name="default">
+        <configuration action-id="eu.esdihumboldt.hale.io.instance.write.transformed" provider-id="eu.esdihumboldt.hale.io.xls.writer.instance">
+            <setting name="charset">UTF-8</setting>
+            <setting name="meta.description"></setting>
+            <setting name="useSchema">true</setting>
+            <setting name="selectedExportType">NAP_AggCompetentAuthority,NAP_AggMappingResultDetail,NAP_AggReductionHealthImpact_3,DatasetDefaultProperties,NAP_Agglomeration,NAP_AggReductionHealthImpact_2,CodelistProperties,NAP_AggReductionHealthImpact_1,NAP_AggReductionMeasure,NAP_AggLimitValues,NoiseActionPlanAgglomeration,</setting>
+            <setting name="contentType">eu.esdihumboldt.hale.io.xls.xlsx</setting>
+            <setting name="solveNestedProperties">true</setting>
+            <setting name="ignoreEmptyFeaturetypes">false</setting>
+        </configuration>
+    </export-config>
+    <file name="alignment.xml" location="DF7_10_Agglomerations_Aggregations.halex.alignment.xml"/>
+    <file name="styles.sld" location="DF7_10_Agglomerations_Aggregations.halex.styles.sld"/>
+    <complex-property name="variables">
+        <core:properties xmlns:core="http://www.esdi-humboldt.eu/hale/core">
+            <core:property name="ALIGNMENT_MODE">
+                <core:value value="aggregation"/>
+            </core:property>
+            <core:property name="MAX_FREETEXT_LENGTH">
+                <core:value value="10000"/>
+            </core:property>
+        </core:properties>
+    </complex-property>
+</hale-project>
