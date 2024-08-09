@@ -35,7 +35,7 @@
             <setting name="charset">UTF-8</setting>
             <setting name="meta.description"></setting>
             <setting name="useSchema">true</setting>
-            <setting name="selectedExportType">NAP_AggCompetentAuthority,NAP_AggMappingResultDetail,NAP_AggReductionHealthImpact_3,DatasetDefaultProperties,NAP_Agglomeration,NAP_AggReductionHealthImpact_2,CodelistProperties,NAP_AggReductionHealthImpact_1,NAP_AggReductionMeasure,NAP_AggLimitValues,NoiseActionPlanAgglomeration,</setting>
+            <setting name="selectedExportType">NoiseActionPlanAgglomeration,NAP_Agglomeration,NAP_AggCompetentAuthority,NAP_AggLimitValues,NAP_AggMappingResultDetail,NAP_AggReductionMeasure,NAP_AggReductionHealthImpact_1,NAP_AggReductionHealthImpact_2,NAP_AggReductionHealthImpact_3,DatasetDefaultProperties,CodelistProperties</setting>
             <setting name="contentType">eu.esdihumboldt.hale.io.xls.xlsx</setting>
             <setting name="solveNestedProperties">true</setting>
             <setting name="ignoreEmptyFeaturetypes">false</setting>
