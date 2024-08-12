@@ -17,7 +17,15 @@
 				},
 				{
 					"ref": 3,
-					"name": "NAP_MajorRail"
+					"name": "NAP_MajorRail_LAU"
+				},
+				{
+					"ref": 13,
+					"name": "NAP_MajorRail_NUTS"
+				},
+				{
+					"ref": 14,
+					"name": "NAP_MajorRail_Country"
 				},
 				{
 					"ref": 4,
@@ -250,7 +258,7 @@
 				{
 					"id": 3,
 					"location": "file:/C:/Users/AnnaTamm/Box%20Sync/staff/Projects/2022-15%20UBA%20DE%20END%20II/Transformations/Railway/Noise%20action%20plan%20for%20major%20railway%20(DF7_10).xlsx",
-					"name": "NAP_MajorRail",
+					"name": "NAP_MajorRail_LAU",
 					"constraints": {
 						"abstract": false,
 						"has-value": false,
@@ -273,6 +281,34 @@
 							}
 						},
 						{
+							"name": "allInLAUCode",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": false
+							},
+							"propertyType": {
+								"name": "java.lang.String",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true
+								}
+							}
+						},
+						{
+							"name": "LAUCode",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": false
+							},
+							"propertyType": {
+								"name": "java.lang.String",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true
+								}
+							}
+						},
+						{
 							"name": "railIdIdentifier",
 							"constraints": {
 								"cardinality": "1..1",
@@ -285,9 +321,22 @@
 									"has-value": true
 								}
 							}
-						},
+						}
+					]
+				},
+				{
+					"id": 13,
+					"location": "file:/home/flo/src/wetransform/rivm-cvgg-end/_Noise%20action%20plan%20for%20major%20railway%20(DF7_10).xlsx",
+					"name": "NAP_MajorRail_NUTS",
+					"constraints": {
+						"abstract": false,
+						"has-value": false,
+						"mappable": true,
+						"mapping-relevant": true
+					},
+					"declares": [
 						{
-							"name": "allInLAUCode",
+							"name": "actionPlanId_identifier",
 							"constraints": {
 								"cardinality": "1..1",
 								"nillable": true
@@ -315,7 +364,104 @@
 							}
 						},
 						{
+							"name": "NUTSLevel",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": false
+							},
+							"propertyType": {
+								"name": "java.lang.String",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true
+								}
+							}
+						},
+						{
+							"name": "NUTSCode",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": false
+							},
+							"propertyType": {
+								"name": "java.lang.String",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true
+								}
+							}
+						},
+						{
+							"name": "railIdIdentifier",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"name": "java.lang.String",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true
+								}
+							}
+						}
+					]
+				},
+				{
+					"id": 14,
+					"location": "file:/home/flo/src/wetransform/rivm-cvgg-end/_Noise%20action%20plan%20for%20major%20railway%20(DF7_10).xlsx",
+					"name": "NAP_MajorRail_Country",
+					"constraints": {
+						"abstract": false,
+						"has-value": false,
+						"mappable": true,
+						"mapping-relevant": true
+					},
+					"declares": [
+						{
+							"name": "actionPlanId_identifier",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"name": "java.lang.String",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true
+								}
+							}
+						},
+						{
 							"name": "allInCountry",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"name": "java.lang.String",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true
+								}
+							}
+						},
+						{
+							"name": "countryCode",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": false
+							},
+							"propertyType": {
+								"name": "java.lang.String",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true
+								}
+							}
+						},
+						{
+							"name": "railIdIdentifier",
 							"constraints": {
 								"cardinality": "1..1",
 								"nillable": true
