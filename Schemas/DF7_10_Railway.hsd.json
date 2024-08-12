@@ -903,6 +903,20 @@
 							}
 						},
 						{
+							"name": "ESTATUnitCode",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"name": "java.lang.String",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true
+								}
+							}
+						},
+						{
 							"name": "railIdIdentifier",
 							"constraints": {
 								"cardinality": "1..1",
@@ -959,6 +973,20 @@
 					"declares": [
 						{
 							"name": "actionPlanId_identifier",
+							"constraints": {
+								"cardinality": "1..1",
+								"nillable": true
+							},
+							"propertyType": {
+								"name": "java.lang.String",
+								"constraints": {
+									"binding": "java.lang.String",
+									"has-value": true
+								}
+							}
+						},
+						{
+							"name": "ESTATUnitCode",
 							"constraints": {
 								"cardinality": "1..1",
 								"nillable": true
