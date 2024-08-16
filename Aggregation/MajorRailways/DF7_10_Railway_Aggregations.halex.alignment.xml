@@ -39,7 +39,6 @@ codelistProperty('NAP_RailReductionMeasure', 'plannedMeasureDetail_measuresInCos
             <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
 // Check if any tables were present that are mandatory&#13;
 def expectedTypes = [&#13;
-	'NAP_MajorRail':'TB53',&#13;
 	'NAP_MajorRailCompetentAuthority':'TB59',&#13;
 	'NAP_MajorRailLimitValues':'TB135',&#13;
 	'NAP_RailMappingResultDetail':'TB65',&#13;
@@ -91,52 +90,6 @@ _target {&#13;
 }
 </core:text>
         </complexParameter>
-    </cell>
-    <cell relation="eu.esdihumboldt.cst.functions.groovy.retype" id="C750be061-3ef0-4afd-bed2-2724bd1e2814" priority="normal">
-        <source>
-            <class>
-                <type name="NAP_MajorRail"/>
-            </class>
-        </source>
-        <target>
-            <class>
-                <type name="NAP_MajorRail"/>
-            </class>
-        </target>
-        <complexParameter name="script">
-            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
-&#13;
-def SHEET = 'NAP_MajorRail'&#13;
-&#13;
-_snippets.end_Checks {&#13;
-	registerType(SHEET)&#13;
-	&#13;
-	uniqueCheck('TU96', SHEET, ['actionPlanId_identifier', 'railIdIdentifier', 'allInLAUCode', 'allInNUTSCode', 'allInCountry'])&#13;
-	freetextCheck('LEN', 'FC98', SHEET, 'actionPlanId_identifier')&#13;
-	&#13;
-	codelistCheck('END_RT23', null, SHEET, 'allInLAUCode', CODELIST_LauIdValue(), true)&#13;
-	codelistCheck('END_RT24', null, SHEET, 'allInNUTSCode', CODELIST_NutsIdValue(), true)&#13;
-	&#13;
-	xorCheck('END_RC13', SHEET, ['allInCountry','allInLAUCode','allInNUTSCode','railIdIdentifier'], 'Only one reference level is expected to be provided for each actionPlan: railIdIdentifier, allInLAUCode, allInNUTSCode or allInCountry', exists())&#13;
-}&#13;
-&#13;
-
-</core:text>
-        </complexParameter>
-    </cell>
-    <cell relation="eu.esdihumboldt.hale.align.retype" id="C7c6d69cd-f1e5-4a3c-bd65-d8feb7ad7111" priority="normal">
-        <source>
-            <class>
-                <type name="NAP_MajorRail"/>
-            </class>
-        </source>
-        <target>
-            <class>
-                <type name="NAP_MajorRail"/>
-            </class>
-        </target>
-        <parameter value="true" name="ignoreNamespaces"/>
-        <parameter value="true" name="structuralRename"/>
     </cell>
     <cell relation="eu.esdihumboldt.cst.functions.groovy.retype" id="Cc0f95c47-b424-4380-9935-e67a2d994ee8" priority="normal">
         <source>
@@ -217,6 +170,104 @@ _snippets.end_Checks {&#13;
         <target>
             <class>
                 <type name="NAP_MajorRailLimitValues"/>
+            </class>
+        </target>
+        <parameter value="true" name="ignoreNamespaces"/>
+        <parameter value="true" name="structuralRename"/>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.retype" id="C750be061-3ef0-4afd-bed2-2724bd1e2814" priority="normal">
+        <source>
+            <class>
+                <type name="NAP_MajorRail_LAU"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NAP_MajorRail_LAU"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+&#13;
+def SHEET = 'NAP_MajorRail_LAU'&#13;
+&#13;
+_snippets.end_Checks {&#13;
+	&#13;
+	freetextCheck('LEN', 'FC192', SHEET, 'actionPlanId_identifier')&#13;
+	&#13;
+	codelistCheck('FT207', 'FC206', SHEET, 'allInLAUCode', CODELIST_Boolean())&#13;
+	codelistCheck('END_RT52', 'FC196', SHEET, 'LAUCode', CODELIST_LauIdValue())&#13;
+	&#13;
+	freetextCheck('END_FS_67', null, SHEET, 'roadIdIdentifier')&#13;
+	&#13;
+	conditionalCheck('END_CT72', SHEET, 'allInLAUCode', 'roadIdIdentifier', ['No'])&#13;
+}&#13;
+
+</core:text>
+        </complexParameter>
+        <annotation type="message">
+            <core:message xmlns:core="http://www.esdi-humboldt.eu/hale/core" category="migration" dismissed="true">
+                <core:content>
+                    <core:text xml:space="preserve">The cell's entities have been replaced, the new entities may have a different structure and/or names and may require updating the Groovy script accordingly</core:text>
+                </core:content>
+            </core:message>
+        </annotation>
+    </cell>
+    <cell relation="eu.esdihumboldt.hale.align.retype" id="C7c6d69cd-f1e5-4a3c-bd65-d8feb7ad7111" priority="normal">
+        <source>
+            <class>
+                <type name="NAP_MajorRail_LAU"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NAP_MajorRail_LAU"/>
+            </class>
+        </target>
+        <parameter value="true" name="ignoreNamespaces"/>
+        <parameter value="true" name="structuralRename"/>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.retype" id="Ccda47f97-ece8-48ff-b518-e9f593570514" priority="normal">
+        <source>
+            <class>
+                <type name="NAP_MajorRail_NUTS"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NAP_MajorRail_NUTS"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+def SHEET = 'NAP_MajorRail_NUTS'&#13;
+&#13;
+_snippets.end_Checks {&#13;
+	&#13;
+	freetextCheck('LEN', 'FC170', SHEET, 'actionPlanId_identifier')&#13;
+	&#13;
+	codelistCheck('FT209', 'FC208', SHEET, 'allInNUTSCode', CODELIST_Boolean())&#13;
+	codelistCheck('END_RT54', 'FC175', SHEET, 'NUTSCode', CODELIST_NutsIdValue())&#13;
+	codelistCheck('TC215', 'FC214', SHEET, 'NUTSLevel', CODELIST_NutsLevelValue())&#13;
+	&#13;
+	freetextCheck('END_FS_69', null, SHEET, 'roadIdIdentifier')&#13;
+	&#13;
+	conditionalCheck('END_CT73', SHEET, 'allInNUTSCode', 'roadIdIdentifier', ['No'])&#13;
+}&#13;
+&#13;
+
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.hale.align.retype" id="Cc6e731ed-2193-4c0b-96c1-e7400cba7020" priority="normal">
+        <source>
+            <class>
+                <type name="NAP_MajorRail_NUTS"/>
+            </class>
+        </source>
+        <target>
+            <class>
+                <type name="NAP_MajorRail_NUTS"/>
             </class>
         </target>
         <parameter value="true" name="ignoreNamespaces"/>
