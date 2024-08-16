@@ -1,40 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <alignment xmlns="http://www.esdi-humboldt.eu/hale/alignment">
-    <cell relation="eu.esdihumboldt.cst.functions.groovy.create" id="Cd2c0eb42-1857-4e92-ac44-3c6b1d6ab98f" priority="normal">
-        <target>
-            <class>
-                <type name="NAP_MajorRail"/>
-            </class>
-        </target>
-        <complexParameter name="script">
-            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
-withTransformationContext {&#13;
-	def c = _.context.collector(it)&#13;
-		&#13;
-	_target {&#13;
-		actionPlanId_identifier( c.Allgemeines.kennungPlan.value() )&#13;
-		def ags_rs = c.Allgemeines.ags_rs.value()&#13;
-		switch (ags_rs.length()) {&#13;
-			case 3:&#13;
-				// get NUTS code for RS of Regierungsbezirk like classified in lookup-table 'RB-RS_zu_NUTSCode'&#13;
-				nuts = _snippets.helperFunctions.getLookupTableValue(ags_rs, 'ce7f4ce5-ceb6-47ef-bb9d-b79c930792c4')&#13;
-				allInNUTSCode( nuts )&#13;
-				break&#13;
-			case 8:&#13;
-				// AGS of Gemeinde is equivalent to LAU code&#13;
-				allInLAUCode( ags_rs )&#13;
-				break&#13;
-			case 9:&#13;
-				// get LAU codes for RS of Amt (MV) or Verbandsgemeinde like classified in lookup-table 'VWG-RS_zu_LAUCodes'&#13;
-				lau = _snippets.helperFunctions.getLookupTableValue(ags_rs, 'b5e5b305-6d74-4790-89a7-3a222924e400')&#13;
-				allInLAUCode( lau )&#13;
-				break&#13;
-		}&#13;
-	}&#13;
-}
-</core:text>
-        </complexParameter>
-    </cell>
     <cell relation="eu.esdihumboldt.cst.functions.groovy.create" id="C89bc6f2b-3ab1-4d09-b7c9-afe8eea986de" priority="normal">
         <target>
             <class>
@@ -70,6 +35,74 @@ withTransformationContext {&#13;
 		actionPlanId_identifier( c.Allgemeines.kennungPlan.value() )&#13;
 		limitValues_otherCriteriaDescription( c.Allgemeines.infoGrenzwert.value() )&#13;
 		limitValues_noiseLimitReportIdIdentifier( 'LR_DE_00_1' )&#13;
+	}&#13;
+}
+</core:text>
+        </complexParameter>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.create" id="Cd2c0eb42-1857-4e92-ac44-3c6b1d6ab98f" priority="normal">
+        <target>
+            <class>
+                <type name="NAP_MajorRail_LAU"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+withTransformationContext {&#13;
+	def c = _.context.collector(it)&#13;
+	&#13;
+	def ags_rs = c.Allgemeines.ags_rs.value()&#13;
+	switch (ags_rs.length()) {&#13;
+		case 8:&#13;
+			// AGS of Gemeinde is equivalent to LAU code&#13;
+			_target {&#13;
+				actionPlanId_identifier( c.Allgemeines.kennungPlan.value() )&#13;
+				allInLAUCode( 'Yes' )&#13;
+				LAUCode( ags_rs )&#13;
+			}&#13;
+			break&#13;
+		case 9:&#13;
+			// get LAU codes for RS of Amt (MV) or Verbandsgemeinde like classified in lookup-table 'VWG-RS_zu_LAUCodes'&#13;
+			def lau = _snippets.helperFunctions.getLookupTableValue(ags_rs, 'b5e5b305-6d74-4790-89a7-3a222924e400')&#13;
+			_target {&#13;
+				actionPlanId_identifier( c.Allgemeines.kennungPlan.value() )&#13;
+				allInLAUCode( 'Yes' )&#13;
+				LAUCode( lau )&#13;
+			}&#13;
+			break&#13;
+	}&#13;
+}
+</core:text>
+        </complexParameter>
+        <annotation type="message">
+            <core:message xmlns:core="http://www.esdi-humboldt.eu/hale/core" category="migration" dismissed="true">
+                <core:content>
+                    <core:text xml:space="preserve">The cell's entities have been replaced, the new entities may have a different structure and/or names and may require updating the Groovy script accordingly</core:text>
+                </core:content>
+            </core:message>
+        </annotation>
+    </cell>
+    <cell relation="eu.esdihumboldt.cst.functions.groovy.create" id="Ccc3db4da-9525-41c8-8d64-381274ecdf17" priority="normal">
+        <target>
+            <class>
+                <type name="NAP_MajorRail_NUTS"/>
+            </class>
+        </target>
+        <complexParameter name="script">
+            <core:text xmlns:core="http://www.esdi-humboldt.eu/hale/core" xml:space="preserve">
+withTransformationContext {&#13;
+	def c = _.context.collector(it)&#13;
+	&#13;
+	def ags_rs = c.Allgemeines.ags_rs.value()&#13;
+	if (ags_rs.length() == 3) {&#13;
+		// get NUTS code for RS of Regierungsbezirk like classified in lookup-table 'RB-RS_zu_NUTSCode'&#13;
+		def nuts = _snippets.helperFunctions.getLookupTableValue(ags_rs, 'ce7f4ce5-ceb6-47ef-bb9d-b79c930792c4')&#13;
+		_target {&#13;
+			actionPlanId_identifier( c.Allgemeines.kennungPlan.value() )&#13;
+			allInNUTSCode( 'Yes' )&#13;
+			NUTSCode( nuts )&#13;
+			NUTSLevel ( 'NUTS2' )&#13;
+		}&#13;
 	}&#13;
 }
 </core:text>
