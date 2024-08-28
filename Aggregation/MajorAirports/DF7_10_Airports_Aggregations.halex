@@ -51,7 +51,10 @@
                 <core:value value="aggregation"/>
             </core:property>
             <core:property name="MAX_FREETEXT_LENGTH">
-                <core:value value="10000"/>
+                <core:value value="4000"/>
+            </core:property>
+            <core:property name="MAX_URL_LENGTH">
+                <core:value value="2100"/>
             </core:property>
         </core:properties>
     </complex-property>
