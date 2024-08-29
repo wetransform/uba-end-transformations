@@ -473,9 +473,10 @@ def existsCheck(String codeMissing, String sheet, String field, boolean isWarnin
 
 def urlCheck(String codeInvalid, String codeMissing, String sheet, String field, String mustStartWith = null, boolean isWarning = false, long maxLength = _project.vars.MAX_URL_LENGTH as long) {
     generalCheck(codeInvalid, codeMissing, sheet, field, 'is not a valid URL',
-        mustStartWith ? isValidUrlThatStartsWith(mustStartWith) : isValidUrl(),
-		null, isWarning)
-		&& generalCheck('LEN', null, sheet, field, "is too long (max. allowed length is ${maxLength})", isNotTooLong(maxLength), null, isWarning)
+            mustStartWith ? isValidUrlThatStartsWith(mustStartWith) : isValidUrl(),
+		    null, isWarning) &&
+        generalCheck('LEN', null, sheet, field, "is too long (max. allowed length is ${maxLength})",
+            isNotTooLong(maxLength), null, isWarning)
 }
 
 def costCheck(String codeInvalid, String codeMissing, String sheet, String field, boolean isWarning = false) {

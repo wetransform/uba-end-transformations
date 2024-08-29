@@ -3,7 +3,7 @@
     <name>UBA HES nach END DF7_10 Railway</name>
     <author>Anna Tamm (wetransform GmbH)</author>
     <created>2023-11-15T16:11:09.513+01:00</created>
-    <modified>2024-08-16T13:33:28.985+02:00</modified>
+    <modified>2024-08-29T09:09:30.571+02:00</modified>
     <save-config action-id="project.save" provider-id="eu.esdihumboldt.hale.io.project.hale25.xml.writer">
         <setting name="charset">UTF-8</setting>
         <setting name="projectFiles.separate">false</setting>
