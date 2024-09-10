@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<hale-project version="5.2.0.SNAPSHOT">
+<hale-project version="5.3.0.release">
     <name>UBA Gebiet nach DF7_10 Coverage Area</name>
     <author>Anna Tamm (wetransform GmbH)</author>
     <created>2023-12-12T15:56:37.402+01:00</created>
-    <modified>2024-03-18T08:44:29.889+01:00</modified>
+    <modified>2024-09-09T14:58:24.479+02:00</modified>
     <save-config action-id="project.save" provider-id="eu.esdihumboldt.hale.io.project.hale25.xml.writer">
         <setting name="charset">UTF-8</setting>
         <setting name="projectFiles.separate">false</setting>
@@ -30,6 +30,17 @@
         <setting name="contentType">eu.esdihumboldt.hale.io.groovy</setting>
         <setting name="autoReload">true</setting>
     </resource>
+    <export-config name="default">
+        <configuration action-id="eu.esdihumboldt.hale.io.instance.write.transformed" provider-id="eu.esdihumboldt.hale.io.geopackage.instance.writer">
+            <setting name="charset">UTF-8</setting>
+            <setting name="meta.description"></setting>
+            <setting name="createEmptyTables">true</setting>
+            <setting name="crs">code:EPSG:3035</setting>
+            <setting name="overwriteTargetFile">true</setting>
+            <setting name="spatialindex.type">rtree</setting>
+            <setting name="contentType">eu.esdihumboldt.hale.io.geopackage</setting>
+        </configuration>
+    </export-config>
     <file name="alignment.xml" location="UBA-DE_Gebiet_to_DF7_10_CoverageArea.halex.alignment.xml"/>
     <file name="styles.sld" location="UBA-DE_Gebiet_to_DF7_10_CoverageArea.halex.styles.sld"/>
     <property name="defaultGeometry:{http://www.esdi-humboldt.eu/hale/gpkg}NoiseActionPlanCoverageArea/1">geometry</property>
