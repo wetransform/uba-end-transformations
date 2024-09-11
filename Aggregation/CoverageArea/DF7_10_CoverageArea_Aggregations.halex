@@ -3,7 +3,7 @@
     <name>UBA END DF7_10 Coverage Area Aggregation</name>
     <author>Anna Tamm (wetransform GmbH)</author>
     <created>2024-02-21T15:36:13.020+01:00</created>
-    <modified>2024-09-09T17:06:20.313+02:00</modified>
+    <modified>2024-09-11T08:47:16.940+02:00</modified>
     <save-config action-id="project.save" provider-id="eu.esdihumboldt.hale.io.project.hale25.xml.writer">
         <setting name="charset">UTF-8</setting>
         <setting name="projectFiles.separate">false</setting>
