@@ -53,7 +53,6 @@ codelistProperty('QuietArea', 'quietAreaId_identifierScheme', 'http://dd.eionet.
 // Check if any tables were present that are mandatory&#13;
 def expectedTypes = [&#13;
 	'QuietArea':'TB1',&#13;
-	'QuietAreaDocumentation':'TB28',&#13;
 ]&#13;
 def presentTypes&#13;
 &#13;
